@@ -11,9 +11,11 @@ inline void cToggleFullscreen(Config*);
 int main(void)
 {
     Config* config = new Config{ 1280,720 };
-    InitWindow(1280, 720, "Demo game with raylib");
+    InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
 
-    SetTargetFPS(165);
+    SetWindowState(FLAG_VSYNC_HINT);
+    /* SetTargetFPS(165); */
+    /* SetExitKey(32); */
 
     State *currentState = new Menu(config);
 

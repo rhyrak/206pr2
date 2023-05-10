@@ -39,7 +39,7 @@ void InGame::render()
 
     ClearBackground(MAGENTA);
     // move this to map::render ____________________________________________________
-    DrawRectangle(-1000, -1000, 1280+2000, 720+2000, DARKBLUE);
+    DrawRectangle(-1000, -1000, config->windowWidth+2000, config->windowHeight+2000, DARKBLUE);
     DrawRectangle(0, 600, 1280, 120, DARKGREEN);
     DrawRectangle(300, 300, 50, 300, DARKBROWN);
     DrawTriangle(Vector2{ 325,150 }, Vector2{ 225,450 }, Vector2{ 425,450 }, GREEN);
