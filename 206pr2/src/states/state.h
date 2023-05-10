@@ -6,14 +6,14 @@
 class State
 {
 protected:
-    State(Config *config);
+    State(Config *config);  /*Constructor*/
     char signalF;
     Config* config;
 public:
-    ~State();
-    virtual void update() = 0;
-    virtual void render() = 0;
-    virtual char signal() = 0;
+    ~State();   /*Destructor*/
+    virtual void update() = 0;  /*Overridable method*/
+    virtual void render() = 0;  /*Overridable method*/
+    virtual char signal() = 0;  /*Overridable method*/
 };
 
 #endif

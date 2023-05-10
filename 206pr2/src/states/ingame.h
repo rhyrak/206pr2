@@ -5,18 +5,19 @@
 #include "state.h"
 #include "../../main.h"
 
+/*InGame extends State*/
 class InGame : public State
 {
 private:
-    Player player;
-    Camera2D camera;
-    bool isCameraLocked;
+    Player player;  /*Player Object*/
+    Camera2D camera;    /*Camera Object*/
+    bool isCameraLocked;    /*Free-Cam flag*/
 public:
-    InGame(Config *config);
-    void update() override;
-    void render() override;
-    char signal() override;
-    Player getPlayer();
+    InGame(Config *config); /*Constructor*/
+    void update() override; /*Overridden method*/
+    void render() override; /*Overridden method*/
+    char signal() override; /*Overridden method*/
+    Player getPlayer(); /*Accessor*/
 };
 
 #endif
