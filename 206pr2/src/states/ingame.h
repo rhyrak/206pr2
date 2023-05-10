@@ -16,6 +16,7 @@ public:
     void update() override;
     void render() override;
     char signal() override;
+    Player getPlayer();
 };
 
 #endif

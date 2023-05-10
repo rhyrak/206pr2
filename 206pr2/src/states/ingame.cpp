@@ -24,6 +24,12 @@ void InGame::update()
         camera.target.y = player.getCenterPoint().y - config->windowHeight/2;
         camera.offset.x = 0;
         camera.offset.y = 0;
+        
+        player.xDebug.x = player.getCenterPoint().x - config->windowWidth / 2 + 10;
+        player.xDebug.y = player.getCenterPoint().y - config->windowHeight / 2 + 35;
+        player.yDebug.x = player.getCenterPoint().x - config->windowWidth / 2 + 10;
+        player.yDebug.y = player.getCenterPoint().y - config->windowHeight / 2 + 35;
+        
     }
     else {
         if (IsKeyDown(KEY_UP)) camera.offset.y -= dt * -300;
@@ -45,6 +51,7 @@ void InGame::render()
     DrawTriangle(Vector2{ 325,150 }, Vector2{ 225,450 }, Vector2{ 425,450 }, GREEN);
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     player.render();
+    player.displayDebugInfo();
     
     EndMode2D();
     
@@ -55,4 +62,9 @@ void InGame::render()
 char InGame::signal()
 {
     return signalF;
+}
+
+Player InGame::getPlayer()
+{
+    return player;
 }

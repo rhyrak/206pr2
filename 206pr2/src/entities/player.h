@@ -14,7 +14,6 @@ public:
     ~Player();
     void update();
     void render();
-    Vector2 getCenterPoint();
 };
 
 #endif

@@ -27,8 +27,3 @@ void Player::update()
     if (IsKeyDown(KEY_W)) centerPoint.y -= 400 * dt;
     if (IsKeyDown(KEY_S)) centerPoint.y += 400 * dt;
 }
-
-
-Vector2 Player::getCenterPoint() {
-    return Vector2{ centerPoint.x,centerPoint.y };
-}
