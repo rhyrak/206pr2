@@ -9,9 +9,9 @@ Player::Player()
 {
 }
 
-Player::Player(std::string idDebug, int upkey, int downkey, int leftKey, int rightKey)
+Player::Player(std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey)
 {
-    centerPoint = Vector2{ 600,575 };
+    centerPoint = coords;
     texture = LoadTexture("res/amogus.png");
     this->idDebug = idDebug + "'s coordinates:";
     /*Assign movement keys*/

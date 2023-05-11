@@ -139,6 +139,7 @@
     <ClCompile Include="src\states\ingame.cpp" />
     <ClCompile Include="src\states\menu.cpp" />
     <ClCompile Include="src\states\state.cpp" />
+    <ClCompile Include="src\textures\grid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="src\states\ingame.h" />
     <ClInclude Include="src\states\menu.h" />
     <ClInclude Include="src\states\state.h" />
+    <ClInclude Include="src\textures\grid.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,7 +16,7 @@ private:
     int rightKey = KeyboardKey::KEY_NULL;
 public:
     Player();   /*Default Constructor, don't use it lol*/
-    Player(std::string idDebug, int upkey, int downkey, int leftKey, int rightKey);   /*Constructor*/
+    Player(std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey);   /*Constructor*/
     ~Player();  /*Destructor*/
     void update();
     void render();
