@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include "player.h"
+#include <cmath>
 
 #define ROUND(a) ((int)((a) + 0.5f))
 #include <string>
@@ -9,8 +10,9 @@ Player::Player()
 {
 }
 
-Player::Player(std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey)
+Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey)
 {
+    this->map = map;
     centerPoint = coords;
     texture = LoadTexture("res/amogus.png");
     this->idDebug = idDebug + "'s coordinates:";
@@ -34,10 +36,46 @@ void Player::render()
 void Player::update()
 {
     float dt = GetFrameTime();
-    if (IsKeyDown(leftKey)) centerPoint.x -= 400 * dt;
-    if (IsKeyDown(rightKey)) centerPoint.x += 400 * dt;
-    if (IsKeyDown(upKey)) centerPoint.y -= 400 * dt;
-    if (IsKeyDown(downKey)) centerPoint.y += 400 * dt;
+    if (IsKeyDown(leftKey))
+    {
+        if(centerPoint.x > 0)
+        {
+            centerPoint.x -= floor(400 * dt);
+        }
+        else
+            centerPoint.x = 0;
+    }      
+
+    if (IsKeyDown(rightKey))
+    {
+        if(centerPoint.x < map->windowWidth)
+        {
+            centerPoint.x += floor(400 * dt);
+        }
+        else
+            centerPoint.x = map->windowWidth;
+    }   
+
+    if (IsKeyDown(upKey))
+    {
+        if(centerPoint.y > 0)
+        {
+            centerPoint.y -= floor(400 * dt);
+        }
+        else
+            centerPoint.y = 0;
+    }      
+
+    if (IsKeyDown(downKey))
+    {
+        if(centerPoint.y < map->windowHeight)
+        {
+            centerPoint.y += floor(400 * dt);
+        }
+        else
+            centerPoint.y = map->windowHeight;
+    }
+          
 }
 
 int Player::getUpKey()

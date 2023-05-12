@@ -4,6 +4,7 @@
 
 #include <raylib.h>
 #include <string>
+#include "../../main.h"
 
 class Entity
 {
@@ -11,6 +12,7 @@ protected:
     Entity();
     Rectangle hitbox;
     Vector2 centerPoint = { 0 , 0 };
+    Config* map;
 public:
     Vector2 getCenterPoint();
     /*Temp for debug purposes*/

@@ -4,8 +4,11 @@
 
 InGame::InGame(Config *config) : State(config)
 {
+    map = new Config{ config->windowWidth * 2, 1472 };
+
     /*Create new Player*/
     player = Player(
+        map,
         "Player 1",
         { (float)config->windowWidth, (float)config->windowHeight },
         KeyboardKey::KEY_W,
@@ -22,7 +25,6 @@ InGame::InGame(Config *config) : State(config)
     };
 
     isCameraLocked = true;  /*enable flag by default*/
-    map = new Config{ config->windowWidth*2, 1472 };
     grid = Grid(map);
 }
 
