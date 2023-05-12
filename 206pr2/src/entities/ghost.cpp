@@ -38,31 +38,31 @@ void Ghost::moveRandom() {
     randomDir = 1 + (rand() % 8);
     randomRange = ((rand() % 3001) / 1000.0F) + 1.0;
 
-    if (randomDir == 1) { // right
+    if (randomDir == 1) { 
         moveRight = true;
     }
-    if (randomDir == 2) { // left
+    if (randomDir == 2) { 
         moveLeft = true;
     }
-    if (randomDir == 3) { // upright
+    if (randomDir == 3) { 
         moveUp = true;
         moveRight = true;
     }
-    if (randomDir == 4) { // upleft
+    if (randomDir == 4) { 
         moveUp = true;
         moveLeft = true;
     }
-    if (randomDir == 5) { // up
+    if (randomDir == 5) {
         moveUp = true;
     }
-    if (randomDir == 6) { // down
+    if (randomDir == 6) {
         moveDown = true;
     }
-    if (randomDir == 7) { // downright
+    if (randomDir == 7) { 
         moveDown = true;
         moveRight = true;
     }
-    if (randomDir == 8) { // downleft
+    if (randomDir == 8) {
         moveDown = true;
         moveLeft = true;
     }
