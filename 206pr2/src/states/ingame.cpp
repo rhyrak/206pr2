@@ -10,7 +10,7 @@ InGame::InGame(Config *config) : State(config)
     player = Player(
         map,
         "Player 1",
-        { 80.0, 80.0 },
+        { 100.0, 100.0 },
         KeyboardKey::KEY_W,
         KeyboardKey::KEY_S,
         KeyboardKey::KEY_A,
@@ -62,7 +62,6 @@ void InGame::render()
     DrawTriangle(Vector2{ 325,150 }, Vector2{ 225,450 }, Vector2{ 425,450 }, GREEN);
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     player.render();    /*Draw player model*/
-    player.displayDebugInfo();  /*Display coordinates*/
 
     /*Shadow Experimental*/
     for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
@@ -75,6 +74,8 @@ void InGame::render()
 
         }
     }
+
+    player.displayDebugInfo();  /*Display coordinates*/
 
     EndMode2D();
     

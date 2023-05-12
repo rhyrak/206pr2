@@ -48,7 +48,7 @@ void Player::update()
 
     if (IsKeyDown(rightKey))
     {
-        if(centerPoint.x < map->windowWidth - 0.1)
+        if(centerPoint.x < map->windowWidth - 0.11)
         {
             centerPoint.x += (400 * dt);
         }
@@ -68,7 +68,7 @@ void Player::update()
 
     if (IsKeyDown(downKey))
     {
-        if(centerPoint.y < map->windowHeight - 0.1)
+        if(centerPoint.y < map->windowHeight - 0.11)
         {
             centerPoint.y += (400 * dt);
         }
