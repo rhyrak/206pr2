@@ -1,49 +1,69 @@
 #include <raylib.h>
 #include "ghost.h"
+#include <cstdlib>
 #define ROUND(a) ((int)((a) + 0.5f))
 
-Ghost::Ghost() {}
-
-Ghost::Ghost(Vector2 coords) {
-    centerPoint = coords;
+Ghost::Ghost() {
+    centerPoint = { (30 + (rand() % 2500)) / 1.0F, (30 + (rand() % 1411)) / 1.0F };
     texture = LoadTexture("res/ghost.png");
 }
 
 Ghost::~Ghost() {}
 
 void Ghost::update() {
-    move();
+
+    if ((moveUp == false && moveDown == false && moveRight == false && moveLeft == false) || randomRange <= 0.0
+        || (centerPoint.x <= 30.0 || centerPoint.x >= 2529.0 || centerPoint.y <= 30.0 || centerPoint.y >= 1441.0))
+        moveRandom();
+
     float dt = GetFrameTime();
-    if (moveLeft) centerPoint.x -= 200 * dt;
-    if (moveRight) centerPoint.x += 200 * dt;
-    if (moveUp) centerPoint.y -= 200 * dt;
-    if (moveDown) centerPoint.y += 200 * dt;
+    randomRange -= dt;
+    if (moveLeft) centerPoint.x -= 100 * dt;
+    if (moveRight) centerPoint.x += 100 * dt;
+    if (moveUp) centerPoint.y -= 100 * dt;
+    if (moveDown) centerPoint.y += 100 * dt;
 }
 
 void Ghost::render() {
     DrawTexture(texture, ROUND(centerPoint.x - texture.width / 2), ROUND(centerPoint.y - texture.height / 2), WHITE);
 }
 
-void Ghost::move() {
-
+void Ghost::moveRandom() {
+    
     moveRight = false;
     moveLeft = false;
     moveUp = false;
     moveDown = false;
 
-    actionLockCounter++;
+    randomDir = 1 + (rand() % 8);
+    randomRange = ((rand() % 3001) / 1000.0F) + 1.0;
 
-    if (actionLockCounter >= 0 && actionLockCounter < 100) {
+    if (randomDir == 1) { // right
         moveRight = true;
     }
-    else if (actionLockCounter >= 150 && actionLockCounter < 250) {
-        moveDown = true;
-    }
-    else if (actionLockCounter >= 300 && actionLockCounter < 400) {
+    if (randomDir == 2) { // left
         moveLeft = true;
     }
-    else if (actionLockCounter >= 450 && actionLockCounter < 550)
+    if (randomDir == 3) { // upright
         moveUp = true;
-    if (actionLockCounter == 600)
-        actionLockCounter = 0;
+        moveRight = true;
+    }
+    if (randomDir == 4) { // upleft
+        moveUp = true;
+        moveLeft = true;
+    }
+    if (randomDir == 5) { // up
+        moveUp = true;
+    }
+    if (randomDir == 6) { // down
+        moveDown = true;
+    }
+    if (randomDir == 7) { // downright
+        moveDown = true;
+        moveRight = true;
+    }
+    if (randomDir == 8) { // downleft
+        moveDown = true;
+        moveLeft = true;
+    }
 }

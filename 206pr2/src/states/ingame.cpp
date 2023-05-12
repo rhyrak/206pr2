@@ -29,7 +29,7 @@ InGame::InGame(Config *config) : State(config)
     );
 
 
-    ghost = Ghost({ 680.0,660.0 });
+    ghost = Ghost();
     /*Create Camera*/
     camera = Camera2D{
         Vector2{0,0},

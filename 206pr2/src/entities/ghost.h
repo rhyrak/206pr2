@@ -8,15 +8,15 @@
 class Ghost : public Entity {
 private:
 	Texture2D texture;
-	int actionLockCounter = 0;
+	int randomDir;
+	float randomRange = 0.0;
 	bool moveRight = false;
 	bool moveLeft = false;
 	bool moveUp = false;
 	bool moveDown = false;
-	void move();
+	void moveRandom();
 public:
 	Ghost();
-	Ghost(Vector2 coords);
 	~Ghost();
 	void update();
 	void render();
