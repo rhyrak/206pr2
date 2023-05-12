@@ -2,6 +2,7 @@
 #define INGAME_H
 
 #include "../entities/player.h"
+#include "../entities/ghost.h"
 #include "../textures/grid.hpp"
 #include "state.h"
 #include "../../main.h"
@@ -13,6 +14,7 @@ class InGame : public State
 private:
     Grid grid;
     Player player;  /*Player Object*/
+    Ghost ghost;
     Camera2D camera;    /*Camera Object*/
     bool isCameraLocked;    /*Free-Cam flag*/
     Config* map;

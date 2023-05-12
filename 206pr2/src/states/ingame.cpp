@@ -17,6 +17,7 @@ InGame::InGame(Config *config) : State(config)
         KeyboardKey::KEY_D
     );
 
+    ghost = Ghost({ 680.0,660.0 });
     /*Create Camera*/
     camera = Camera2D{
         Vector2{0,0},
@@ -33,7 +34,7 @@ void InGame::update()
     float dt = GetFrameTime();
     player.update();
     if (IsKeyPressed(KEY_V)) isCameraLocked = !isCameraLocked;  /*toggle flag*/
-
+    ghost.update();
     /*update camera position according to flag*/
     if (isCameraLocked) 
     {
@@ -62,7 +63,7 @@ void InGame::render()
     DrawTriangle(Vector2{ 325,150 }, Vector2{ 225,450 }, Vector2{ 425,450 }, GREEN);
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     player.render();    /*Draw player model*/
-
+    ghost.render();
     /*Shadow Experimental*/
     for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
         for (int i = 0; i < grid.config->windowHeight / grid.size; i++) {
