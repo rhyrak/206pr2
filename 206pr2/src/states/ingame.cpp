@@ -7,7 +7,7 @@ InGame::InGame(Config *config) : State(config)
     map = new Config{ config->windowWidth * 2, 1472 };
 
     /*Create new Player*/
-    player = Player(
+    player1 = Player(
         map,
         "Player 1",
         { 100.0, 100.0 },
@@ -17,11 +17,24 @@ InGame::InGame(Config *config) : State(config)
         KeyboardKey::KEY_D
     );
 
+
+    player2 = Player(
+        map,
+        "Player 2",
+        { (float)(map->windowWidth - 100.0), (float)(map->windowHeight - 100.0) },
+        KeyboardKey::KEY_UP,
+        KeyboardKey::KEY_DOWN,
+        KeyboardKey::KEY_LEFT,
+        KeyboardKey::KEY_RIGHT
+    );
+
+
+    ghost = Ghost({ 680.0,660.0 });
     /*Create Camera*/
     camera = Camera2D{
         Vector2{0,0},
-        player.getCenterPoint(),
-        0.0F, 1.0F
+        player1.getCenterPoint(),
+        0.0F, 0.4F
     };
 
     isCameraLocked = true;  /*enable flag by default*/
@@ -31,21 +44,22 @@ InGame::InGame(Config *config) : State(config)
 void InGame::update()
 {
     float dt = GetFrameTime();
-    player.update();
+    player1.update();
+    player2.update();
     if (IsKeyPressed(KEY_V)) isCameraLocked = !isCameraLocked;  /*toggle flag*/
-
+    ghost.update();
     /*update camera position according to flag*/
     if (isCameraLocked) 
     {
-        camera.target.x = player.getCenterPoint().x - config->windowWidth/2;
-        camera.target.y = player.getCenterPoint().y - config->windowHeight/2;
+        camera.target.x = player1.getCenterPoint().x - config->windowWidth/2;
+        camera.target.y = player1.getCenterPoint().y - config->windowHeight/2;
         camera.offset.x = 0;
         camera.offset.y = 0;
         
-        player.xDebug.x = player.getCenterPoint().x - config->windowWidth / 2 + 30;
-        player.xDebug.y = player.getCenterPoint().y - config->windowHeight / 2 + 35;
-        player.yDebug.x = player.getCenterPoint().x - config->windowWidth / 2 + 30;
-        player.yDebug.y = player.getCenterPoint().y - config->windowHeight / 2 + 35;    
+        player1.xDebug.x = player1.getCenterPoint().x - config->windowWidth / 2 + 30;
+        player1.xDebug.y = player1.getCenterPoint().y - config->windowHeight / 2 + 35;
+        player1.yDebug.x = player1.getCenterPoint().x - config->windowWidth / 2 + 30;
+        player1.yDebug.y = player1.getCenterPoint().y - config->windowHeight / 2 + 35;    
     }
 
 }
@@ -61,21 +75,19 @@ void InGame::render()
     DrawRectangle(300, 300, 50, 300, DARKBROWN);
     DrawTriangle(Vector2{ 325,150 }, Vector2{ 225,450 }, Vector2{ 425,450 }, GREEN);
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    player.render();    /*Draw player model*/
-
+    player1.render();    /*Draw player model*/
+    player2.render();
+    ghost.render();
     /*Shadow Experimental*/
     for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
         for (int i = 0; i < grid.config->windowHeight / grid.size; i++) {
-            if (!CheckCollisionCircleRec(player.getCenterPoint(), 148, grid.getRectangle({(float)i, (float)j}))) {
-                if ((player.getCenterPoint().x)/grid.size != i && (player.getCenterPoint().y)/grid.size != j) {
+            if (!CheckCollisionCircleRec(player1.getCenterPoint(), 148, grid.getRectangle({(float)i, (float)j})) && !CheckCollisionCircleRec(player2.getCenterPoint(),148, grid.getRectangle({(float)i, (float)j}))) {
                     grid.render({ (float)j * grid.size, (float)i * grid.size });
-                }
             }
-
         }
     }
 
-    player.displayDebugInfo();  /*Display coordinates*/
+    player1.displayDebugInfo();  /*Display coordinates*/
 
     EndMode2D();
     
@@ -92,5 +104,5 @@ char InGame::signal()
 /*Accessor*/
 Player InGame::getPlayer()
 {
-    return player;
+    return player1;
 }

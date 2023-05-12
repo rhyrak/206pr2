@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\entities\entity.cpp" />
+    <ClCompile Include="src\entities\ghost.cpp" />
     <ClCompile Include="src\entities\player.cpp" />
     <ClCompile Include="src\states\ingame.cpp" />
     <ClCompile Include="src\states\menu.cpp" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="main.h" />
     <ClInclude Include="src\entities\entity.h" />
+    <ClInclude Include="src\entities\ghost.h" />
     <ClInclude Include="src\entities\player.h" />
     <ClInclude Include="src\states\ingame.h" />
     <ClInclude Include="src\states\menu.h" />
