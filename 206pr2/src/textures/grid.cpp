@@ -14,8 +14,8 @@ Grid::Grid(Config* config)
 
 void Grid::fillVector()
 {
-	for (int i = 0; i < config->windowHeight / size; i++) {
-		for (int j = 0; j < config->windowWidth / size; j++) {
+	for (int i = 0; i < config->windowWidth / size; i++) {
+		for (int j = 0; j < config->windowHeight / size; j++) {
 			arr.push_back(Rectangle{(float)i*size, (float)j*size, (float)size, (float)size});
 		}
 	}
@@ -31,5 +31,5 @@ Rectangle Grid::getRectangle(Vector2 coords)
 {
 	int x = coords.x;
 	int y = coords.y;
-	return arr.at(abs(x) * abs(y));
+	return arr.at((abs(y) * (config->windowHeight / size)) + abs(x));
 }

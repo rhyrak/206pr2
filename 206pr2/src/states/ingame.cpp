@@ -65,11 +65,11 @@ void InGame::render()
     player.displayDebugInfo();  /*Display coordinates*/
 
     /*Shadow Experimental*/
-    for (int i = 0; i < grid.config->windowWidth / grid.size; i++) {
-        for (int j = 0; j < grid.config->windowHeight / grid.size; j++) {
-            if (CheckCollisionCircleRec(player.getCenterPoint(), (float)16, grid.getRectangle({ (float)i, (float)j }))) {
+    for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
+        for (int i = 0; i < grid.config->windowHeight / grid.size; i++) {
+            if (!CheckCollisionCircleRec(player.getCenterPoint(), 128, grid.getRectangle({(float)i, (float)j}))) {
                 if ((player.getCenterPoint().x)/grid.size != i && (player.getCenterPoint().y)/grid.size != j) {
-                    grid.render({ (float)i * grid.size, (float)j * grid.size });
+                    grid.render({ (float)j * grid.size, (float)i * grid.size });
                 }
             }
 

@@ -97,3 +97,8 @@ int Player::getRightKey()
 {
     return this->rightKey;
 }
+
+Rectangle Player::getRect() 
+{
+    return Rectangle{ centerPoint.x, centerPoint.y, (float)texture.width, (float)texture.height };
+}
