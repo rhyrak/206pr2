@@ -38,42 +38,42 @@ void Player::update()
     float dt = GetFrameTime();
     if (IsKeyDown(leftKey))
     {
-        if(centerPoint.x > 0)
+        if(centerPoint.x > 0.01)
         {
-            centerPoint.x -= floor(400 * dt);
+            centerPoint.x -= (400 * dt);
         }
         else
-            centerPoint.x = 0;
+            centerPoint.x = 0.01;
     }      
 
     if (IsKeyDown(rightKey))
     {
-        if(centerPoint.x < map->windowWidth)
+        if(centerPoint.x < map->windowWidth - 0.1)
         {
-            centerPoint.x += floor(400 * dt);
+            centerPoint.x += (400 * dt);
         }
         else
-            centerPoint.x = map->windowWidth;
+            centerPoint.x = map->windowWidth - 0.1;
     }   
 
     if (IsKeyDown(upKey))
     {
-        if(centerPoint.y > 0)
+        if(centerPoint.y > 0.01)
         {
-            centerPoint.y -= floor(400 * dt);
+            centerPoint.y -= (400 * dt);
         }
         else
-            centerPoint.y = 0;
+            centerPoint.y = 0.01;
     }      
 
     if (IsKeyDown(downKey))
     {
-        if(centerPoint.y < map->windowHeight)
+        if(centerPoint.y < map->windowHeight - 0.1)
         {
-            centerPoint.y += floor(400 * dt);
+            centerPoint.y += (400 * dt);
         }
         else
-            centerPoint.y = map->windowHeight;
+            centerPoint.y = map->windowHeight - 0.1;
     }
           
 }

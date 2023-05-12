@@ -22,8 +22,8 @@ void Grid::fillVector()
 }
 
 void Grid::render(Vector2 coords) {
-	int x = (coords.x / size) * size;
-	int y = (coords.y / size) * size;
+	int x = (floor(coords.x) / size) * size;
+	int y = (floor(coords.y) / size) * size;
 	DrawTexture(texture, x, y, WHITE);
 }
 
@@ -31,5 +31,5 @@ Rectangle Grid::getRectangle(Vector2 coords)
 {
 	int x = coords.x;
 	int y = coords.y;
-	return arr.at((abs(y) * (config->windowHeight / size)) + abs(x));
+	return arr.at((y * (config->windowHeight / size)) + x);
 }

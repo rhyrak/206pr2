@@ -10,7 +10,7 @@ InGame::InGame(Config *config) : State(config)
     player = Player(
         map,
         "Player 1",
-        { (float)config->windowWidth, (float)config->windowHeight },
+        { 80.0, 80.0 },
         KeyboardKey::KEY_W,
         KeyboardKey::KEY_S,
         KeyboardKey::KEY_A,
@@ -67,7 +67,7 @@ void InGame::render()
     /*Shadow Experimental*/
     for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
         for (int i = 0; i < grid.config->windowHeight / grid.size; i++) {
-            if (!CheckCollisionCircleRec(player.getCenterPoint(), 128, grid.getRectangle({(float)i, (float)j}))) {
+            if (!CheckCollisionCircleRec(player.getCenterPoint(), 148, grid.getRectangle({(float)i, (float)j}))) {
                 if ((player.getCenterPoint().x)/grid.size != i && (player.getCenterPoint().y)/grid.size != j) {
                     grid.render({ (float)j * grid.size, (float)i * grid.size });
                 }
