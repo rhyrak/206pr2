@@ -19,7 +19,7 @@ public:
     std::string idDebug;
     Vector2 xDebug = { 0 , 0 };
     Vector2 yDebug = { 0 , 0 };
-    void displayDebugInfo();
+    void displayDebugInfo(int offset);
     /*^^^^^^^^^^^^^^^^^^^^^^^*/
 };
 

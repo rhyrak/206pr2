@@ -4,6 +4,7 @@
 #include "../entities/player.h"
 #include "../entities/ghost.h"
 #include "../textures/grid.hpp"
+#include "cmath"
 #include "state.h"
 #include "../../main.h"
 #include "raylib.h"
@@ -17,12 +18,12 @@ private:
     Player player2; 
     Ghost ghost;
     Camera2D camera;    /*Camera Object*/
-    bool isCameraLocked;    /*Free-Cam flag*/
+    bool nightVision;    /*cheat*/
     Config* map;
 public:
     InGame(Config *config); /*Constructor*/
-    void update() override; /*Overridden method*/
-    void render() override; /*Overridden method*/
+    inline void update() override; /*Overridden method*/
+    inline void render() override; /*Overridden method*/
     char signal() override; /*Overridden method*/
     Player getPlayer(); /*Accessor*/
 };

@@ -12,7 +12,7 @@ inline void cToggleFullscreen(Config*); /*Inline function, toggles Fullscreen mo
 /*main function*/
 int main(void)
 {
-    Config* config = new Config{ 1280,720 };    /*Define new Config Object*/
+    Config* config = new Config{ 1896,1056 };    /*Define new Config Object*/
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
 

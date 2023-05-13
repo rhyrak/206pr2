@@ -10,11 +10,11 @@ Vector2 Entity::getCenterPoint() {
 }
 
 /*For Debug purposes, display coordinates of entity*/
-void Entity::displayDebugInfo()
+void Entity::displayDebugInfo(int offset)
 {
-    DrawText(&idDebug[0], (int)xDebug.x - 20, (int)xDebug.y - 25, 20, RED);
-    DrawText(TextFormat("%.2f", centerPoint.x), (int)xDebug.x, (int)xDebug.y, 20, RED);
-    DrawText("X: ", (int)xDebug.x - 20, (int)xDebug.y, 20, RED);
-    DrawText(TextFormat("%.2f", centerPoint.y), (int)yDebug.x, (int)yDebug.y + 20, 20, RED);
-    DrawText("Y: ", (int)yDebug.x - 20, (int)yDebug.y + 20, 20, RED);
+    DrawText(&idDebug[0], (int)xDebug.x + 5, (int)xDebug.y + offset, 20, BLUE);
+    DrawText(TextFormat("%.2f", centerPoint.x), (int)xDebug.x + 25, (int)xDebug.y + offset + 20 , 20, BLUE);
+    DrawText("X: ", (int)xDebug.x + 5, (int)xDebug.y + offset + 20, 20, BLUE);
+    DrawText(TextFormat("%.2f", centerPoint.y), (int)yDebug.x + 25, (int)yDebug.y + offset + 40, 20, BLUE);
+    DrawText("Y: ", (int)yDebug.x + 5, (int)yDebug.y + offset + 40, 20, BLUE);
 }

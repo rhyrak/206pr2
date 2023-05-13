@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include "../../main.h"
+#include "shadow.hpp"
 #include <vector>
 
 class Grid
@@ -9,12 +10,13 @@ class Grid
 public:
 	int size;
 	Config* config;
-	Texture2D texture;
-	std::vector<Rectangle> arr;
+	std::vector<Shadow> arr;
 	Grid();
 	Grid(Config* config);
+	~Grid();
 	void fillVector();
 	void render(Vector2 coords);
-	Rectangle getRectangle(Vector2 coords);
+	Shadow getShadow(Vector2 coords);
+	Vector2 normalizeVector2(Vector2 coords);
 
 };

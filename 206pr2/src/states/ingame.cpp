@@ -4,7 +4,7 @@
 
 InGame::InGame(Config *config) : State(config)
 {
-    map = new Config{ config->windowWidth * 2, 1472 };
+    map = new Config{ config->windowWidth * 2, config->windowHeight * 2};
 
     /*Create new Player*/
     player1 = Player(
@@ -32,39 +32,25 @@ InGame::InGame(Config *config) : State(config)
     ghost = Ghost();
     /*Create Camera*/
     camera = Camera2D{
-        Vector2{0,0},
-        player1.getCenterPoint(),
-        0.0F, 0.4F
+        Vector2{(float) config->windowWidth / 2 + 12, (float) config->windowHeight / 2 + 12},
+        {(float)map->windowWidth / 2, (float)map->windowHeight / 2 },
+        0.0F, 0.5F
     };
 
-    isCameraLocked = true;  /*enable flag by default*/
+    nightVision = false;  /*disable flag by default*/
     grid = Grid(map);
 }
 
-void InGame::update()
+inline void InGame::update()
 {
     float dt = GetFrameTime();
     player1.update();
     player2.update();
-    if (IsKeyPressed(KEY_V)) isCameraLocked = !isCameraLocked;  /*toggle flag*/
     ghost.update();
-    /*update camera position according to flag*/
-    if (isCameraLocked) 
-    {
-        camera.target.x = player1.getCenterPoint().x - config->windowWidth/2;
-        camera.target.y = player1.getCenterPoint().y - config->windowHeight/2;
-        camera.offset.x = 0;
-        camera.offset.y = 0;
-        
-        player1.xDebug.x = player1.getCenterPoint().x - config->windowWidth / 2 + 30;
-        player1.xDebug.y = player1.getCenterPoint().y - config->windowHeight / 2 + 35;
-        player1.yDebug.x = player1.getCenterPoint().x - config->windowWidth / 2 + 30;
-        player1.yDebug.y = player1.getCenterPoint().y - config->windowHeight / 2 + 35;    
-    }
-
+    if (IsKeyPressed(KEY_V)) nightVision = !nightVision;  /*toggle flag*/
 }
 
-void InGame::render()
+inline void InGame::render()
 {
     BeginMode2D(camera);
 
@@ -79,20 +65,21 @@ void InGame::render()
     player2.render();
     ghost.render();
     /*Shadow Experimental*/
-    for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
-        for (int i = 0; i < grid.config->windowHeight / grid.size; i++) {
-            if (!CheckCollisionCircleRec(player1.getCenterPoint(), 148, grid.getRectangle({(float)i, (float)j})) && !CheckCollisionCircleRec(player2.getCenterPoint(),148, grid.getRectangle({(float)i, (float)j}))) {
-                    grid.render({ (float)j * grid.size, (float)i * grid.size });
+    if (!nightVision)
+    {
+        for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
+            for (int i = 0; i < grid.config->windowHeight / grid.size; i++) {
+                if (!CheckCollisionCircleRec(player1.getCenterPoint(), 148, grid.getShadow({ (float)i, (float)j }).shape) && !CheckCollisionCircleRec(player2.getCenterPoint(), 148, grid.getShadow({ (float)i, (float)j }).shape)) {
+                    grid.render({ (float)i, (float)j });
+                }
             }
         }
     }
 
-    player1.displayDebugInfo();  /*Display coordinates*/
-
     EndMode2D();
-    
-    if (isCameraLocked)
-        DrawCircle(10, 10, 5, RED); /*Indicator for Free-cam mode*/
+
+    player1.displayDebugInfo(20);  /*Display coordinates*/
+    player2.displayDebugInfo(80);  /*Display coordinates*/
 }
 
 /*Accessor*/
