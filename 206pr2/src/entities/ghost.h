@@ -17,6 +17,7 @@ private:
 	void moveRandom();
 public:
 	Ghost();
+	Ghost(Config *config);
 	~Ghost();
 	void update();
 	void render();

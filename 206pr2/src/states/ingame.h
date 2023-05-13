@@ -18,6 +18,7 @@ private:
     Player player2; 
     Ghost ghost;
     Camera2D camera;    /*Camera Object*/
+    float visionRadius;
     bool nightVision;    /*cheat*/
     bool coordinates;    /*cheat*/
     Config* map;

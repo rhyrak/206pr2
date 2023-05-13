@@ -29,7 +29,7 @@ InGame::InGame(Config *config) : State(config)
     );
 
 
-    ghost = Ghost();
+    ghost = Ghost(map);
     /*Create Camera*/
     camera = Camera2D{
         Vector2{(float) config->windowWidth / 2 + 12, (float) config->windowHeight / 2 + 12},
@@ -39,6 +39,7 @@ InGame::InGame(Config *config) : State(config)
 
     nightVision = false;  /*disable flag by default*/
     coordinates = false;  /*disable flag by default*/
+    visionRadius = 148.0;
     grid = Grid(map);
 }
 
@@ -71,13 +72,19 @@ inline void InGame::render()
     {
         for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
             for (int i = 0; i < grid.config->windowHeight / grid.size; i++) {
-                if (!CheckCollisionCircleRec(player1.getCenterPoint(), 148, grid.getShadow({ (float)i, (float)j }).shape)
-                    && !CheckCollisionCircleRec(player2.getCenterPoint(), 148, grid.getShadow({ (float)i, (float)j }).shape))
+                if (!CheckCollisionCircleRec(player1.getCenterPoint(), visionRadius, grid.getShadow({ (float)i, (float)j }).shape)
+                    && !CheckCollisionCircleRec(player2.getCenterPoint(), visionRadius, grid.getShadow({ (float)i, (float)j }).shape))
                 {
                     grid.render({ (float)i, (float)j });
                 }
             }
         }
+    }
+
+    if (coordinates)
+    {
+        DrawCircleLines(player1.getCenterPoint().x, player1.getCenterPoint().y, 148, RED);
+        DrawCircleLines(player2.getCenterPoint().x, player2.getCenterPoint().y, 148, RED);
     }
 
     EndMode2D();
