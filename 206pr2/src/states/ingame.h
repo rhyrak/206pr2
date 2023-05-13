@@ -19,6 +19,7 @@ private:
     Ghost ghost;
     Camera2D camera;    /*Camera Object*/
     bool nightVision;    /*cheat*/
+    bool coordinates;    /*cheat*/
     Config* map;
 public:
     InGame(Config *config); /*Constructor*/

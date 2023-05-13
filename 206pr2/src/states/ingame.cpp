@@ -38,6 +38,7 @@ InGame::InGame(Config *config) : State(config)
     };
 
     nightVision = false;  /*disable flag by default*/
+    coordinates = false;  /*disable flag by default*/
     grid = Grid(map);
 }
 
@@ -47,7 +48,8 @@ inline void InGame::update()
     player1.update();
     player2.update();
     ghost.update();
-    if (IsKeyPressed(KEY_V)) nightVision = !nightVision;  /*toggle flag*/
+    if (IsKeyPressed(KEY_N)) nightVision = !nightVision; /*toggle flag*/
+    if (IsKeyPressed(KEY_C)) coordinates = !coordinates; /*toggle flag*/
 }
 
 inline void InGame::render()
@@ -69,7 +71,9 @@ inline void InGame::render()
     {
         for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
             for (int i = 0; i < grid.config->windowHeight / grid.size; i++) {
-                if (!CheckCollisionCircleRec(player1.getCenterPoint(), 148, grid.getShadow({ (float)i, (float)j }).shape) && !CheckCollisionCircleRec(player2.getCenterPoint(), 148, grid.getShadow({ (float)i, (float)j }).shape)) {
+                if (!CheckCollisionCircleRec(player1.getCenterPoint(), 148, grid.getShadow({ (float)i, (float)j }).shape)
+                    && !CheckCollisionCircleRec(player2.getCenterPoint(), 148, grid.getShadow({ (float)i, (float)j }).shape))
+                {
                     grid.render({ (float)i, (float)j });
                 }
             }
@@ -78,8 +82,11 @@ inline void InGame::render()
 
     EndMode2D();
 
-    player1.displayDebugInfo(20);  /*Display coordinates*/
-    player2.displayDebugInfo(80);  /*Display coordinates*/
+    if(coordinates)
+    {
+        player1.displayDebugInfo(20);  /*Display coordinates*/
+        player2.displayDebugInfo(80);  /*Display coordinates*/
+    } 
 }
 
 /*Accessor*/
