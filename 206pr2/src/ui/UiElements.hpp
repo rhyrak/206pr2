@@ -1,0 +1,25 @@
+#include <raylib.h>
+
+
+/// A rectangle defining the position of the element in the resource file.
+/// Pass into getTexture function to get scaled texture of the element.
+typedef Rectangle UiElement;
+
+#define NOT_FOUND			UiElement{240,240,16,16}
+
+#define IBTN_EXIT			UiElement{192,64,16,16}
+#define IBTN_WINDOWED		UiElement{208,64,16,16}
+#define IBTN_FULLSCREEN		UiElement{224,64,16,16}
+
+#define BTN_BLUE_ACTIVE		UiElement{0,0,48,16}
+#define BTN_BLUE_HOVER		UiElement{0,16,48,16}
+#define BTN_BLUE_CLICKED	UiElement{0,48,48,16}
+
+#define BTN_ORANGE_ACTIVE	UiElement{48,0,48,16}
+#define BTN_GREEN_ACTIVE	UiElement{96,0,48,16}
+#define BTN_YELLOW_ACTIVE	UiElement{144,0,48,16}
+#define BTN_WHITE_ACTIVE	UiElement{192,0,48,16}
+
+/// WIP
+/// @returns scaled texture of the given element in ui.png
+Texture2D getTexture(UiElement uiElem,float scale);

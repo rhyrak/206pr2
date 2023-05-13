@@ -12,7 +12,7 @@ inline void cToggleFullscreen(Config*); /*Inline function, toggles Fullscreen mo
 /*main function*/
 int main(void)
 {
-    Config* config = new Config{ 1896,1056 };    /*Define new Config Object*/
+    Config* config = new Config{ 1896,1056,false };    /*Define new Config Object*/
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
 
@@ -23,7 +23,8 @@ int main(void)
     State *currentState = new Menu(config); /*Menu by default*/
 
     /*Game loop*/
-    while (!WindowShouldClose())
+    bool exitFlag = false;
+    while (!exitFlag && !WindowShouldClose())
     {
         /*Fullscreen shortcut*/
         if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
@@ -51,6 +52,12 @@ int main(void)
                 delete currentState;
                 currentState = new InGame(config);
                 break;
+            case 100:
+                cToggleFullscreen(config);
+                break;
+            case 69:
+                exitFlag = true;
+                break;
             default:
                 break;
             }
@@ -66,6 +73,7 @@ int main(void)
 
 /*Enter and Exit Fullscreen mode*/
 inline void cToggleFullscreen(Config *config) {
+    config->isFullscreen = !config->isFullscreen;
     if (IsWindowFullscreen())
     {
         config->windowHeight = 720;

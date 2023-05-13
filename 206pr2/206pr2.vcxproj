@@ -142,6 +142,8 @@
     <ClCompile Include="src\states\state.cpp" />
     <ClCompile Include="src\textures\grid.cpp" />
     <ClCompile Include="src\textures\shadow.cpp" />
+    <ClCompile Include="src\ui\IconButton.cpp" />
+    <ClCompile Include="src\ui\UiElements.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
@@ -153,6 +155,8 @@
     <ClInclude Include="src\states\state.h" />
     <ClInclude Include="src\textures\grid.hpp" />
     <ClInclude Include="src\textures\shadow.hpp" />
+    <ClInclude Include="src\ui\IconButton.hpp" />
+    <ClInclude Include="src\ui\UiElements.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
