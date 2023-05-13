@@ -38,27 +38,27 @@ void Player::update()
     float dt = GetFrameTime();
     if (IsKeyDown(leftKey))
     {
-        if(centerPoint.x > texture.width/2)
+        if(centerPoint.x > texture.width / 2)
         {
             centerPoint.x -= (400 * dt);
         }
         else
-            centerPoint.x = texture.width/2;
+            centerPoint.x = texture.width / 2;
     }      
 
     if (IsKeyDown(rightKey))
     {
-        if(centerPoint.x < map->windowWidth - texture.width/2)
+        if(centerPoint.x < map->windowWidth - texture.width / 2)
         {
             centerPoint.x += (400 * dt);
         }
         else
-            centerPoint.x = map->windowWidth - texture.width/2;
+            centerPoint.x = map->windowWidth - texture.width / 2;
     }   
 
     if (IsKeyDown(upKey))
     {
-        if(centerPoint.y > texture.height/2)
+        if(centerPoint.y > texture.height / 2)
         {
             centerPoint.y -= (400 * dt);
         }

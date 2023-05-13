@@ -25,42 +25,42 @@ void Ghost::update() {
     randomRange -= dt;
     if (moveLeft)
     {
-        if (centerPoint.x > 0.01)
+        if (centerPoint.x > texture.height / 2)
         {
             centerPoint.x -= (100 * dt);
         }
         else
-            centerPoint.x = 0.01;
+            centerPoint.x = texture.height / 2;
     }
 
     if (moveRight)
     {
-        if (centerPoint.x < map->windowWidth - 0.11)
+        if (centerPoint.x < map->windowWidth - texture.height / 2)
         {
             centerPoint.x += (100 * dt);
         }
         else
-            centerPoint.x = map->windowWidth - 0.1;
+            centerPoint.x = map->windowWidth - texture.height / 2;
     }
 
     if (moveUp)
     {
-        if (centerPoint.y > 0.01)
+        if (centerPoint.y > texture.height / 2)
         {
             centerPoint.y -= (100 * dt);
         }
         else
-            centerPoint.y = 0.01;
+            centerPoint.y = texture.height / 2;
     }
 
     if (moveDown)
     {
-        if (centerPoint.y < map->windowHeight - 0.11)
+        if (centerPoint.y < map->windowHeight - texture.height / 2)
         {
             centerPoint.y += (100 * dt);
         }
         else
-            centerPoint.y = map->windowHeight - 0.1;
+            centerPoint.y = map->windowHeight - texture.height / 2;
     }
 }
 
