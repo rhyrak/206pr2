@@ -19,10 +19,12 @@ private:
     Camera2D camera;    /*Camera Object*/
     float visionRadius;
     bool nightVision;    /*cheat*/
-    bool coordinates;    /*cheat*/
+    bool displayCoordinates;    /*cheat*/
+    bool displayHitBoxes;   /*cheat*/
     Config* map;
 public:
     InGame(Config *config); /*Constructor*/
+    ~InGame();  /*Destructor*/
     inline void update() override; /*Overridden method*/
     inline void render() override; /*Overridden method*/
     int signal() override; /*Overridden method*/

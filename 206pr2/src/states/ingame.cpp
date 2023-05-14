@@ -2,8 +2,6 @@
 #include <raymath.h>
 #include "ingame.hpp"
 #include <iostream>
-#include <stddef.h>
-#include <stdint.h>
 
 InGame::InGame(Config *config) : State(config)
 {
@@ -31,7 +29,7 @@ InGame::InGame(Config *config) : State(config)
         KeyboardKey::KEY_RIGHT
     );
 
-    ghost = Ghost(map);
+    ghost = Ghost("Ghost1", map);
     /*Create Camera*/
     camera = Camera2D{
         Vector2{(float) config->windowWidth / 2, (float) config->windowHeight / 2},
@@ -40,8 +38,9 @@ InGame::InGame(Config *config) : State(config)
     };
 
     nightVision = false;  /*disable flag by default*/
-    coordinates = false;  /*disable flag by default*/
-    visionRadius = 148.0;
+    displayCoordinates = false;  /*disable flag by default*/
+    displayHitBoxes = false;    /*disable flag by default*/
+    visionRadius = 30.0;
     /**/
 
     // get the locations of spots in shader
@@ -59,6 +58,10 @@ InGame::InGame(Config *config) : State(config)
     /**/
 }
 
+InGame::~InGame()
+{
+}
+
 inline void InGame::update()
 {
     float dt = GetFrameTime();
@@ -71,7 +74,8 @@ inline void InGame::update()
     player2.update();
     ghost.update();
     if (IsKeyPressed(KEY_N)) nightVision = !nightVision; /*toggle flag*/
-    if (IsKeyPressed(KEY_C)) coordinates = !coordinates; /*toggle flag*/
+    if (IsKeyPressed(KEY_C)) displayCoordinates = !displayCoordinates; /*toggle flag*/
+    if (IsKeyPressed(KEY_H)) displayHitBoxes = !displayHitBoxes; /*toggle flag*/
 
     /**/
         
@@ -102,11 +106,15 @@ inline void InGame::render()
     player2.render();
     ghost.render();
 
-    if (coordinates)
+    if (displayHitBoxes)
     {
-        DrawCircleLines(player1.getCenterPoint().x, player1.getCenterPoint().y, 148, RED);
-        DrawCircleLines(player2.getCenterPoint().x, player2.getCenterPoint().y, 148, RED);
+        DrawCircleLines(player1.getCenterPoint().x, player1.getCenterPoint().y, visionRadius*2, RED);
+        DrawCircleLines(player2.getCenterPoint().x, player2.getCenterPoint().y, visionRadius*2, RED);
+        DrawRectangleLinesEx(player1.getHitbox(), 2, RED);
+        DrawRectangleLinesEx(player2.getHitbox(), 2, RED);
     }
+
+
 
     EndMode2D();
 
@@ -123,11 +131,11 @@ inline void InGame::render()
         /**/
     }
 
-
-    if(coordinates)
+    if(displayCoordinates)
     {
-        player1.displayDebugInfo(20);  /*Display coordinates*/
-        player2.displayDebugInfo(80);  /*Display coordinates*/
+        player1.displayDebugInfo(0);  /*Display coordinates*/
+        player2.displayDebugInfo(60);  /*Display coordinates*/
+        ghost.displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
     } 
 }
 

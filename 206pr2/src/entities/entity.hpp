@@ -17,9 +17,8 @@ public:
     Vector2 getCenterPoint();
     /*Temp for debug purposes*/
     std::string idDebug;
-    Vector2 xDebug = { 0 , 0 };
-    Vector2 yDebug = { 0 , 0 };
-    void displayDebugInfo(int offset);
+    Vector2 DebugXY = { 0 , 0 };
+    void displayDebugInfo(int offset, int = 1, int = 20);
     /*^^^^^^^^^^^^^^^^^^^^^^^*/
 };
 

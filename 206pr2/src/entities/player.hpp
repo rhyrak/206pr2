@@ -25,7 +25,7 @@ public:
     int getDownKey();   /*Accesor*/
     int getLeftKey();   /*Accesor*/
     int getRightKey();  /*Accesor*/
-    Rectangle getRect();
+    Rectangle getHitbox();
 };
 
 #endif

@@ -75,6 +75,8 @@ void Player::update()
         else
             centerPoint.y = map->windowHeight - texture.height / 2;
     }
+
+    hitbox = { centerPoint.x - texture.width / 2, centerPoint.y - texture.height / 2, (float)texture.width, (float)texture.height };
           
 }
 
@@ -98,7 +100,7 @@ int Player::getRightKey()
     return this->rightKey;
 }
 
-Rectangle Player::getRect() 
+Rectangle Player::getHitbox() 
 {
-    return Rectangle{ centerPoint.x, centerPoint.y, (float)texture.width, (float)texture.height };
+    return hitbox;
 }

@@ -5,7 +5,7 @@ out vec4 finalColor;
 
 #define     MAX_SPOTS			2
 #define		RADIUS				120
-#define		INNER				60
+#define		INNER				30
 
 // Inputs
 // array of spotlight positions

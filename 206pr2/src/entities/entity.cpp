@@ -10,11 +10,11 @@ Vector2 Entity::getCenterPoint() {
 }
 
 /*For Debug purposes, display coordinates of entity*/
-void Entity::displayDebugInfo(int offset)
+void Entity::displayDebugInfo(int offset, int factor, int fontSize)
 {
-    DrawText(&idDebug[0], (int)xDebug.x + 5, (int)xDebug.y + offset, 20, BLUE);
-    DrawText(TextFormat("%.2f", centerPoint.x), (int)xDebug.x + 25, (int)xDebug.y + offset + 20 , 20, BLUE);
-    DrawText("X: ", (int)xDebug.x + 5, (int)xDebug.y + offset + 20, 20, BLUE);
-    DrawText(TextFormat("%.2f", centerPoint.y), (int)yDebug.x + 25, (int)yDebug.y + offset + 40, 20, BLUE);
-    DrawText("Y: ", (int)yDebug.x + 5, (int)yDebug.y + offset + 40, 20, BLUE);
+    DrawText(&idDebug[0], (int)(DebugXY.x+5)/factor, (int)(DebugXY.y+offset)/factor, fontSize, RAYWHITE);
+    DrawText(TextFormat("%.2f", centerPoint.x), (int)(DebugXY.x + 25)/factor, (int)(DebugXY.y+offset+20)/factor , fontSize, RAYWHITE);
+    DrawText("X: ", (int)(DebugXY.x+5)/factor, (int)(DebugXY.y+offset+20)/factor, fontSize, RAYWHITE);
+    DrawText(TextFormat("%.2f", centerPoint.y), (int)(DebugXY.x+25)/factor, (int)(DebugXY.y+offset+40)/factor, fontSize, RAYWHITE);
+    DrawText("Y: ", (int)(DebugXY.x+5)/factor, (int)(DebugXY.y+offset+40)/factor, fontSize, RAYWHITE);
 }

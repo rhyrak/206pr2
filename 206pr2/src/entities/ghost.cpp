@@ -7,13 +7,16 @@ Ghost::Ghost()
 {
 }
 
-Ghost::Ghost(Config *config) {
+Ghost::Ghost(std::string idDebug, Config *config) {
+    this->idDebug = idDebug;
     this->map = config;
     centerPoint = { (30 + (rand() % map->windowWidth)) / 1.0F, (30 + (rand() % map->windowHeight)) / 1.0F };
     texture = LoadTexture("res/ghost.png");
 }
 
-Ghost::~Ghost() {}
+Ghost::~Ghost()
+{
+}
 
 void Ghost::update() {
 
@@ -62,6 +65,8 @@ void Ghost::update() {
         else
             centerPoint.y = map->windowHeight - texture.height / 2;
     }
+
+    DebugXY = {centerPoint.x, centerPoint.y-texture.height/2-10};
 }
 
 void Ghost::render() {

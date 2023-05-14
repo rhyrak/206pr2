@@ -17,7 +17,7 @@ private:
 	void moveRandom();
 public:
 	Ghost();
-	Ghost(Config *config);
+	Ghost(std::string idDebug, Config *config);
 	~Ghost();
 	void update();
 	void render();
