@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include "ingame.h"
+#include "ingame.hpp"
 #include <iostream>
 
 InGame::InGame(Config *config) : State(config)
@@ -97,7 +97,7 @@ inline void InGame::render()
 }
 
 /*Accessor*/
-char InGame::signal()
+int InGame::signal()
 {
     return signalF;
 }

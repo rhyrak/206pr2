@@ -1,5 +1,5 @@
-#include "state.h"
-#include "../../main.h"
+#include "state.hpp"
+#include "../../main.hpp"
 
 State::State(Config *config)
 {

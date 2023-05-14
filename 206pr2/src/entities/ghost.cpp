@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include "ghost.h"
+#include "ghost.hpp"
 #include <cstdlib>
 #define ROUND(a) ((int)((a) + 0.5f))
 

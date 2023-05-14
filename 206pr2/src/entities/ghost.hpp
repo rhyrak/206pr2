@@ -3,7 +3,7 @@
 #define GHOST_H
 
 #include <vector>
-#include "entity.h"
+#include "entity.hpp"
 
 class Ghost : public Entity {
 private:

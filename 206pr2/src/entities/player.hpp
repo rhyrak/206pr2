@@ -3,8 +3,8 @@
 #define PLAYER_H
 
 #include <vector>
-#include "entity.h"
-#include "../../main.h"
+#include "entity.hpp"
+#include "../../main.hpp"
 
 /*Player extends Entity*/
 class Player : public Entity

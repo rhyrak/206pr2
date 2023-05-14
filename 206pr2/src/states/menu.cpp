@@ -1,4 +1,4 @@
-#include "menu.h"
+#include "menu.hpp"
 #include "../ui/IconButton.hpp"
 #include <raylib.h>
 
@@ -12,6 +12,7 @@ Menu::Menu(Config *config) : State(config)
 
 void Menu::update()
 {
+	signalF = -1;
 	if(IsKeyPressed(KEY_P)) signalF = 2;
 }
 
@@ -20,7 +21,6 @@ void Menu::render()
 	int width = config->windowWidth, height = config->windowHeight;
 	DrawRectangle(0, 0, width, height, RAYWHITE);
 	
-	signalF = -1;
 	if (iButtons.at(0).render()) signalF = 69;
 	if (config->isFullscreen)
 	{
@@ -34,7 +34,7 @@ void Menu::render()
 	DrawText("Press P to play", width/2 - 100, height/3, 32, ORANGE);
 }
 
-char Menu::signal()
+int Menu::signal()
 {
 	return signalF;
 }

@@ -1,9 +1,9 @@
 #include <raylib.h>
-#include "src/states/state.h"
-#include "src/states/ingame.h"
-#include "src/states/menu.h"
+#include "src/states/state.hpp"
+#include "src/states/ingame.hpp"
+#include "src/states/menu.hpp"
 #include "src/textures/grid.hpp"
-#include "main.h"
+#include "main.hpp"
 
 #include <iostream>
 

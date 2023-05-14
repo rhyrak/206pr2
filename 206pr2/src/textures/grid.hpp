@@ -1,7 +1,7 @@
 #pragma once
 
 #include "raylib.h"
-#include "../../main.h"
+#include "../../main.hpp"
 #include "shadow.hpp"
 #include <vector>
 

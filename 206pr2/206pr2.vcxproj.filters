@@ -42,33 +42,45 @@
     <ClCompile Include="src\textures\shadow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\IconButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\UiElements.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\entities\entity.h">
+    <ClInclude Include="src\entities\entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entities\player.h">
+    <ClInclude Include="src\entities\player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\states\ingame.h">
+    <ClInclude Include="src\states\ingame.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\states\menu.h">
+    <ClInclude Include="src\states\menu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\states\state.h">
+    <ClInclude Include="src\states\state.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="main.h">
+    <ClInclude Include="main.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\textures\grid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entities\ghost.h">
+    <ClInclude Include="src\entities\ghost.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\textures\shadow.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\IconButton.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\UiElements.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,12 +1,12 @@
 #ifndef INGAME_H
 #define INGAME_H
 
-#include "../entities/player.h"
-#include "../entities/ghost.h"
+#include "../entities/player.hpp"
+#include "../entities/ghost.hpp"
 #include "../textures/grid.hpp"
 #include "cmath"
-#include "state.h"
-#include "../../main.h"
+#include "state.hpp"
+#include "../../main.hpp"
 #include "raylib.h"
 
 /*InGame extends State*/
@@ -26,7 +26,7 @@ public:
     InGame(Config *config); /*Constructor*/
     inline void update() override; /*Overridden method*/
     inline void render() override; /*Overridden method*/
-    char signal() override; /*Overridden method*/
+    int signal() override; /*Overridden method*/
     Player getPlayer(); /*Accessor*/
 };
 

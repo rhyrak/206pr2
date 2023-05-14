@@ -146,13 +146,13 @@
     <ClCompile Include="src\ui\UiElements.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h" />
-    <ClInclude Include="src\entities\entity.h" />
-    <ClInclude Include="src\entities\ghost.h" />
-    <ClInclude Include="src\entities\player.h" />
-    <ClInclude Include="src\states\ingame.h" />
-    <ClInclude Include="src\states\menu.h" />
-    <ClInclude Include="src\states\state.h" />
+    <ClInclude Include="main.hpp" />
+    <ClInclude Include="src\entities\entity.hpp" />
+    <ClInclude Include="src\entities\ghost.hpp" />
+    <ClInclude Include="src\entities\player.hpp" />
+    <ClInclude Include="src\states\ingame.hpp" />
+    <ClInclude Include="src\states\menu.hpp" />
+    <ClInclude Include="src\states\state.hpp" />
     <ClInclude Include="src\textures\grid.hpp" />
     <ClInclude Include="src\textures\shadow.hpp" />
     <ClInclude Include="src\ui\IconButton.hpp" />

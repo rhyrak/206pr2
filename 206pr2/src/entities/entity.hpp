@@ -4,7 +4,7 @@
 
 #include <raylib.h>
 #include <string>
-#include "../../main.h"
+#include "../../main.hpp"
 
 class Entity
 {
