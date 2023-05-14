@@ -1,10 +1,14 @@
 #include <raylib.h>
+#include <raymath.h>
 #include "ingame.hpp"
 #include <iostream>
+#include <stddef.h>
+#include <stdint.h>
 
 InGame::InGame(Config *config) : State(config)
 {
     map = new Config{ config->windowWidth * 2, config->windowHeight * 2};
+    monitor = GetCurrentMonitor();
 
     /*Create new Player*/
     player1 = Player(
@@ -17,7 +21,6 @@ InGame::InGame(Config *config) : State(config)
         KeyboardKey::KEY_D
     );
 
-
     player2 = Player(
         map,
         "Player 2",
@@ -28,11 +31,10 @@ InGame::InGame(Config *config) : State(config)
         KeyboardKey::KEY_RIGHT
     );
 
-
     ghost = Ghost(map);
     /*Create Camera*/
     camera = Camera2D{
-        Vector2{(float) config->windowWidth / 2 + 12, (float) config->windowHeight / 2 + 12},
+        Vector2{(float) config->windowWidth / 2, (float) config->windowHeight / 2},
         {(float)map->windowWidth / 2, (float)map->windowHeight / 2 },
         0.0F, 0.5F
     };
@@ -40,7 +42,21 @@ InGame::InGame(Config *config) : State(config)
     nightVision = false;  /*disable flag by default*/
     coordinates = false;  /*disable flag by default*/
     visionRadius = 148.0;
-    grid = Grid(map);
+    /**/
+
+    // get the locations of spots in shader
+    char spotName[32] = "spots[x]\0";
+    for (int i = 0; i < MAXSPOT; i++) {
+        spotName[6] = '0' + i;
+        spotLoc[i] = GetShaderLocation(spotShader, spotName);
+    }
+
+    spotPos[0].x = player1.getCenterPoint().x/ (map->windowWidth / config->windowWidth);
+    spotPos[0].y = player1.getCenterPoint().y/ (map->windowHeight / config->windowHeight);
+    spotPos[1].x = player2.getCenterPoint().x/2;
+    spotPos[1].y = player2.getCenterPoint().y/2;
+
+    /**/
 }
 
 inline void InGame::update()
@@ -51,6 +67,19 @@ inline void InGame::update()
     ghost.update();
     if (IsKeyPressed(KEY_N)) nightVision = !nightVision; /*toggle flag*/
     if (IsKeyPressed(KEY_C)) coordinates = !coordinates; /*toggle flag*/
+
+    /**/
+        
+        monitor = GetCurrentMonitor();
+        spotPos[0].x = player1.getCenterPoint().x / (map->windowWidth / config->windowWidth);
+        spotPos[0].y = config->windowHeight - player1.getCenterPoint().y / (map->windowHeight / config->windowHeight);
+        spotPos[1].x = player2.getCenterPoint().x / (map->windowWidth / config->windowWidth);
+        spotPos[1].y = config->windowHeight - player2.getCenterPoint().y / (map->windowHeight / config->windowHeight);
+    
+    SetShaderValue(spotShader, spotLoc[0], &spotPos[0].x, ShaderUniformDataType::SHADER_UNIFORM_VEC2);
+    SetShaderValue(spotShader, spotLoc[1], &spotPos[1].x, ShaderUniformDataType::SHADER_UNIFORM_VEC2);
+    
+    /**/
 }
 
 inline void InGame::render()
@@ -67,19 +96,6 @@ inline void InGame::render()
     player1.render();    /*Draw player model*/
     player2.render();
     ghost.render();
-    /*Shadow Experimental*/
-    if (!nightVision)
-    {
-        for (int j = 0; j < grid.config->windowWidth / grid.size; j++) {
-            for (int i = 0; i < grid.config->windowHeight / grid.size; i++) {
-                if (!CheckCollisionCircleRec(player1.getCenterPoint(), visionRadius, grid.getShadow({ (float)i, (float)j }).shape)
-                    && !CheckCollisionCircleRec(player2.getCenterPoint(), visionRadius, grid.getShadow({ (float)i, (float)j }).shape))
-                {
-                    grid.render({ (float)i, (float)j });
-                }
-            }
-        }
-    }
 
     if (coordinates)
     {
@@ -88,6 +104,20 @@ inline void InGame::render()
     }
 
     EndMode2D();
+
+    if (!nightVision)
+    {
+        /*Shadow Experimental*/
+        BeginShaderMode(spotShader);
+        // instead of a blank rectangle you could render here
+        // a render texture of the full screen used to do screen
+        // scaling (slight adjustment to shader would be required
+        // to actually pay attention to the colour!)
+        DrawRectangle(0, 0, config->windowWidth, config->windowHeight, WHITE);
+        EndShaderMode();
+        /**/
+    }
+
 
     if(coordinates)
     {

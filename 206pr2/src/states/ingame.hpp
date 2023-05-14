@@ -1,9 +1,9 @@
 #ifndef INGAME_H
 #define INGAME_H
+#define MAXSPOT 2
 
 #include "../entities/player.hpp"
 #include "../entities/ghost.hpp"
-#include "../textures/grid.hpp"
 #include "cmath"
 #include "state.hpp"
 #include "../../main.hpp"
@@ -13,7 +13,6 @@
 class InGame : public State
 {
 private:
-    Grid grid;
     Player player1;  /*Player Object*/
     Player player2; 
     Ghost ghost;
@@ -28,6 +27,16 @@ public:
     inline void render() override; /*Overridden method*/
     int signal() override; /*Overridden method*/
     Player getPlayer(); /*Accessor*/
+
+    int monitor;
+    unsigned int spotLoc[MAXSPOT];
+    Vector2 spotPos[MAXSPOT];
+    Vector2 spotVel[MAXSPOT];
+
+    // use default vert shader
+    Shader spotShader = LoadShader(0, "res/shaders/spotlight.fs");
+
+
 };
 
 #endif

@@ -140,8 +140,6 @@
     <ClCompile Include="src\states\ingame.cpp" />
     <ClCompile Include="src\states\menu.cpp" />
     <ClCompile Include="src\states\state.cpp" />
-    <ClCompile Include="src\textures\grid.cpp" />
-    <ClCompile Include="src\textures\shadow.cpp" />
     <ClCompile Include="src\ui\IconButton.cpp" />
     <ClCompile Include="src\ui\UiElements.cpp" />
   </ItemGroup>
@@ -153,8 +151,6 @@
     <ClInclude Include="src\states\ingame.hpp" />
     <ClInclude Include="src\states\menu.hpp" />
     <ClInclude Include="src\states\state.hpp" />
-    <ClInclude Include="src\textures\grid.hpp" />
-    <ClInclude Include="src\textures\shadow.hpp" />
     <ClInclude Include="src\ui\IconButton.hpp" />
     <ClInclude Include="src\ui\UiElements.hpp" />
   </ItemGroup>

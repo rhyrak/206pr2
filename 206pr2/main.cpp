@@ -2,7 +2,6 @@
 #include "src/states/state.hpp"
 #include "src/states/ingame.hpp"
 #include "src/states/menu.hpp"
-#include "src/textures/grid.hpp"
 #include "main.hpp"
 
 #include <iostream>
@@ -72,12 +71,13 @@ int main(void)
 }
 
 /*Enter and Exit Fullscreen mode*/
-inline void cToggleFullscreen(Config *config) {
+inline void cToggleFullscreen(Config *config) 
+{
     config->isFullscreen = !config->isFullscreen;
     if (IsWindowFullscreen())
     {
-        config->windowHeight = 720;
-        config->windowWidth = 1280;
+        config->windowHeight = 1056;
+        config->windowWidth = 1896;
         ToggleFullscreen();
         SetWindowSize(config->windowWidth, config->windowHeight);
     }
