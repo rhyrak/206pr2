@@ -5,6 +5,7 @@ typedef struct {
 	int windowWidth;
 	int windowHeight;
 	bool isFullscreen;
+	bool isUpdated;
 } Config;
 
 #endif

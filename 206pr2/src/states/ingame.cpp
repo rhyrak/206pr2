@@ -62,6 +62,11 @@ InGame::InGame(Config *config) : State(config)
 inline void InGame::update()
 {
     float dt = GetFrameTime();
+    if (config->isUpdated) {
+        map->windowWidth = config->windowWidth * 2;
+        map->windowHeight = config->windowHeight * 2;
+    }
+
     player1.update();
     player2.update();
     ghost.update();

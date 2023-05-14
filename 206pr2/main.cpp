@@ -61,6 +61,7 @@ int main(void)
                 break;
             }
         }
+        config->isUpdated = false;
     }
     /*free up explicit-heap dynamic variable*/
     delete currentState;
@@ -74,6 +75,7 @@ int main(void)
 inline void cToggleFullscreen(Config *config) 
 {
     config->isFullscreen = !config->isFullscreen;
+    config->isUpdated = true;
     if (IsWindowFullscreen())
     {
         config->windowHeight = 1056;
