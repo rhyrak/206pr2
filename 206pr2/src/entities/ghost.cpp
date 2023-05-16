@@ -10,9 +10,9 @@ Ghost::Ghost()
 Ghost::Ghost(std::string idDebug, Config *config) {
     this->idDebug = idDebug;
     this->map = config;
-    isCaught = false;
-    centerPoint = { (30 + (rand() % map->windowWidth)) / 1.0F, (30 + (rand() % map->windowHeight)) / 1.0F };
-    texture = LoadTexture("res/ghost.png");
+    this->isCaught = false;
+    this->centerPoint = { (30 + (rand() % map->windowWidth)) / 1.0F, (30 + (rand() % map->windowHeight)) / 1.0F };
+    this->texture = getTexture("res/ghost.png");
 }
 
 Ghost::~Ghost()
@@ -125,5 +125,19 @@ Rectangle Ghost::getHitbox()
 void Ghost::reloadTexture()
 {
     UnloadTexture(texture);
-    texture = LoadTexture("res/dead_ghost.png");
+    texture = getTexture("res/dead_ghost.png");
+}
+
+Texture2D Ghost::getTexture(const char* path)
+{
+    try {
+        texture = LoadTexture(path);
+        if (texture.id <= 0) throw 0;
+    }
+    catch (...) {
+        missingTexture = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);
+        texture = LoadTextureFromImage(missingTexture);
+        UnloadImage(missingTexture);
+        return texture;
+    }
 }

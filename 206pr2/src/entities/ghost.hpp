@@ -24,6 +24,7 @@ public:
 	Rectangle getHitbox();
 	bool isCaught;
 	void reloadTexture();
+	Texture2D getTexture(const char* path) override;
 	
 };
 #endif

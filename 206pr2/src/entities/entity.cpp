@@ -9,6 +9,11 @@ Vector2 Entity::getCenterPoint() {
     return Vector2{ centerPoint.x,centerPoint.y };
 }
 
+Texture2D Entity::getTexture(const char* path)
+{
+    return LoadTextureFromImage(GenImageChecked(64, 64, 32, 32, PURPLE, BLACK));
+}
+
 /*For Debug purposes, display coordinates of entity*/
 void Entity::displayDebugInfo(int offset, int factor, int fontSize)
 {

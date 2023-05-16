@@ -32,7 +32,7 @@ int main(void){
         if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
         
         currentState->update();
-        std::cout << player1score;
+        //std::cout << player1score;
         BeginDrawing();
 
         currentState->render();

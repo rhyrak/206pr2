@@ -11,6 +11,7 @@ class Player : public Entity
 {
 private:
     Texture2D texture;
+    Image missingTexture;
     int upKey = KeyboardKey::KEY_NULL;
     int downKey = KeyboardKey::KEY_NULL;
     int leftKey = KeyboardKey::KEY_NULL;
@@ -26,6 +27,7 @@ public:
     int getLeftKey();   /*Accesor*/
     int getRightKey();  /*Accesor*/
     Rectangle getHitbox();
+    Texture2D getTexture(const char* path) override;
 };
 
 #endif

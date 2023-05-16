@@ -15,6 +15,9 @@ protected:
     Config* map;
 public:
     Vector2 getCenterPoint();
+    virtual Texture2D getTexture(const char* path);
+    Texture2D texture;
+    Image missingTexture;
     /*Temp for debug purposes*/
     std::string idDebug;
     Vector2 DebugXY = { 0 , 0 };
