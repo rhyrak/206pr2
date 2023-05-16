@@ -77,6 +77,20 @@ inline void InGame::update()
     if (IsKeyPressed(KEY_C)) displayCoordinates = !displayCoordinates; /*toggle flag*/
     if (IsKeyPressed(KEY_H)) displayHitBoxes = !displayHitBoxes; /*toggle flag*/
 
+    if (!ghost.isCaught) {
+        if (CheckCollisionRecs(ghost.getHitbox(), player1.getHitbox()))
+        {
+            ghost.isCaught = true;
+            ghost.reloadTexture();
+        }
+        if (CheckCollisionRecs(ghost.getHitbox(), player2.getHitbox()))
+        {
+            ghost.isCaught = true;
+            ghost.reloadTexture();
+        }
+    }
+
+
     /**/
         
         monitor = GetCurrentMonitor();

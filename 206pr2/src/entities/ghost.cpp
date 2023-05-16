@@ -10,6 +10,7 @@ Ghost::Ghost()
 Ghost::Ghost(std::string idDebug, Config *config) {
     this->idDebug = idDebug;
     this->map = config;
+    isCaught = false;
     centerPoint = { (30 + (rand() % map->windowWidth)) / 1.0F, (30 + (rand() % map->windowHeight)) / 1.0F };
     texture = LoadTexture("res/ghost.png");
 }
@@ -20,52 +21,55 @@ Ghost::~Ghost()
 
 void Ghost::update() {
 
-    if ((moveUp == false && moveDown == false && moveRight == false && moveLeft == false) || randomRange <= 0.0
-        || (centerPoint.x <= texture.width/2 || centerPoint.x >= map->windowWidth - texture.width/2 || centerPoint.y <= texture.height/2 || centerPoint.y >= map->windowHeight - texture.height/2))
-        moveRandom();
-
-    float dt = GetFrameTime();
-    randomRange -= dt;
-    if (moveLeft)
+    if(!isCaught)
     {
-        if (centerPoint.x > texture.height / 2)
-        {
-            centerPoint.x -= (100 * dt);
-        }
-        else
-            centerPoint.x = texture.height / 2;
-    }
+        if ((moveUp == false && moveDown == false && moveRight == false && moveLeft == false) || randomRange <= 0.0
+            || (centerPoint.x <= texture.width / 2 || centerPoint.x >= map->windowWidth - texture.width / 2 || centerPoint.y <= texture.height / 2 || centerPoint.y >= map->windowHeight - texture.height / 2))
+            moveRandom();
 
-    if (moveRight)
-    {
-        if (centerPoint.x < map->windowWidth - texture.height / 2)
+        float dt = GetFrameTime();
+        randomRange -= dt;
+        if (moveLeft)
         {
-            centerPoint.x += (100 * dt);
+            if (centerPoint.x > texture.height / 2)
+            {
+                centerPoint.x -= (100 * dt);
+            }
+            else
+                centerPoint.x = texture.height / 2;
         }
-        else
-            centerPoint.x = map->windowWidth - texture.height / 2;
-    }
 
-    if (moveUp)
-    {
-        if (centerPoint.y > texture.height / 2)
+        if (moveRight)
         {
-            centerPoint.y -= (100 * dt);
+            if (centerPoint.x < map->windowWidth - texture.height / 2)
+            {
+                centerPoint.x += (100 * dt);
+            }
+            else
+                centerPoint.x = map->windowWidth - texture.height / 2;
         }
-        else
-            centerPoint.y = texture.height / 2;
-    }
 
-    if (moveDown)
-    {
-        if (centerPoint.y < map->windowHeight - texture.height / 2)
+        if (moveUp)
         {
-            centerPoint.y += (100 * dt);
+            if (centerPoint.y > texture.height / 2)
+            {
+                centerPoint.y -= (100 * dt);
+            }
+            else
+                centerPoint.y = texture.height / 2;
         }
-        else
-            centerPoint.y = map->windowHeight - texture.height / 2;
-    }
 
+        if (moveDown)
+        {
+            if (centerPoint.y < map->windowHeight - texture.height / 2)
+            {
+                centerPoint.y += (100 * dt);
+            }
+            else
+                centerPoint.y = map->windowHeight - texture.height / 2;
+        }
+    }
+    hitbox = { centerPoint.x - texture.width / 2, centerPoint.y - texture.height / 2, (float)texture.width, (float)texture.height };
     DebugXY = {centerPoint.x, centerPoint.y-texture.height/2-10};
 }
 
@@ -111,4 +115,15 @@ void Ghost::moveRandom() {
         moveDown = true;
         moveLeft = true;
     }
+}
+
+Rectangle Ghost::getHitbox()
+{
+    return hitbox;
+}
+
+void Ghost::reloadTexture()
+{
+    UnloadTexture(texture);
+    texture = LoadTexture("res/dead_ghost.png");
 }

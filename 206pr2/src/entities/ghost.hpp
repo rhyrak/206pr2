@@ -21,5 +21,9 @@ public:
 	~Ghost();
 	void update();
 	void render();
+	Rectangle getHitbox();
+	bool isCaught;
+	void reloadTexture();
+	
 };
 #endif
