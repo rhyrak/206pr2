@@ -7,11 +7,12 @@
 class map {
 private:
 	std::vector<Image> floor;
+    int camOffsetX = 0;
+    int camOffsetY = 0;
 
 public:
     void render();
-    void AddImage(Image image);
-    Image GetImage(int index);
+    
 };
 
 std::vector<std::vector<std::vector<int>>> arr = {

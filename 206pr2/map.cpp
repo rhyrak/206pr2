@@ -4,13 +4,7 @@
 #include "../../main.hpp"
 
 Image image = LoadImage("map.png");
-void map::AddImage(Image image) {
-	floor.push_back(image);
-}
 
-Image map::GetImage(int index) {
-	return floor[index];
-}
 
 inline void map::render()
 {
