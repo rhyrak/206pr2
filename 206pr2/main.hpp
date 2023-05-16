@@ -8,4 +8,8 @@ typedef struct {
 	bool isUpdated;
 } Config;
 
+
+extern	int player1score;
+extern	int player2score;
+
 #endif

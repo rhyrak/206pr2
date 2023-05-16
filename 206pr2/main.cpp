@@ -6,11 +6,14 @@
 
 #include <iostream>
 
+int player1score;
+int player2score;
+
 inline void cToggleFullscreen(Config*); /*Inline function, toggles Fullscreen mode*/
 
 /*main function*/
-int main(void)
-{
+int main(void){
+ 
     Config* config = new Config{ 1896,1056,false };    /*Define new Config Object*/
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
@@ -29,7 +32,7 @@ int main(void)
         if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
         
         currentState->update();
-
+        std::cout << player1score;
         BeginDrawing();
 
         currentState->render();

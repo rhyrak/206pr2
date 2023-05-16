@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "ingame.hpp"
+#include "../../main.hpp"
 #include <iostream>
 
 InGame::InGame(Config *config) : State(config)
@@ -82,11 +83,13 @@ inline void InGame::update()
         {
             ghost.isCaught = true;
             ghost.reloadTexture();
+            player1score++;
         }
         if (CheckCollisionRecs(ghost.getHitbox(), player2.getHitbox()))
         {
             ghost.isCaught = true;
             ghost.reloadTexture();
+            player2score++;
         }
     }
 
@@ -150,6 +153,8 @@ inline void InGame::render()
         player1.displayDebugInfo(0);  /*Display coordinates*/
         player2.displayDebugInfo(60);  /*Display coordinates*/
         ghost.displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
+        DrawText(TextFormat("%d", player1score), 400, 400, 20, RAYWHITE);
+        DrawText(TextFormat("%d", player2score), 400, 440, 20, RAYWHITE);
     } 
 }
 
