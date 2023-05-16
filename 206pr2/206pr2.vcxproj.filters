@@ -42,6 +42,12 @@
     <ClCompile Include="src\ui\UiElements.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="map.hpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entities\entity.hpp">
@@ -71,5 +77,10 @@
     <ClInclude Include="src\ui\UiElements.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\CENG\Ceng 206 Programming Languages\project2\map.png">
+      <Filter>Source Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

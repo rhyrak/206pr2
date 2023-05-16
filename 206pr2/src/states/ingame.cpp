@@ -111,8 +111,6 @@ inline void InGame::update()
 
 inline void InGame::render()
 {
-    int firsElement = arr[0][0][0];
-    std::cout << firsElement << std::endl;
     BeginMode2D(camera);
     ClearBackground(MAGENTA);
     // move this to map::render ____________________________________________________

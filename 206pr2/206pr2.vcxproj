@@ -134,6 +134,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
+    <ClCompile Include="map.hpp" />
     <ClCompile Include="src\entities\entity.cpp" />
     <ClCompile Include="src\entities\ghost.cpp" />
     <ClCompile Include="src\entities\player.cpp" />
@@ -153,6 +155,9 @@
     <ClInclude Include="src\states\state.hpp" />
     <ClInclude Include="src\ui\IconButton.hpp" />
     <ClInclude Include="src\ui\UiElements.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\CENG\Ceng 206 Programming Languages\project2\map.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
