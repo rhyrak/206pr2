@@ -13,25 +13,24 @@ Menu::Menu(Config *config) : State(config)
 void Menu::update()
 {
 	signalF = -1;
-	if(IsKeyPressed(KEY_P)) signalF = 2;
+	config->cursorType = 1;
+	if (IsKeyPressed(KEY_P)) signalF = 2;
 }
 
 void Menu::render()
 {
 	int width = config->windowWidth, height = config->windowHeight;
 	DrawRectangle(0, 0, width, height, RAYWHITE);
-	
-	if (iButtons.at(0).render()) signalF = 69;
-	if (config->isFullscreen)
-	{
-		if (iButtons.at(2).render()) signalF = 100;
-	}
-	else
-	{
-		if (iButtons.at(1).render()) signalF = 100;
-	}
 
-	DrawText("Press P to play", width/2 - 100, height/3, 32, ORANGE);
+	int exitBtn = iButtons.at(0).render();
+	if (exitBtn == 2) signalF = 69;
+	else if (exitBtn == 1) config->cursorType = 0;
+
+	int toggleFsBtn = iButtons.at(config->isFullscreen ? 2 : 1).render();
+	if (toggleFsBtn == 2) signalF = 100;
+	else if (toggleFsBtn == 1) config->cursorType = 0;
+
+	DrawText("Press P to play", width / 2 - 100, height / 3, 32, ORANGE);
 }
 
 int Menu::signal()

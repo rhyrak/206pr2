@@ -33,16 +33,18 @@ void IconButton::setPosition(Vector2 newPos)
 	this->hitbox.y = newPos.y;
 }
 
-bool IconButton::render()
+int IconButton::render()
 {
-	if (CheckCollisionPointRec(GetMousePosition(),hitbox))
+	bool hover = CheckCollisionPointRec(GetMousePosition(), hitbox);
+	if (hover)
 		DrawTexture(textures.at(0), hitbox.x, hitbox.y, tint);
 	else
 		DrawTexture(textures.at(0), hitbox.x, hitbox.y, WHITE);
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), hitbox))
-		return true;
-	return false;
+		return 2;
+
+	return hover ? 1 : 0;
 }
 
 

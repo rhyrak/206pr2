@@ -2,10 +2,11 @@
 #define MAIN_H
 
 typedef struct {
-	int windowWidth;
-	int windowHeight;
-	bool isFullscreen;
-	bool isUpdated;
+    int windowWidth;
+    int windowHeight;
+    int cursorType;
+    bool isFullscreen;
+    bool isUpdated;
 } Config;
 
 

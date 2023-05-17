@@ -22,7 +22,7 @@ public:
 	~IconButton();
 	void scale(float scale);
 	void setPosition(Vector2 newPos);
-	bool render();
+	int render();
 };
 
 #endif

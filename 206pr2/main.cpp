@@ -5,6 +5,7 @@
 #include "main.hpp"
 
 #include <iostream>
+#include "src/ui/UiElements.hpp"
 
 int player1score;
 int player2score;
@@ -14,13 +15,17 @@ inline void cToggleFullscreen(Config*); /*Inline function, toggles Fullscreen mo
 /*main function*/
 int main(void){
  
-    Config* config = new Config{ 1896,1056,false };    /*Define new Config Object*/
+    Config* config = new Config{ 1896,1056,1,false,false };    /*Define new Config Object*/
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
 
     SetWindowState(FLAG_VSYNC_HINT);    /*Limit FPS to monitor's Refresh rate*/
     /* SetTargetFPS(60); */
     /* SetExitKey(32); */ /*27 is ESC, 32 is SPACEBAR, refer to ASCII table*/
+
+    HideCursor();
+    Texture2D cursorActive = getTexture(CURSOR_ACTIVE, 2);
+    Texture2D cursorHover = getTexture(CURSOR_HOVER, 2);
 
     State *currentState = new Menu(config); /*Menu by default*/
 
@@ -38,6 +43,12 @@ int main(void){
         currentState->render();
 
         DrawFPS(config->windowWidth-90, 10);
+
+        switch (config->cursorType) {
+        case 1: DrawTexture(cursorActive, GetMouseX(), GetMouseY(), WHITE); break;
+        case 0: DrawTexture(cursorHover, GetMouseX(), GetMouseY(), WHITE); break;
+        }
+
         EndDrawing();
 
         /*Change game state accordingly*/
