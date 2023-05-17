@@ -11,15 +11,11 @@ IconButton::IconButton(Rectangle hitbox, int icon, Color tint)
 	setTexture(icon, &textures, hitbox.width / 16.0F);
 }
 
-
-IconButton::IconButton()
-{
-
-}
-
 IconButton::~IconButton()
 {
-
+	delete signalF;
+	for (const Texture2D& texture : textures)
+		UnloadTexture(texture);
 }
 
 void IconButton::scale(float scale)

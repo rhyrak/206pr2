@@ -2,6 +2,7 @@
 #include "src/states/state.hpp"
 #include "src/states/ingame.hpp"
 #include "src/states/menu.hpp"
+#include "src/states/settings.hpp"
 #include "main.hpp"
 
 #include <iostream>
@@ -52,34 +53,38 @@ int main(void){
         EndDrawing();
 
         /*Change game state accordingly*/
-        char signal = currentState->signal();
-        if (signal != -1)
-        {
-            switch (signal)
-            {
-            case 1:
+        int signal = currentState->signal();
+        switch (signal) {
+            case S_NAV_MENU:
                 delete currentState;
                 currentState = new Menu(config);
                 break;
-            case 2:
+            case S_NAV_INGAME:
                 delete currentState;
                 currentState = new InGame(config);
                 break;
-            case 100:
+            case S_NAV_SETTINGS:
+                delete currentState;
+                currentState = new Settings(config);
+                break;
+            case S_WIN_TOGGLE_FS:
                 cToggleFullscreen(config);
                 break;
-            case 69:
+            case S_WIN_CLOSE:
                 exitFlag = true;
                 break;
             default:
                 break;
             }
-        }
+
         config->isUpdated = false;
     }
+
     /*free up explicit-heap dynamic variable*/
     delete currentState;
 
+    UnloadTexture(cursorActive);
+    UnloadTexture(cursorHover);
     CloseWindow();
 
     return 0;

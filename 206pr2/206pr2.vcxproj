@@ -141,6 +141,7 @@
     <ClCompile Include="src\entities\player.cpp" />
     <ClCompile Include="src\states\ingame.cpp" />
     <ClCompile Include="src\states\menu.cpp" />
+    <ClCompile Include="src\states\settings.cpp" />
     <ClCompile Include="src\states\state.cpp" />
     <ClCompile Include="src\ui\IconButton.cpp" />
     <ClCompile Include="src\ui\UiElements.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="src\entities\player.hpp" />
     <ClInclude Include="src\states\ingame.hpp" />
     <ClInclude Include="src\states\menu.hpp" />
+    <ClInclude Include="src\states\settings.hpp" />
     <ClInclude Include="src\states\state.hpp" />
     <ClInclude Include="src\ui\IconButton.hpp" />
     <ClInclude Include="src\ui\UiElements.hpp" />

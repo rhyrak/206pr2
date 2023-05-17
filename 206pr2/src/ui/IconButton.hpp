@@ -18,7 +18,6 @@ private:
 	Color tint;
 public:
 	IconButton(Rectangle hitbox, int icon, Color tint = GRAY);
-	IconButton();
 	~IconButton();
 	void scale(float scale);
 	void setPosition(Vector2 newPos);

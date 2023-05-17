@@ -7,10 +7,10 @@ class State
 {
 protected:
     State(Config *config);  /*Constructor*/
-    char signalF;
+    int signalF;
     Config* config;
 public:
-    ~State();   /*Destructor*/
+    virtual ~State();   /*Destructor*/
     virtual void update() = 0;  /*Overridable method*/
     virtual void render() = 0;  /*Overridable method*/
     virtual int signal() = 0;  /*Overridable method*/
