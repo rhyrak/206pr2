@@ -7,8 +7,6 @@
 class map {
 private:
 	std::vector<Image> floor;
-    int camOffsetX = 0;
-    int camOffsetY = 0;
 
 public:
     void render();
