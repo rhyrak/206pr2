@@ -1,11 +1,11 @@
 #include <raylib.h>
+#include <iostream>
+
 #include "src/states/state.hpp"
 #include "src/states/ingame.hpp"
 #include "src/states/menu.hpp"
 #include "src/states/settings.hpp"
 #include "main.hpp"
-
-#include <iostream>
 #include "src/ui/UiElements.hpp"
 
 int player1score;
@@ -13,9 +13,15 @@ int player2score;
 
 inline void cToggleFullscreen(Config*); /*Inline function, toggles Fullscreen mode*/
 
+/*Java-like instanceof function (Thanks stackoverflow.com)*/
+template<typename Base, typename T>
+inline bool instanceof(const T* ptr) {
+    return dynamic_cast<const Base*>(ptr) != nullptr;
+}
+
 /*main function*/
 int main(void){
- 
+
     Config* config = new Config{ 1600,900,1,false,false };    /*Define new Config Object*/
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
@@ -35,7 +41,9 @@ int main(void){
     while (!exitFlag && !WindowShouldClose())
     {
         /*Fullscreen shortcut*/
-        if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
+        if (!instanceof<InGame>(currentState)) {
+            if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
+        }        
         
         currentState->update();
         //std::cout << player1score;
