@@ -18,6 +18,8 @@ public:
     void render();
     void scaleMapTexture(int w, int h);
     bool canMove(int x, int y);
+    int getTileWidth();
+    int getTileHeight();
 };
 
 

@@ -5,6 +5,7 @@
 #define ROUND(a) ((int)((a) + 0.5f))
 #include <string>
 #include "../map/map.hpp"
+#include "../../main.hpp"
 
 
 Player::Player()
@@ -16,8 +17,7 @@ Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int 
     this->map = map;
     this->world = world;
     this->centerPoint = coords;
-    this->missingTexture = GenImageChecked(400, 400, 1, 1, PURPLE, BLACK);
-    this->texture = this->getTexture("res/amogus.png");
+    this->texture = this->getTexture("res/amogus.png", TileWidth, TileHeight);
     this->idDebug = idDebug + "'s coordinates:";
     /*Assign movement keys*/
     this->upKey = upkey;

@@ -4,6 +4,9 @@
 #include "../../main.hpp"
 #include "mapData.hpp"
 
+int TileWidth;
+int TileHeight;
+
 Map::Map(int w, int h)
 {
     this->height = h;
@@ -29,6 +32,8 @@ void Map::render()
  void Map::scaleMapTexture(int w, int h) {
      this->tileWidth = w / 32;
      this->tileHeight = h / 18;
+     TileWidth = this->tileWidth;
+     TileHeight = this->tileHeight;
      UnloadTexture(mapTexture);
      Image mapImg = GenImageColor(w, h, MAGENTA);
     Image tileSet = LoadImage("res/map.png");
@@ -78,4 +83,14 @@ bool Map::canMove(int x, int y) {
     }
 
     return canMove;
+}
+
+int Map::getTileWidth()
+{
+    return tileWidth;
+}
+
+int Map::getTileHeight()
+{
+    return tileHeight;
 }
