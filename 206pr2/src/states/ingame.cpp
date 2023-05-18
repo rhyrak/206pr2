@@ -43,7 +43,7 @@ InGame::InGame(Config *config) : State(config)
 
     for (int i = 1; i <= 11; i++)
     {
-        ghosts.push_back(Ghost("Ghost" + i, map));
+        ghosts.push_back(Ghost("Ghost" + std::to_string(i), map));
     }
 
     nightVision = false;  /*disable flag by default*/
@@ -166,9 +166,12 @@ inline void InGame::render()
 
     if(displayCoordinates)
     {
+        for (int i = 0; i < ghosts.size(); i++)
+        {
+            ghosts.at(i).displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
+        }
         player1.displayDebugInfo(0);  /*Display coordinates*/
         player2.displayDebugInfo(60);  /*Display coordinates*/
-        ghost.displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
         DrawText(TextFormat("%d", player1score), 400, 400, 20, RAYWHITE);
         DrawText(TextFormat("%d", player2score), 400, 440, 20, RAYWHITE);
     } 
