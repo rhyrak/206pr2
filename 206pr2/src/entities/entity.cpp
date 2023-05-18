@@ -22,6 +22,7 @@ Texture2D Entity::getTexture(const char* path, int tileWidth, int tileHeight)
     }
     catch (...) {
         *image = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);
+        ImageResize(image, tileWidth * 0.75, tileHeight * 0.75);
         texture = LoadTextureFromImage(*image);
         UnloadImage(*image);
         return texture;

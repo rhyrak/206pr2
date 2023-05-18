@@ -17,7 +17,7 @@ Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int 
     this->map = map;
     this->world = world;
     this->centerPoint = coords;
-    this->texture = this->getTexture("res/amogus.png", TileWidth, TileHeight);
+    this->texture = this->getTexture("res/afmogus.png", TileWidth, TileHeight);
     this->idDebug = idDebug + "'s coordinates:";
     /*Assign movement keys*/
     this->upKey = upkey;
