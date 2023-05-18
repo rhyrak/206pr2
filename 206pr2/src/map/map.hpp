@@ -7,7 +7,10 @@
 class Map {
 private:
 	Texture2D mapTexture;
-
+    int tileWidth;
+    int tileHeight;
+    int width;
+    int height;
 public:
     Map(int w, int h);
     Map();

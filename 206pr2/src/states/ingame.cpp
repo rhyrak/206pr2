@@ -6,7 +6,7 @@
 
 
 InGame::InGame(Config *config) : State(config)
-{
+{ 
     map = new Config{ config->windowWidth * 2, config->windowHeight * 2};
     monitor = GetCurrentMonitor();
     world = new Map(map->windowWidth, map->windowHeight);
@@ -14,7 +14,7 @@ InGame::InGame(Config *config) : State(config)
     player1 = Player(
         map,
         "Player 1",
-        { 100.0, 100.0 },
+        { 200.0, 200.0 },
         KeyboardKey::KEY_W,
         KeyboardKey::KEY_S,
         KeyboardKey::KEY_A,
@@ -25,7 +25,7 @@ InGame::InGame(Config *config) : State(config)
     player2 = Player(
         map,
         "Player 2",
-        { (float)(map->windowWidth - 100.0), (float)(map->windowHeight - 100.0) },
+        { (float)(map->windowWidth - 200.0), (float)(map->windowHeight - 200.0) },
         KeyboardKey::KEY_UP,
         KeyboardKey::KEY_DOWN,
         KeyboardKey::KEY_LEFT,

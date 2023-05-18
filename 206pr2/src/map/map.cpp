@@ -6,6 +6,8 @@
 
 Map::Map(int w, int h)
 {
+    this->height = h;
+    this->width = w;
     scaleMapTexture(w, h);
 }
 
@@ -25,18 +27,18 @@ void Map::render()
 }
 
  void Map::scaleMapTexture(int w, int h) {
-     int tileWidth = w / 32;
-     int tileHeight = h / 18;
+     this->tileWidth = w / 32;
+     this->tileHeight = h / 18;
      UnloadTexture(mapTexture);
      Image mapImg = GenImageColor(w, h, MAGENTA);
     Image tileSet = LoadImage("res/map.png");
     std::vector<Image> tiles = std::vector<Image>(2500);
-    tiles.at(0) = GenImageColor(tileWidth, tileHeight, Color{0,0,0,0});
+    tiles.at(0) = GenImageColor(this->tileWidth, this->tileHeight, Color{0,0,0,0});
     int iter = 1;
     for (int j = 0; j < 31; j++) {
         for (int i = 0; i < 64; i++) {
             Image tile = ImageFromImage(tileSet, Rectangle{ 16.0F * i,16.0F * j,16,16 });
-            ImageResizeNN(&tile, tileWidth, tileHeight);
+            ImageResizeNN(&tile, this->tileWidth, this->tileHeight);
             tiles.at(iter) = tile;
             iter++;
         }
@@ -64,14 +66,11 @@ void Map::render()
 
 
 bool Map::canMove(int x, int y) {
-    int xIndex = x / 32, yIndex = y / 32;
-    bool canMove = true;
-
-    for (int layer = 1; layer < 4; layer++)
+    int xIndex = x / (width / 32), yIndex = y / (height / 18);
+    bool canMove = false;
         try {
-        if (mapData[layer][yIndex][xIndex] > 0) {
-            canMove = false;
-            break;
+        if (mapData[0][(int)floor(yIndex)][(int)floor(xIndex)] != 0 && mapData[2][(int)floor(yIndex)][(int)floor(xIndex)] != 1248) {
+            canMove = true;
         }
     }
     catch (...) {
