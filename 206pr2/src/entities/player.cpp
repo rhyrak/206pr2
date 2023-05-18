@@ -17,7 +17,7 @@ Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int 
     this->world = world;
     this->centerPoint = coords;
     this->missingTexture = GenImageChecked(400, 400, 1, 1, PURPLE, BLACK);
-    this->texture = getTexture("res/amogus.png");
+    this->texture = this->getTexture("res/amogus.png");
     this->idDebug = idDebug + "'s coordinates:";
     /*Assign movement keys*/
     this->upKey = upkey;
@@ -43,9 +43,7 @@ void Player::update()
     {
         if(centerPoint.x > texture.width / 2)
         {
-            if (world->canMove((int)(centerPoint.x - (400 * dt)), (int)centerPoint.y))
-                centerPoint.x -= (400 * dt);
-
+            centerPoint.x -= (400 * dt);
         }
         else
             centerPoint.x = texture.width / 2;
@@ -110,20 +108,3 @@ Rectangle Player::getHitbox()
     return hitbox;
 }
 
-Texture2D Player::getTexture(const char* path)
-{
-    try {
-        Image temp = LoadImage(path);
-        ImageResizeNN(&temp, temp.width * 2, temp.height * 2);
-        texture = LoadTextureFromImage(temp);
-        UnloadImage(temp);
-        if (texture.id <= 0) throw 0;
-        return texture;
-    }
-    catch (...) {
-        missingTexture = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);
-        texture = LoadTextureFromImage(missingTexture);
-        UnloadImage(missingTexture);
-        return texture;
-    }
-}

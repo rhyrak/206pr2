@@ -9,9 +9,20 @@ Vector2 Entity::getCenterPoint() {
     return Vector2{ centerPoint.x,centerPoint.y };
 }
 
+
 Texture2D Entity::getTexture(const char* path)
 {
-    return LoadTextureFromImage(GenImageChecked(64, 64, 32, 32, PURPLE, BLACK));
+    try {
+        texture = LoadTexture(path);
+        if (!IsTextureReady(texture)) throw 0;
+        return texture;
+    }
+    catch (...) {
+        missingTexture = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);
+        texture = LoadTextureFromImage(missingTexture);
+        UnloadImage(missingTexture);
+        return texture;
+    }
 }
 
 /*For Debug purposes, display coordinates of entity*/

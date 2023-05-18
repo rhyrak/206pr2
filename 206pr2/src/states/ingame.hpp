@@ -24,6 +24,7 @@ private:
     bool displayHitBoxes;   /*cheat*/
     Config* map;
     Map* world;
+    std::vector< Ghost> ghosts;
 public:
     InGame(Config *config); /*Constructor*/
     ~InGame();  /*Destructor*/

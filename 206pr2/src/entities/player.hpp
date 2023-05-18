@@ -29,7 +29,6 @@ public:
     int getLeftKey();   /*Accesor*/
     int getRightKey();  /*Accesor*/
     Rectangle getHitbox();
-    Texture2D getTexture(const char* path) override;
 };
 
 #endif
