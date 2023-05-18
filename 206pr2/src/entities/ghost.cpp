@@ -127,17 +127,3 @@ void Ghost::reloadTexture()
     UnloadTexture(texture);
     texture = getTexture("res/dead_ghost.png");
 }
-
-Texture2D Ghost::getTexture(const char* path)
-{
-    try {
-        texture = LoadTexture(path);
-        if (texture.id <= 0) throw 0;
-    }
-    catch (...) {
-        missingTexture = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);
-        texture = LoadTextureFromImage(missingTexture);
-        UnloadImage(missingTexture);
-        return texture;
-    }
-}

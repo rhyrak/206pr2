@@ -31,13 +31,18 @@ InGame::InGame(Config *config) : State(config)
         KeyboardKey::KEY_RIGHT
     );
 
-    ghost = Ghost("Ghost1", map);
+    //ghost = Ghost("Ghost1", map);
     /*Create Camera*/
     camera = Camera2D{
         Vector2{(float) config->windowWidth / 2, (float) config->windowHeight / 2},
         {(float)map->windowWidth / 2, (float)map->windowHeight / 2 },
         0.0F, 0.5F
     };
+
+    for (int i = 1; i <= 11; i++)
+    {
+        ghosts.push_back(Ghost("Ghost" + i, map));
+    }
 
     nightVision = false;  /*disable flag by default*/
     displayCoordinates = false;  /*disable flag by default*/
@@ -57,6 +62,8 @@ InGame::InGame(Config *config) : State(config)
     spotPos[1].x = player2.getCenterPoint().x/2;
     spotPos[1].y = player2.getCenterPoint().y/2;
 
+    
+
     /**/
 }
 
@@ -74,25 +81,32 @@ inline void InGame::update()
 
     player1.update();
     player2.update();
-    ghost.update();
+    //ghost.update();
+    for (int i = 0; i < ghosts.size(); i++)
+    {
+        ghosts.at(i).update();
+
+        if (!ghosts.at(i).isCaught) {
+            if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player1.getHitbox()))
+            {
+                ghosts.at(i).isCaught = true;
+                ghosts.at(i).reloadTexture();
+                player1score++;
+            }
+            if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player2.getHitbox()))
+            {
+                ghosts.at(i).isCaught = true;
+                ghosts.at(i).reloadTexture();
+                player2score++;
+            }
+        }
+    }
+
     if (IsKeyPressed(KEY_N)) nightVision = !nightVision; /*toggle flag*/
     if (IsKeyPressed(KEY_C)) displayCoordinates = !displayCoordinates; /*toggle flag*/
     if (IsKeyPressed(KEY_H)) displayHitBoxes = !displayHitBoxes; /*toggle flag*/
 
-    if (!ghost.isCaught) {
-        if (CheckCollisionRecs(ghost.getHitbox(), player1.getHitbox()))
-        {
-            ghost.isCaught = true;
-            ghost.reloadTexture();
-            player1score++;
-        }
-        if (CheckCollisionRecs(ghost.getHitbox(), player2.getHitbox()))
-        {
-            ghost.isCaught = true;
-            ghost.reloadTexture();
-            player2score++;
-        }
-    }
+
 
 
     /**/
@@ -121,7 +135,11 @@ inline void InGame::render()
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     player1.render();    /*Draw player model*/
     player2.render();
-    ghost.render();
+
+    for (int i = 0; i < ghosts.size(); i++)
+    {
+        ghosts.at(i).render();
+    }
 
     if (displayHitBoxes)
     {

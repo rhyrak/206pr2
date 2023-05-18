@@ -15,7 +15,7 @@ Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int 
     this->map = map;
     this->centerPoint = coords;
     this->missingTexture = GenImageChecked(400, 400, 1, 1, PURPLE, BLACK);
-    this->texture = getTexture("res/amogus.png");
+    this->texture = this->getTexture("res/amogus.png");
     this->idDebug = idDebug + "'s coordinates:";
     /*Assign movement keys*/
     this->upKey = upkey;
@@ -106,16 +106,3 @@ Rectangle Player::getHitbox()
     return hitbox;
 }
 
-Texture2D Player::getTexture(const char* path)
-{
-    try {
-        texture = LoadTexture(path);
-        if (texture.id <= 0) throw 0;
-    }
-    catch (...) {
-        missingTexture = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);
-        texture = LoadTextureFromImage(missingTexture);
-        UnloadImage(missingTexture);
-        return texture;
-    }
-}

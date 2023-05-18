@@ -22,6 +22,7 @@ private:
     bool displayCoordinates;    /*cheat*/
     bool displayHitBoxes;   /*cheat*/
     Config* map;
+    std::vector< Ghost> ghosts;
 public:
     InGame(Config *config); /*Constructor*/
     ~InGame();  /*Destructor*/
