@@ -8,6 +8,7 @@
 #include "state.hpp"
 #include "../../main.hpp"
 #include "raylib.h"
+#include "../map/map.hpp"
 
 /*InGame extends State*/
 class InGame : public State
@@ -22,6 +23,7 @@ private:
     bool displayCoordinates;    /*cheat*/
     bool displayHitBoxes;   /*cheat*/
     Config* map;
+    Map* world;
 public:
     InGame(Config *config); /*Constructor*/
     ~InGame();  /*Destructor*/
@@ -37,7 +39,6 @@ public:
 
     // use default vert shader
     Shader spotShader = LoadShader(0, "res/shaders/spotlight.fs");
-
 
 };
 

@@ -5,6 +5,7 @@
 #include <vector>
 #include "entity.hpp"
 #include "../../main.hpp"
+#include "../map/map.hpp"
 
 /*Player extends Entity*/
 class Player : public Entity
@@ -16,9 +17,10 @@ private:
     int downKey = KeyboardKey::KEY_NULL;
     int leftKey = KeyboardKey::KEY_NULL;
     int rightKey = KeyboardKey::KEY_NULL;
+    Map* world;
 public:
     Player();   /*Default Constructor, don't use it lol*/
-    Player(Config* map, std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey);   /*Constructor*/
+    Player(Config* map, std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey, Map* world);   /*Constructor*/
     ~Player();  /*Destructor*/
     void update();
     void render();

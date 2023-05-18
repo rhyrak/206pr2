@@ -134,8 +134,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="map.cpp" />
-    <ClCompile Include="map.hpp" />
+    <ClCompile Include="src\map\map.cpp" />
+    <ClCompile Include="src\map\map.hpp" />
     <ClCompile Include="src\entities\entity.cpp" />
     <ClCompile Include="src\entities\ghost.cpp" />
     <ClCompile Include="src\entities\player.cpp" />
@@ -151,15 +151,13 @@
     <ClInclude Include="src\entities\entity.hpp" />
     <ClInclude Include="src\entities\ghost.hpp" />
     <ClInclude Include="src\entities\player.hpp" />
+    <ClInclude Include="src\map\mapData.hpp" />
     <ClInclude Include="src\states\ingame.hpp" />
     <ClInclude Include="src\states\menu.hpp" />
     <ClInclude Include="src\states\settings.hpp" />
     <ClInclude Include="src\states\state.hpp" />
     <ClInclude Include="src\ui\IconButton.hpp" />
     <ClInclude Include="src\ui\UiElements.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\Downloads\CENG\Ceng 206 Programming Languages\project2\map.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

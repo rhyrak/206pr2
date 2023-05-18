@@ -4,15 +4,17 @@
 
 #define ROUND(a) ((int)((a) + 0.5f))
 #include <string>
+#include "../map/map.hpp"
 
 
 Player::Player()
 {
 }
 
-Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey)
+Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey, Map* world)
 {
     this->map = map;
+    this->world = world;
     this->centerPoint = coords;
     this->missingTexture = GenImageChecked(400, 400, 1, 1, PURPLE, BLACK);
     this->texture = getTexture("res/amogus.png");
@@ -41,7 +43,9 @@ void Player::update()
     {
         if(centerPoint.x > texture.width / 2)
         {
-            centerPoint.x -= (400 * dt);
+            if (world->canMove((int)(centerPoint.x - (400 * dt)), (int)centerPoint.y))
+                centerPoint.x -= (400 * dt);
+
         }
         else
             centerPoint.x = texture.width / 2;
@@ -109,8 +113,12 @@ Rectangle Player::getHitbox()
 Texture2D Player::getTexture(const char* path)
 {
     try {
-        texture = LoadTexture(path);
+        Image temp = LoadImage(path);
+        ImageResizeNN(&temp, temp.width * 2, temp.height * 2);
+        texture = LoadTextureFromImage(temp);
+        UnloadImage(temp);
         if (texture.id <= 0) throw 0;
+        return texture;
     }
     catch (...) {
         missingTexture = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);

@@ -133,6 +133,7 @@ Texture2D Ghost::getTexture(const char* path)
     try {
         texture = LoadTexture(path);
         if (texture.id <= 0) throw 0;
+        return texture;
     }
     catch (...) {
         missingTexture = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);

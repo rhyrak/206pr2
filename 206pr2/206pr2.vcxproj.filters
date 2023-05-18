@@ -42,10 +42,10 @@
     <ClCompile Include="src\ui\UiElements.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="map.hpp">
+    <ClCompile Include="src\map\map.hpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="map.cpp">
+    <ClCompile Include="src\map\map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\states\settings.cpp">
@@ -83,10 +83,8 @@
     <ClInclude Include="src\states\settings.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\Downloads\CENG\Ceng 206 Programming Languages\project2\map.png">
-      <Filter>Source Files</Filter>
-    </Image>
+    <ClInclude Include="src\map\mapData.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
