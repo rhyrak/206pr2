@@ -48,26 +48,26 @@ int main(void){
     /* SetTargetFPS(60); */
     /* SetExitKey(32); */ /*27 is ESC, 32 is SPACEBAR, refer to ASCII table*/
 
+    if (config->isFullscreen && !IsWindowFullscreen())
+        ToggleFullscreen();
+
     HideCursor();
     Texture2D cursorActive = getTexture(CURSOR_ACTIVE, 2);
     Texture2D cursorHover = getTexture(CURSOR_HOVER, 2);
 
     State *currentState = new Menu(config); /*Menu by default*/
 
-    if (config->isFullscreen)
-    {
-        config->isFullscreen = false;
-        cToggleFullscreen(config);
-    }
-
     /*Game loop*/
     bool exitFlag = false;
+    config->isUpdated = true; // force an update when the game is started
     while (!exitFlag && !WindowShouldClose())
     {
         /*Fullscreen shortcut*/
         if (!instanceof<InGame>(currentState)) {
             if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
-        }        
+        }
+
+        if (IsKeyPressed(KEY_Q) && IsKeyDown(KEY_LEFT_ALT)) MinimizeWindow();
         
         currentState->update();
         //std::cout << player1score;
@@ -150,6 +150,5 @@ inline void cToggleFullscreen(Config *config)
         config->windowWidth = GetMonitorWidth(monitor);
         SetWindowSize(config->windowWidth, config->windowHeight);
         ToggleFullscreen();
-
     }
 }

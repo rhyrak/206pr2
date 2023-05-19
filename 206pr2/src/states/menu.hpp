@@ -5,12 +5,16 @@
 #include "state.hpp"
 #include "../../main.hpp"
 #include "../ui/IconButton.hpp"
+#include "../ui/Button.hpp"
 #include <vector>
+#include "../util/GridLayout.hpp"
 
 class Menu : public State
 {
 private:
-    std::vector<IconButton*> iButtons;
+    std::vector<IconButton*> iButtons; // Icon buttons
+    std::vector<Button*> mButtons; // Menu buttons
+    GridLayout gl;
 public:
     Menu(Config *config);
     ~Menu();

@@ -15,7 +15,7 @@ typedef Rectangle UiElement;
 #define IBTN_WINDOWED       UiElement{208,64,16,16}
 #define IBTN_FULLSCREEN     UiElement{224,64,16,16}
 
-#define BTN_BLUE_ACTIVE     UiElement{0,0,48,16}
+#define BTN_BLUE_ACTIVE     UiElement{0,32,48,16}
 #define BTN_BLUE_HOVER      UiElement{0,16,48,16}
 #define BTN_BLUE_CLICKED    UiElement{0,48,48,16}
 

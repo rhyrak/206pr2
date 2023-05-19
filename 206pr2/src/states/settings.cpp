@@ -62,8 +62,7 @@ void Settings::update()
 
 void Settings::render()
 {
-	
-	gl.drawGrid();
+	//gl.drawGrid();
 	ClearBackground(RAYWHITE);
 	DrawText("WIP. Press space to go back", gl.getXCoord(3), gl.getYCoord(3), 32, GRAY);
 	for (int i = 0; i < buttons.size(); i++)

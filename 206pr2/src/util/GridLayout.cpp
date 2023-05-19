@@ -46,19 +46,23 @@ void GridLayout::drawGrid()
 	for (int i = 0; i*gridSize < config->windowHeight; i++)
 	{
 		DrawLine(0, i * gridSize, config->windowWidth, i * gridSize, Color{ 255,0,0,60 });
+		if (i%5 == 0)
+			DrawLine(0, i * gridSize, config->windowWidth, i * gridSize, Color{ 255,0,0,155 });
 	}
 	for (int i = 0; i * gridSize < config->windowWidth; i++)
 	{
 		DrawLine(i * gridSize, 0, i * gridSize, config->windowWidth, Color{ 255,0,0,60 });
+		if (i % 5 == 0)
+			DrawLine(i * gridSize, 0, i * gridSize, config->windowWidth, Color{ 255,0,0,155 });
 	}
 }
 
 float GridLayout::getXCoord(float x) {
-	return (int)(x * gridSize + 0.5F);
+	return x * gridSize + 0.5F;
 }
 
 float GridLayout::getYCoord(float y) {
-	return (int)(y * gridSize + 0.5F);
+	return y * gridSize + 0.5F;
 }
 
 

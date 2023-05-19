@@ -1,17 +1,20 @@
 #include "menu.hpp"
 
+inline void initButtons(Config* config, GridLayout* gl, std::vector<IconButton*> *iBtns, std::vector<Button*> *mBtns);
+
 Menu::Menu(Config *config) : State(config)
 {
-	iButtons = std::vector<IconButton*>(3);
-	iButtons.at(0) = new IconButton(Rectangle{ 32,32,64,64 }, I_EXIT, RED);
-	iButtons.at(1) = new IconButton(Rectangle{ 112,32,64,64 }, I_GO_FULLSCREEN);
-	iButtons.at(2) = new IconButton(Rectangle{ 112,32,64,64 }, I_GO_WINDOWED);
+	gl = GridLayout(config, -25);
+	initButtons(config, &gl, &iButtons, &mButtons);
 }
 
 Menu::~Menu()
 {
 	for (int i = 0; i < iButtons.size(); i++)
 		delete iButtons.at(i);
+
+	for (int i = 0; i < mButtons.size(); i++)
+		delete mButtons.at(i);
 }
 
 void Menu::update()
@@ -20,25 +23,58 @@ void Menu::update()
 	config->cursorType = 1;
 	if (IsKeyPressed(KEY_P)) signalF = S_NAV_INGAME;
 	if (IsKeyPressed(KEY_O)) signalF = S_NAV_SETTINGS;
+	if (config->isUpdated)
+	{
+		gl.recalculate();
+		initButtons(config, &gl, &iButtons, &mButtons);
+	}
 }
 
 void Menu::render()
 {
 	int width = config->windowWidth, height = config->windowHeight;
-	DrawRectangle(0, 0, width, height, RAYWHITE);
+	ClearBackground(RAYWHITE);
+	//gl.drawGrid();
 
-	int exitBtn = iButtons.at(0)->render();
-	if (exitBtn == 2) signalF = S_WIN_CLOSE;
-	else if (exitBtn == 1) config->cursorType = 0;
-
-	int toggleFsBtn = iButtons.at(config->isFullscreen ? 2 : 1)->render();
+	int toggleFsBtn = iButtons.at(config->isFullscreen ? 1 : 0)->render();
 	if (toggleFsBtn == 2) signalF = S_WIN_TOGGLE_FS;
 	else if (toggleFsBtn == 1) config->cursorType = 0;
 
-	DrawText("Press P to play", width / 2 - 100, height / 3, 32, ORANGE);
+	for (int i = 0; i < mButtons.size(); i++)
+	{
+		int feedback = mButtons.at(i)->render();
+		if (feedback == 1) config->cursorType = 0;
+		else if (feedback == 2) {
+			switch (i)
+			{
+			case 0: signalF = S_NAV_INGAME; break;
+			case 1: signalF = S_NAV_SETTINGS; break;
+			case 2: signalF = S_WIN_CLOSE; break;
+			}
+		}
+	}
+
+	//DrawText("Press P to play", width / 2 - 100, height / 3, 32, ORANGE);
 }
 
 Signal Menu::signal()
 {
 	return signalF;
+}
+
+inline void initButtons(Config* config, GridLayout* gl, std::vector<IconButton*>* iBtns, std::vector<Button*>* mBtns)
+{
+	for (int i = 0; i < iBtns->size(); i++)
+		delete iBtns->at(i);
+	for (int i = 0; i < mBtns->size(); i++)
+		delete mBtns->at(i);
+
+	*iBtns = std::vector<IconButton*>(2);
+	iBtns->at(0) = new IconButton(Rectangle{ gl->getXCoord(0.5),gl->getYCoord(0.5),gl->getGridSize(),gl->getGridSize() }, I_GO_FULLSCREEN);
+	iBtns->at(1) = new IconButton(Rectangle{ gl->getXCoord(0.5),gl->getYCoord(0.5),gl->getGridSize(),gl->getGridSize() }, I_GO_WINDOWED);
+
+	*mBtns = std::vector<Button*>(3);
+	mBtns->at(0) = new Button(Rectangle(Rectangle{ gl->getXCoord(10),gl->getYCoord(4),5*gl->getGridSize(),1.5F*gl->getGridSize() }), "PLAY");
+	mBtns->at(1) = new Button(Rectangle(Rectangle{ gl->getXCoord(10),gl->getYCoord(6),5*gl->getGridSize(),1.5F*gl->getGridSize() }), "SETTINGS");
+	mBtns->at(2) = new Button(Rectangle(Rectangle{ gl->getXCoord(10),gl->getYCoord(8),5*gl->getGridSize(),1.5F*gl->getGridSize() }), "EXIT");
 }
