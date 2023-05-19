@@ -1,26 +1,25 @@
 #include "IconButton.hpp"
 #include "UiElements.hpp"
 
-inline void setTexture(int icon, std::vector<Texture2D> *textures, float scale);
+inline void setTexture(int icon,Texture2D *texture, float scale);
 
 IconButton::IconButton(Rectangle hitbox, int icon, Color tint)
 	: hitbox{ hitbox }, type{ icon }, tint { tint }
 {
 	signalF = new int;
 	*signalF = -1;
-	setTexture(icon, &textures, hitbox.width / 16.0F);
+	setTexture(icon, &texture, hitbox.width / 16.0F);
 }
 
 IconButton::~IconButton()
 {
-	/*delete signalF;
-	for (int i = 0; i < textures.size(); i++)
-		UnloadTexture(textures.at(i));*/
+	delete signalF;
+	UnloadTexture(texture);
 }
 
 void IconButton::scale(float scale)
 {
-	setTexture(type, &textures, scale);
+	setTexture(type, &texture, scale);
 }
 
 void IconButton::setPosition(Vector2 newPos)
@@ -33,9 +32,9 @@ int IconButton::render()
 {
 	bool hover = CheckCollisionPointRec(GetMousePosition(), hitbox);
 	if (hover)
-		DrawTexture(textures.at(0), hitbox.x, hitbox.y, tint);
+		DrawTexture(texture, hitbox.x, hitbox.y, tint);
 	else
-		DrawTexture(textures.at(0), hitbox.x, hitbox.y, WHITE);
+		DrawTexture(texture, hitbox.x, hitbox.y, WHITE);
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), hitbox))
 		return 2;
@@ -48,21 +47,20 @@ Rectangle IconButton::getHitbox() {
 }
 
 
-inline void setTexture(int icon, std::vector<Texture2D> *textures, float scale) {
-	if (!(*textures).empty() )
-		(*textures).clear();
+inline void setTexture(int icon, Texture2D *texture, float scale) {
+	if (IsTextureReady(*texture))
+		UnloadTexture(*texture);
 	
-		*textures = std::vector<Texture2D>(1);
 	switch (icon)
 	{
 	case I_GO_FULLSCREEN:
-		(*textures).at(0) = getTexture(IBTN_FULLSCREEN, scale);
+		*texture = getTexture(IBTN_FULLSCREEN, scale);
 		break;
 	case I_GO_WINDOWED:
-		(*textures).at(0) = getTexture(IBTN_WINDOWED, scale);
+		*texture = getTexture(IBTN_WINDOWED, scale);
 		break;
 	case I_EXIT:
-		(*textures).at(0) = getTexture(IBTN_EXIT, scale);
+		*texture = getTexture(IBTN_EXIT, scale);
 		break;
 	case KEY_UP:
 	case KEY_LEFT:
@@ -78,7 +76,7 @@ inline void setTexture(int icon, std::vector<Texture2D> *textures, float scale) 
 		if (icon == KEY_RIGHT)
 			ImageRotateCW(&temp);
 		ImageResizeNN(&temp, temp.width * scale, temp.height * scale);
-		(*textures).at(0) = LoadTextureFromImage(temp);
+		*texture = LoadTextureFromImage(temp);
 		UnloadImage(temp);
 		UnloadImage(arrow);
 		break;
@@ -88,7 +86,7 @@ inline void setTexture(int icon, std::vector<Texture2D> *textures, float scale) 
 			Image temp = LoadImageFromTexture(getTexture(IBTN_EMTPY, scale));
 			Image text = ImageText(TextFormat("%c", icon), temp.width * 0.65, Color{ 25,137,184,255 });
 			ImageDraw(&temp, text, Rectangle{ 0,0,(float)text.width, (float)text.height }, Rectangle{ temp.width * 0.25F,temp.height * 0.25F,temp.width * 0.5F,temp.height * 0.5F },WHITE);
-			(*textures).at(0) = LoadTextureFromImage(temp);
+			*texture = LoadTextureFromImage(temp);
 			UnloadImage(temp);
 			UnloadImage(text);
 		}

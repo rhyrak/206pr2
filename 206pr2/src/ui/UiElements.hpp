@@ -19,11 +19,6 @@ typedef Rectangle UiElement;
 #define BTN_BLUE_HOVER      UiElement{0,16,48,16}
 #define BTN_BLUE_CLICKED    UiElement{0,48,48,16}
 
-#define BTN_ORANGE_ACTIVE   UiElement{48,0,48,16}
-#define BTN_GREEN_ACTIVE    UiElement{96,0,48,16}
-#define BTN_YELLOW_ACTIVE   UiElement{144,0,48,16}
-#define BTN_WHITE_ACTIVE    UiElement{192,0,48,16}
-
 #define CURSOR_ACTIVE       UiElement{240,32,16,16}
 #define CURSOR_HOVER        UiElement{240,48,16,16}
 

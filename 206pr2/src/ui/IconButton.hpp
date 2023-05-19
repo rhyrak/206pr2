@@ -12,7 +12,7 @@ class IconButton
 {
 private:
 	Rectangle hitbox;
-	std::vector<Texture2D> textures;
+	Texture2D texture;
 	int *signalF;
 	int type;
 	Color tint;

@@ -10,8 +10,8 @@ Menu::Menu(Config *config) : State(config)
 
 Menu::~Menu()
 {
-	for (IconButton* ib : iButtons)
-		delete ib;
+	for (int i = 0; i < iButtons.size(); i++)
+		delete iButtons.at(i);
 }
 
 void Menu::update()

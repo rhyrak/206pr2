@@ -11,7 +11,8 @@ Settings::Settings(Config* config) : State(config)
 
 Settings::~Settings()
 {
-
+	for (int i = 0; i < buttons.size(); i++)
+		delete buttons.at(i);
 }
 
 int selectedId = -1;
