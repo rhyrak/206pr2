@@ -7,6 +7,10 @@ typedef Rectangle UiElement;
 
 #define NOT_FOUND           UiElement{0,0,0,0}
 
+#define IBTN_EMTPY          UiElement{240,64,16,16}
+
+#define UP_ARROW            UiElement{240,80,16,16}
+
 #define IBTN_EXIT           UiElement{192,64,16,16}
 #define IBTN_WINDOWED       UiElement{208,64,16,16}
 #define IBTN_FULLSCREEN     UiElement{224,64,16,16}

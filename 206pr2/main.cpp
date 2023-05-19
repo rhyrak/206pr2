@@ -16,7 +16,24 @@ inline void cToggleFullscreen(Config*); /*Inline function, toggles Fullscreen mo
 /*main function*/
 int main(void){
  
-    Config* config = new Config{ 1600,900,1,false,false };    /*Define new Config Object*/
+    Config* config;
+    FILE* configFile;
+    errno_t res = fopen_s(&configFile, "config.bin", "rb");
+    if (res == EINVAL || configFile == 0)
+    {
+        std::cout << "CREATING DEFAULT CONFIG\n";
+        config = new Config{
+            { KEY_W,KEY_S,KEY_A,KEY_D,KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT },
+            1600,900,1,false,false };    /*Define new Config Object*/
+    }
+    else
+    {
+        std::cout << "READING SAVED CONFIG\n";
+        config = new Config;
+        fread(config, sizeof(Config), 1, configFile);
+        fclose(configFile);
+    }
+
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
 
@@ -29,6 +46,12 @@ int main(void){
     Texture2D cursorHover = getTexture(CURSOR_HOVER, 2);
 
     State *currentState = new Menu(config); /*Menu by default*/
+
+    if (config->isFullscreen)
+    {
+        config->isFullscreen = false;
+        cToggleFullscreen(config);
+    }
 
     /*Game loop*/
     bool exitFlag = false;
@@ -87,6 +110,12 @@ int main(void){
     UnloadTexture(cursorHover);
     CloseWindow();
 
+    res = fopen_s(&configFile, "config.bin", "wb");
+    if (res != EINVAL && configFile != 0)
+    {
+        fwrite(config, sizeof(Config), 1, configFile);
+    }
+
     return 0;
 }
 
@@ -95,16 +124,19 @@ inline void cToggleFullscreen(Config *config)
 {
     config->isFullscreen = !config->isFullscreen;
     config->isUpdated = true;
+
+    int monitor = GetCurrentMonitor();
     if (IsWindowFullscreen())
     {
         config->windowHeight = 900;
         config->windowWidth = 1600;
         ToggleFullscreen();
         SetWindowSize(config->windowWidth, config->windowHeight);
+        SetWindowPosition((GetMonitorWidth(monitor) - config->windowWidth) / 2,
+            (GetMonitorHeight(monitor) - config->windowHeight) / 2);
     }
     else
     {
-        int monitor = GetCurrentMonitor();
         config->windowHeight = GetMonitorHeight(monitor);
         config->windowWidth = GetMonitorWidth(monitor);
         SetWindowSize(config->windowWidth, config->windowHeight);

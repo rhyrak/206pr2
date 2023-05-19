@@ -7,7 +7,9 @@
 
 InGame::InGame(Config *config) : State(config)
 {
-    map = new Config{ config->windowWidth * 2, config->windowHeight * 2};
+    map = new Config;
+    map->windowWidth = config->windowWidth * 2;
+    map->windowHeight = config->windowHeight * 2;
     monitor = GetCurrentMonitor();
     world = new Map(map->windowWidth, map->windowHeight);
     /*Create new Player*/
@@ -15,10 +17,10 @@ InGame::InGame(Config *config) : State(config)
         map,
         "Player 1",
         { 100.0, 100.0 },
-        KeyboardKey::KEY_W,
-        KeyboardKey::KEY_S,
-        KeyboardKey::KEY_A,
-        KeyboardKey::KEY_D,
+        config->keymap.p1Up,
+        config->keymap.p1Down,
+        config->keymap.p1Left,
+        config->keymap.p1Right,
         world
     );
 
@@ -26,10 +28,10 @@ InGame::InGame(Config *config) : State(config)
         map,
         "Player 2",
         { (float)(map->windowWidth - 100.0), (float)(map->windowHeight - 100.0) },
-        KeyboardKey::KEY_UP,
-        KeyboardKey::KEY_DOWN,
-        KeyboardKey::KEY_LEFT,
-        KeyboardKey::KEY_RIGHT,
+        config->keymap.p2Up,
+        config->keymap.p2Down,
+        config->keymap.p2Left,
+        config->keymap.p2Right,
         world
     );
 

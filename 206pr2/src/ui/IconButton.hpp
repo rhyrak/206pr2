@@ -22,6 +22,7 @@ public:
 	void scale(float scale);
 	void setPosition(Vector2 newPos);
 	int render();
+	Rectangle getHitbox();
 };
 
 #endif
