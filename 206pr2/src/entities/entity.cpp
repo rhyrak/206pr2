@@ -13,6 +13,7 @@ Vector2 Entity::getCenterPoint() {
 Texture2D Entity::getTexture(const char* path, int tileWidth, int tileHeight)
 {
     try {
+        image = new Image;
         *image = LoadImage(path);
         if (!IsImageReady(*image)) throw 0;
         ImageResize(image, tileWidth * 0.75, tileHeight * 0.75);
