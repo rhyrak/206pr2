@@ -5,11 +5,13 @@
 #include "state.hpp"
 #include "../../main.hpp"
 #include "../ui/IconButton.hpp"
+#include "../util/GridLayout.hpp"
 
 class Settings : public State
 {
 private:
     std::vector<IconButton*> buttons;
+    GridLayout gl;
 public:
     Settings(Config* config);
     ~Settings();

@@ -1,10 +1,12 @@
 #include "settings.hpp"
+#include "../util/GridLayout.hpp"
 
-_inline void initButtons(std::vector<IconButton*>* buttons, Config* config);
+_inline void initButtons(std::vector<IconButton*>* buttons, Config* config, GridLayout* gl);
 
 Settings::Settings(Config* config) : State(config)
 {
-	initButtons(&buttons, config);
+	gl = GridLayout(config, -20);
+	initButtons(&buttons, config, &gl);
 }
 
 Settings::~Settings()
@@ -40,7 +42,7 @@ void Settings::update()
 
 		if (shouldUpdateButtons) {
 			selectedId = -1;
-			initButtons(&buttons, config);
+			initButtons(&buttons, config, &gl);
 		}
 	}
 
@@ -49,12 +51,20 @@ void Settings::update()
 	{
 		blinkDur = 0.5F;
 	}
+
+	if (config->isUpdated)
+	{
+		gl.recalculate();
+		initButtons(&buttons, config, &gl);
+	}
 }
 
 void Settings::render()
 {
+	
+	gl.drawGrid();
 	ClearBackground(RAYWHITE);
-	DrawText("WIP. Press space to go back", 300, 300, 32, GRAY);
+	DrawText("WIP. Press space to go back", gl.getXCoord(3), gl.getYCoord(3), 32, GRAY);
 	for (int i = 0; i < buttons.size(); i++)
 	{
 		int feedback = buttons.at(i)->render();
@@ -71,8 +81,8 @@ void Settings::render()
 		}
 	}
 
-	DrawText("Player 1", 315, 500, 32, Color{ 25,137,184,255 });
-	DrawText("Player 2", 615, 500, 32, Color{ 25,137,184,255 });
+	DrawText("Player 1", gl.getXCoord(6.5), gl.getYCoord(7.2), gl.getGridSize()*0.5, Color{25,137,184,255});
+	DrawText("Player 2", gl.getXCoord(11.5), gl.getYCoord(7.2), gl.getGridSize()*0.5, Color{25,137,184,255});
 }
 
 Signal Settings::signal()
@@ -81,7 +91,7 @@ Signal Settings::signal()
 }
 
 
-_inline void initButtons(std::vector<IconButton*>* buttons, Config* config)
+_inline void initButtons(std::vector<IconButton*>* buttons, Config* config, GridLayout *gl)
 {
 	for (int i = 0; i < buttons->size(); i++)
 	{
@@ -89,13 +99,21 @@ _inline void initButtons(std::vector<IconButton*>* buttons, Config* config)
 	}
 	buttons->clear();
 
-	buttons->push_back(new IconButton(Rectangle{ 350,350,64,64 }, config->keymap.p1Up));
-	buttons->push_back(new IconButton(Rectangle{ 350 - 70,350 + 70,64,64 }, config->keymap.p1Left));
-	buttons->push_back(new IconButton(Rectangle{ 350,350 + 70,64,64 }, config->keymap.p1Down));
-	buttons->push_back(new IconButton(Rectangle{ 350 + 70,350 + 70,64,64 }, config->keymap.p1Right));
+	buttons->push_back(new IconButton(Rectangle{
+		gl->getXCoord(7),gl->getYCoord(5),gl->getGridSize(),gl->getGridSize() }, config->keymap.p1Up));
+	buttons->push_back(new IconButton(Rectangle{
+		gl->getXCoord(6),gl->getYCoord(6),gl->getGridSize(),gl->getGridSize() }, config->keymap.p1Left));
+	buttons->push_back(new IconButton(Rectangle{
+		gl->getXCoord(7),gl->getYCoord(6),gl->getGridSize(),gl->getGridSize() }, config->keymap.p1Down));
+	buttons->push_back(new IconButton(Rectangle{
+		gl->getXCoord(8),gl->getYCoord(6),gl->getGridSize(),gl->getGridSize() }, config->keymap.p1Right));
 
-	buttons->push_back(new IconButton(Rectangle{ 650,350,64,64 }, config->keymap.p2Up));
-	buttons->push_back(new IconButton(Rectangle{ 650 - 70,350 + 70,64,64 }, config->keymap.p2Left));
-	buttons->push_back(new IconButton(Rectangle{ 650,350 + 70,64,64 }, config->keymap.p2Down));
-	buttons->push_back(new IconButton(Rectangle{ 650 + 70,350 + 70,64,64 }, config->keymap.p2Right));
+	buttons->push_back(new IconButton(Rectangle{
+		gl->getXCoord(12),gl->getYCoord(5),gl->getGridSize(),gl->getGridSize() }, config->keymap.p2Up));
+	buttons->push_back(new IconButton(Rectangle{
+		gl->getXCoord(11),gl->getYCoord(6),gl->getGridSize(),gl->getGridSize() }, config->keymap.p2Left));
+	buttons->push_back(new IconButton(Rectangle{
+		gl->getXCoord(12),gl->getYCoord(6),gl->getGridSize(),gl->getGridSize() }, config->keymap.p2Down));
+	buttons->push_back(new IconButton(Rectangle{
+		gl->getXCoord(13),gl->getYCoord(6),gl->getGridSize(),gl->getGridSize() }, config->keymap.p2Right));
 }
