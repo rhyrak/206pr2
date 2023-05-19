@@ -3,6 +3,8 @@
 #include <cstdlib>
 #define ROUND(a) ((int)((a) + 0.5f))
 
+#include "../../main.hpp"
+
 Ghost::Ghost()
 {
 }
@@ -12,7 +14,7 @@ Ghost::Ghost(std::string idDebug, Config *config) {
     this->map = config;
     this->isCaught = false;
     this->centerPoint = { (30 + (rand() % map->windowWidth)) / 1.0F, (30 + (rand() % map->windowHeight)) / 1.0F };
-    this->texture = getTexture("res/ghost.png");
+    this->texture = getTexture("res/ghost.png", TileWidth, TileHeight);
 }
 
 Ghost::~Ghost()
@@ -125,5 +127,5 @@ Rectangle Ghost::getHitbox()
 void Ghost::reloadTexture()
 {
     UnloadTexture(texture);
-    texture = getTexture("res/dead_ghost.png");
+    texture = getTexture("res/dead_ghost.png", TileWidth, TileHeight);
 }

@@ -10,17 +10,21 @@ Vector2 Entity::getCenterPoint() {
 }
 
 
-Texture2D Entity::getTexture(const char* path)
+Texture2D Entity::getTexture(const char* path, int tileWidth, int tileHeight)
 {
     try {
-        texture = LoadTexture(path);
-        if (!IsTextureReady(texture)) throw 0;
+        *image = LoadImage(path);
+        if (!IsImageReady(*image)) throw 0;
+        ImageResize(image, tileWidth * 0.75, tileHeight * 0.75);
+        texture = LoadTextureFromImage(*image);
+        UnloadImage(*image);
         return texture;
     }
     catch (...) {
-        missingTexture = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);
-        texture = LoadTextureFromImage(missingTexture);
-        UnloadImage(missingTexture);
+        *image = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);
+        ImageResize(image, tileWidth * 0.75, tileHeight * 0.75);
+        texture = LoadTextureFromImage(*image);
+        UnloadImage(*image);
         return texture;
     }
 }

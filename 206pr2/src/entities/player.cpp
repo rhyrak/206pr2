@@ -5,6 +5,7 @@
 #define ROUND(a) ((int)((a) + 0.5f))
 #include <string>
 #include "../map/map.hpp"
+#include "../../main.hpp"
 
 
 Player::Player()
@@ -16,8 +17,7 @@ Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int 
     this->map = map;
     this->world = world;
     this->centerPoint = coords;
-    this->missingTexture = GenImageChecked(400, 400, 1, 1, PURPLE, BLACK);
-    this->texture = this->getTexture("res/amogus.png");
+    this->texture = this->getTexture("res/afmogus.png", TileWidth, TileHeight);
     this->idDebug = idDebug + "'s coordinates:";
     /*Assign movement keys*/
     this->upKey = upkey;
@@ -43,7 +43,8 @@ void Player::update()
     {
         if(centerPoint.x > texture.width / 2)
         {
-            centerPoint.x -= (400 * dt);
+            if (world->canMove(((int)centerPoint.x - texture.width / 2 ) - (400 * dt), (int)centerPoint.y))
+                centerPoint.x -= (400 * dt);
         }
         else
             centerPoint.x = texture.width / 2;
@@ -53,7 +54,8 @@ void Player::update()
     {
         if(centerPoint.x < map->windowWidth - texture.width / 2)
         {
-            centerPoint.x += (400 * dt);
+            if(world->canMove(((int)centerPoint.x + texture.width / 2 ) + (400 * dt), (int)centerPoint.y))
+                centerPoint.x += (400 * dt);
         }
         else
             centerPoint.x = map->windowWidth - texture.width / 2;
@@ -63,7 +65,8 @@ void Player::update()
     {
         if(centerPoint.y > texture.height / 2)
         {
-            centerPoint.y -= (400 * dt);
+            if(world->canMove((int)centerPoint.x, (centerPoint.y - texture.height / 2) - (400 * dt)))
+                centerPoint.y -= (400 * dt);
         }
         else
             centerPoint.y = texture.height / 2;
@@ -73,7 +76,8 @@ void Player::update()
     {
         if(centerPoint.y < map->windowHeight - texture.height / 2)
         {
-            centerPoint.y += (400 * dt);
+            if(world->canMove((int)centerPoint.x, (centerPoint.y + texture.height / 2) + (400 * dt)))
+                centerPoint.y += (400 * dt);
         }
         else
             centerPoint.y = map->windowHeight - texture.height / 2;
