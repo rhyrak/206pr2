@@ -15,15 +15,15 @@ Texture2D Entity::getTexture(const char* path, int tileWidth, int tileHeight)
     try {
         image = new Image;
         *image = LoadImage(path);
-        if (!IsImageReady(*image)) throw 0;
-        ImageResize(image, tileWidth * 0.75, tileHeight * 0.75);
+        if (!IsImageReady(*image)) throw 1;
+        ImageResize(image, tileWidth * ScaleFactor, tileHeight * ScaleFactor);
         texture = LoadTextureFromImage(*image);
         UnloadImage(*image);
         return texture;
     }
     catch (...) {
         *image = GenImageChecked(64, 64, 32, 32, PURPLE, BLACK);
-        ImageResize(image, tileWidth * 0.75, tileHeight * 0.75);
+        ImageResize(image, tileWidth * ScaleFactor, tileHeight * ScaleFactor);
         texture = LoadTextureFromImage(*image);
         UnloadImage(*image);
         return texture;

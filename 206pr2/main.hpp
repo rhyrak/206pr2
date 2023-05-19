@@ -31,5 +31,6 @@ extern	int player1score;
 extern	int player2score;
 extern  int TileWidth;
 extern  int TileHeight;
+extern  float ScaleFactor;
 
 #endif

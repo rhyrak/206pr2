@@ -74,7 +74,7 @@ bool Map::canMove(int x, int y) {
     int xIndex = x / (width / 32), yIndex = y / (height / 18);
     bool canMove = false;
         try {
-        if (mapData[0][(int)floor(yIndex)][(int)floor(xIndex)] != 0 && mapData[2][(int)floor(yIndex)][(int)floor(xIndex)] != 1248 && mapData[2][(int)floor(yIndex)][(int)floor(xIndex)] != 594) {
+        if (mapData[0][(int)floor(yIndex)][(int)floor(xIndex)] != 0 && mapData[2][(int)floor(yIndex)][(int)floor(xIndex)] != 1248) {
             canMove = true;
         }
     }

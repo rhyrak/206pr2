@@ -10,6 +10,7 @@
 
 int player1score;
 int player2score;
+float ScaleFactor = 0.6;
 
 inline void cToggleFullscreen(Config*); /*Inline function, toggles Fullscreen mode*/
 
