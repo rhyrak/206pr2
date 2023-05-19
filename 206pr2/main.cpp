@@ -84,7 +84,7 @@ int main(void){
         EndDrawing();
 
         /*Change game state accordingly*/
-        int signal = currentState->signal();
+        Signal signal = currentState->signal();
         switch (signal) {
             case S_NAV_MENU:
                 delete currentState;

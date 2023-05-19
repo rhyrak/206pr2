@@ -16,7 +16,7 @@ public:
     ~Menu();
     void update() override;
     void render() override;
-    int signal() override;
+    Signal signal() override;
 };
 
 #endif

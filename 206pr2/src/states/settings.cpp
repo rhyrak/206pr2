@@ -75,7 +75,7 @@ void Settings::render()
 	DrawText("Player 2", 615, 500, 32, Color{ 25,137,184,255 });
 }
 
-int Settings::signal()
+Signal Settings::signal()
 {
 	return signalF;
 }

@@ -15,7 +15,7 @@ public:
     ~Settings();
     void update() override;
     void render() override;
-    int signal() override;
+    Signal signal() override;
 };
 
 #endif

@@ -16,7 +16,7 @@ Menu::~Menu()
 
 void Menu::update()
 {
-	signalF = -1;
+	signalF = S_NO_CHANGE;
 	config->cursorType = 1;
 	if (IsKeyPressed(KEY_P)) signalF = S_NAV_INGAME;
 	if (IsKeyPressed(KEY_O)) signalF = S_NAV_SETTINGS;
@@ -38,7 +38,7 @@ void Menu::render()
 	DrawText("Press P to play", width / 2 - 100, height / 3, 32, ORANGE);
 }
 
-int Menu::signal()
+Signal Menu::signal()
 {
 	return signalF;
 }

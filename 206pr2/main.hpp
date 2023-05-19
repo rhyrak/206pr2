@@ -3,11 +3,14 @@
 
 #include <raylib.h>
 
-#define S_NAV_INGAME 1
-#define S_NAV_MENU 2
-#define S_NAV_SETTINGS 3
-#define S_WIN_TOGGLE_FS 4
-#define S_WIN_CLOSE 5
+typedef enum {
+    S_NO_CHANGE     = -1,
+    S_NAV_INGAME    = 1,
+    S_NAV_MENU      = 2,
+    S_NAV_SETTINGS  = 3,
+    S_WIN_TOGGLE_FS = 4,
+    S_WIN_CLOSE     = 5,
+} Signal;
 
 typedef struct {
     KeyboardKey p1Up, p1Down, p1Left, p1Right;

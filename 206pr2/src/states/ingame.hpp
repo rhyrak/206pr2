@@ -30,7 +30,7 @@ public:
     ~InGame();  /*Destructor*/
     inline void update() override; /*Overridden method*/
     inline void render() override; /*Overridden method*/
-    int signal() override; /*Overridden method*/
+    Signal signal() override; /*Overridden method*/
     Player getPlayer(); /*Accessor*/
 
     int monitor;

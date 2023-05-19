@@ -4,7 +4,7 @@
 State::State(Config *config)
 {
 	this->config = config;
-	this->signalF = -1;
+	this->signalF = S_NO_CHANGE;
 }
 
 State::~State()

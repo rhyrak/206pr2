@@ -2,6 +2,7 @@
 #include <raymath.h>
 #include "ingame.hpp"
 #include "../../main.hpp"
+#include "../map/map.hpp"
 #include <iostream>
 
 
@@ -184,7 +185,7 @@ inline void InGame::render()
 }
 
 /*Accessor*/
-int InGame::signal()
+Signal InGame::signal()
 {
     return signalF;
 }
