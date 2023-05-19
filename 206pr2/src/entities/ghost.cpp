@@ -13,6 +13,7 @@ Ghost::Ghost(std::string idDebug, Config *config) {
     this->idDebug = idDebug;
     this->map = config;
     this->isCaught = false;
+    this->speed = 100.0;
     this->centerPoint = { (30 + (rand() % map->windowWidth)) / 1.0F, (30 + (rand() % map->windowHeight)) / 1.0F };
     this->texture = getTexture("res/ghost.png", TileWidth, TileHeight);
 }
@@ -35,7 +36,7 @@ void Ghost::update() {
         {
             if (centerPoint.x > texture.height / 2)
             {
-                centerPoint.x -= (100 * dt);
+                centerPoint.x -= (this->speed * dt);
             }
             else
                 centerPoint.x = texture.height / 2;
@@ -45,7 +46,7 @@ void Ghost::update() {
         {
             if (centerPoint.x < map->windowWidth - texture.height / 2)
             {
-                centerPoint.x += (100 * dt);
+                centerPoint.x += (this->speed * dt);
             }
             else
                 centerPoint.x = map->windowWidth - texture.height / 2;
@@ -55,7 +56,7 @@ void Ghost::update() {
         {
             if (centerPoint.y > texture.height / 2)
             {
-                centerPoint.y -= (100 * dt);
+                centerPoint.y -= (this->speed * dt);
             }
             else
                 centerPoint.y = texture.height / 2;
@@ -65,7 +66,7 @@ void Ghost::update() {
         {
             if (centerPoint.y < map->windowHeight - texture.height / 2)
             {
-                centerPoint.y += (100 * dt);
+                centerPoint.y += (this->speed * dt);
             }
             else
                 centerPoint.y = map->windowHeight - texture.height / 2;

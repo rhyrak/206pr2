@@ -8,6 +8,7 @@
 class Ghost : public Entity {
 private:
 	Texture2D texture;
+	float speed = 1.0;
 	int randomDir;
 	float randomRange = 0.0;
 	bool moveRight = false;

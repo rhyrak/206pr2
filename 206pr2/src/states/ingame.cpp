@@ -141,10 +141,14 @@ inline void InGame::render()
 
     if (displayHitBoxes)
     {
-        DrawCircleLines(player1.getCenterPoint().x, player1.getCenterPoint().y, visionRadius*2, RED);
-        DrawCircleLines(player2.getCenterPoint().x, player2.getCenterPoint().y, visionRadius*2, RED);
+        //DrawCircleLines(player1.getCenterPoint().x, player1.getCenterPoint().y, visionRadius*2, RED);
+        //DrawCircleLines(player2.getCenterPoint().x, player2.getCenterPoint().y, visionRadius*2, RED);
         DrawRectangleLinesEx(player1.getHitbox(), 2, RED);
         DrawRectangleLinesEx(player2.getHitbox(), 2, RED);
+        for (int i = 0; i < ghosts.size(); i++)
+        {
+            DrawRectangleLinesEx(ghosts.at(i).getHitbox(), 2, RED);
+        }
     }
 
 

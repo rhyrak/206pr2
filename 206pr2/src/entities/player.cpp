@@ -17,7 +17,8 @@ Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int 
     this->map = map;
     this->world = world;
     this->centerPoint = coords;
-    this->texture = this->getTexture("res/afmogus.png", TileWidth, TileHeight);
+    this->speed = 200.0;
+    this->texture = this->getTexture("res/amogus.png", TileWidth, TileHeight);
     this->idDebug = idDebug + "'s coordinates:";
     /*Assign movement keys*/
     this->upKey = upkey;
@@ -43,8 +44,8 @@ void Player::update()
     {
         if(centerPoint.x > texture.width / 2)
         {
-            if (world->canMove(((int)centerPoint.x - texture.width / 2 ) - (400 * dt), (int)centerPoint.y))
-                centerPoint.x -= (400 * dt);
+            if (world->canMove(((int)centerPoint.x - texture.width / 2 ) - (this->speed * dt), (int)centerPoint.y))
+                centerPoint.x -= (this->speed * dt);
         }
         else
             centerPoint.x = texture.width / 2;
@@ -54,8 +55,8 @@ void Player::update()
     {
         if(centerPoint.x < map->windowWidth - texture.width / 2)
         {
-            if(world->canMove(((int)centerPoint.x + texture.width / 2 ) + (400 * dt), (int)centerPoint.y))
-                centerPoint.x += (400 * dt);
+            if(world->canMove(((int)centerPoint.x + texture.width / 2 ) + (this->speed * dt), (int)centerPoint.y))
+                centerPoint.x += (this->speed * dt);
         }
         else
             centerPoint.x = map->windowWidth - texture.width / 2;
@@ -65,8 +66,8 @@ void Player::update()
     {
         if(centerPoint.y > texture.height / 2)
         {
-            if(world->canMove((int)centerPoint.x, (centerPoint.y - texture.height / 2) - (400 * dt)))
-                centerPoint.y -= (400 * dt);
+            if(world->canMove((int)centerPoint.x, (centerPoint.y - texture.height / 2) - (this->speed * dt)))
+                centerPoint.y -= (this->speed * dt);
         }
         else
             centerPoint.y = texture.height / 2;
@@ -76,8 +77,8 @@ void Player::update()
     {
         if(centerPoint.y < map->windowHeight - texture.height / 2)
         {
-            if(world->canMove((int)centerPoint.x, (centerPoint.y + texture.height / 2) + (400 * dt)))
-                centerPoint.y += (400 * dt);
+            if(world->canMove((int)centerPoint.x, (centerPoint.y + texture.height / 2) + (this->speed * dt)))
+                centerPoint.y += (this->speed * dt);
         }
         else
             centerPoint.y = map->windowHeight - texture.height / 2;

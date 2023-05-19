@@ -13,6 +13,7 @@ class Player : public Entity
 private:
     Texture2D texture;
     Image missingTexture;
+    float speed = 1.0;
     int upKey = KeyboardKey::KEY_NULL;
     int downKey = KeyboardKey::KEY_NULL;
     int leftKey = KeyboardKey::KEY_NULL;
