@@ -44,7 +44,9 @@ void Player::update()
     {
         if(centerPoint.x > texture.width / 2)
         {
-            if (world->canMove(((int)centerPoint.x - texture.width / 2 ) - (this->speed * dt), (int)centerPoint.y))
+            if (world->canMove(((int)centerPoint.x - texture.width / 2 ) - (this->speed * dt), (int)centerPoint.y)
+                && world->canMove(((int)centerPoint.x - texture.width / 2) - (this->speed * dt), (int)centerPoint.y + texture.height / 2 - 0.2)
+                && world->canMove(((int)centerPoint.x - texture.width / 2) - (this->speed * dt), (int)centerPoint.y - texture.height / 2 + 0.2))
                 centerPoint.x -= (this->speed * dt);
         }
         else
@@ -55,7 +57,9 @@ void Player::update()
     {
         if(centerPoint.x < map->windowWidth - texture.width / 2)
         {
-            if(world->canMove(((int)centerPoint.x + texture.width / 2 ) + (this->speed * dt), (int)centerPoint.y))
+            if(world->canMove(((int)centerPoint.x + texture.width / 2 ) + (this->speed * dt), (int)centerPoint.y)
+                && world->canMove(((int)centerPoint.x + texture.width / 2) + (this->speed * dt), (int)centerPoint.y + texture.height / 2 - 0.2)
+                && world->canMove(((int)centerPoint.x + texture.width / 2) + (this->speed * dt), (int)centerPoint.y - texture.height / 2 + 0.2))
                 centerPoint.x += (this->speed * dt);
         }
         else
@@ -66,7 +70,9 @@ void Player::update()
     {
         if(centerPoint.y > texture.height / 2)
         {
-            if(world->canMove((int)centerPoint.x, (centerPoint.y - texture.height / 2) - (this->speed * dt)))
+            if(world->canMove((int)centerPoint.x, (centerPoint.y - texture.height / 2) - (this->speed * dt))
+                && world->canMove((int)centerPoint.x + texture.width / 2 - 0.2, (centerPoint.y - texture.height / 2) - (this->speed * dt))
+                && world->canMove((int)centerPoint.x - texture.width / 2 + 0.2, (centerPoint.y - texture.height / 2) - (this->speed * dt)))
                 centerPoint.y -= (this->speed * dt);
         }
         else
@@ -77,7 +83,9 @@ void Player::update()
     {
         if(centerPoint.y < map->windowHeight - texture.height / 2)
         {
-            if(world->canMove((int)centerPoint.x, (centerPoint.y + texture.height / 2) + (this->speed * dt)))
+            if(world->canMove((int)centerPoint.x, (centerPoint.y + texture.height / 2) + (this->speed * dt))
+                && world->canMove((int)centerPoint.x + texture.width / 2 - 0.2, (centerPoint.y + texture.height / 2) + (this->speed * dt))
+                && world->canMove((int)centerPoint.x - texture.width / 2 + 0.2, (centerPoint.y + texture.height / 2) + (this->speed * dt)))
                 centerPoint.y += (this->speed * dt);
         }
         else
