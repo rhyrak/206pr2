@@ -1,6 +1,7 @@
 #include "Button.hpp"
 #include "UiElements.hpp"
 #include <iostream>
+#include "../../main.hpp"
 
 Button::Button(Rectangle hitbox, const char* text, int fontSize, Color tint) :
 	hitbox{hitbox}, tint{tint}

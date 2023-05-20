@@ -26,6 +26,8 @@ typedef Rectangle UiElement;
 #define CURSOR_ACTIVE       UiElement{48,112,16,16}
 #define CURSOR_HOVER        UiElement{64,112,16,16}
 
+#define SCOREBOARD          UiElement{0,128,64,32}
+
 #define UI_DARK_BROWN       Color{151,113,74,255}
 #define UI_LIGHT_BROWN      Color{211,191,143,255}
 

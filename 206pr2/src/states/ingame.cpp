@@ -4,10 +4,12 @@
 #include "../../main.hpp"
 #include "../map/map.hpp"
 #include <iostream>
+#include "../ui/UiElements.hpp"
 
 
 InGame::InGame(Config *config) : State(config)
 {
+    isPaused = false;
     map = new Config;
     map->windowWidth = config->windowWidth * 2;
     map->windowHeight = config->windowHeight * 2;
@@ -67,43 +69,49 @@ InGame::InGame(Config *config) : State(config)
     spotPos[1].x = player2.getCenterPoint().x/2;
     spotPos[1].y = player2.getCenterPoint().y/2;
 
-    
-
     /**/
+
+    gl = GridLayout(config, -32);
+    scoreboard = getTexture(SCOREBOARD, 1.2F*gl.getGridSize()/16);
+    remTime = 120; // seconds
 }
 
 InGame::~InGame()
 {
+    UnloadTexture(scoreboard);
 }
 
 inline void InGame::update()
 {
-    float dt = GetFrameTime();
     if (config->isUpdated) {
         map->windowWidth = config->windowWidth * 2;
         map->windowHeight = config->windowHeight * 2;
         world->scaleMapTexture(map->windowWidth, map->windowHeight);
     }
 
-    player1.update();
-    player2.update();
-    //ghost.update();
-    for (int i = 0; i < ghosts.size(); i++)
+    if (!isPaused)
     {
-        ghosts.at(i).update();
+        remTime -= GetFrameTime();
+        player1.update();
+        player2.update();
+        //ghost.update();
+        for (int i = 0; i < ghosts.size(); i++)
+        {
+            ghosts.at(i).update();
 
-        if (!ghosts.at(i).isCaught) {
-            if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player1.getHitbox()))
-            {
-                ghosts.at(i).isCaught = true;
-                ghosts.at(i).reloadTexture();
-                player1score++;
-            }
-            if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player2.getHitbox()))
-            {
-                ghosts.at(i).isCaught = true;
-                ghosts.at(i).reloadTexture();
-                player2score++;
+            if (!ghosts.at(i).isCaught) {
+                if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player1.getHitbox()))
+                {
+                    ghosts.at(i).isCaught = true;
+                    ghosts.at(i).reloadTexture();
+                    player1score++;
+                }
+                if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player2.getHitbox()))
+                {
+                    ghosts.at(i).isCaught = true;
+                    ghosts.at(i).reloadTexture();
+                    player2score++;
+                }
             }
         }
     }
@@ -112,7 +120,8 @@ inline void InGame::update()
     if (IsKeyPressed(KEY_C)) displayCoordinates = !displayCoordinates; /*toggle flag*/
     if (IsKeyPressed(KEY_H)) displayHitBoxes = !displayHitBoxes; /*toggle flag*/
 
-
+    if (IsKeyPressed(KEY_P)) isPaused = !isPaused; // toggle pause
+    
 
 
     /**/
@@ -182,6 +191,21 @@ inline void InGame::render()
         DrawText(TextFormat("%d", player1score), 400, 400, 20, RAYWHITE);
         DrawText(TextFormat("%d", player2score), 400, 440, 20, RAYWHITE);
     } 
+
+    if (IsKeyDown(KEY_TAB) || isPaused)
+    {
+        DrawTexture(scoreboard, gl.getXCoordCentered(16,scoreboard.width), gl.getYCoordCentered(1.25F,scoreboard.height), WHITE);
+        const char* sbText = TextFormat("%02d %d %02d", player1score, (int)remTime, player2score);
+        Vector2 textDim = MeasureTextEx(font, sbText, gl.getGridSize() * 0.75F, 0);
+        DrawTextEx(font, sbText, Vector2{ gl.getXCoordCentered(16, textDim.x), gl.getYCoordCentered(1.15F, textDim.y) },
+            gl.getGridSize() * 0.75F, 0, UI_LIGHT_BROWN);
+        gl.drawGrid();
+    }
+    if (isPaused)
+    {
+        DrawText("PAUSED", gl.getXCoord(15), gl.getYCoord(5), gl.getGridSize(), BROWN);
+        DrawText("(WIP)", gl.getXCoord(16), gl.getYCoord(6), gl.getGridSize(), BROWN);
+    }
 }
 
 /*Accessor*/

@@ -9,6 +9,7 @@
 #include "../../main.hpp"
 #include "raylib.h"
 #include "../map/map.hpp"
+#include "../util/GridLayout.hpp"
 
 /*InGame extends State*/
 class InGame : public State
@@ -24,6 +25,9 @@ private:
     bool displayHitBoxes;   /*cheat*/
     Config* map;
     Map* world;
+    GridLayout gl;
+    Texture2D scoreboard;
+    bool isPaused;
     std::vector< Ghost> ghosts;
 public:
     InGame(Config *config); /*Constructor*/

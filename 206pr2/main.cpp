@@ -11,6 +11,8 @@
 int player1score;
 int player2score;
 float ScaleFactor = 0.6;
+float remTime = 0;
+Font font;
 
 inline void cToggleFullscreen(Config*); /*Inline function, toggles Fullscreen mode*/
 
@@ -41,6 +43,7 @@ int main(void){
         fclose(configFile);
     }
 
+
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
 
@@ -54,6 +57,7 @@ int main(void){
     HideCursor();
     Texture2D cursorActive = getTexture(CURSOR_ACTIVE, 3);
     Texture2D cursorHover = getTexture(CURSOR_HOVER, 3);
+    font = LoadFontEx("res/ui/Kenney Mini Square Mono.ttf", 96, NULL, 0);
 
     State *currentState = new Menu(config); /*Menu by default*/
 
@@ -117,6 +121,7 @@ int main(void){
 
     UnloadTexture(cursorActive);
     UnloadTexture(cursorHover);
+    UnloadFont(font);
     CloseWindow();
 
     res = fopen_s(&configFile, "config.bin", "wb");

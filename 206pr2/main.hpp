@@ -32,5 +32,7 @@ extern	int player2score;
 extern  int TileWidth;
 extern  int TileHeight;
 extern  float ScaleFactor;
+extern  float remTime;
+extern  Font font;
 
 #endif
