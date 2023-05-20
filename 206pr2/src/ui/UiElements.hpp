@@ -19,8 +19,15 @@ typedef Rectangle UiElement;
 #define BTN_BLUE_HOVER      UiElement{0,16,48,16}
 #define BTN_BLUE_CLICKED    UiElement{0,48,48,16}
 
-#define CURSOR_ACTIVE       UiElement{240,32,16,16}
-#define CURSOR_HOVER        UiElement{240,48,16,16}
+#define BTN_BROWN_ACTIVE    UiElement{0,112,48,16}
+
+//#define CURSOR_ACTIVE       UiElement{240,32,16,16}
+//#define CURSOR_HOVER        UiElement{240,48,16,16}
+#define CURSOR_ACTIVE       UiElement{48,112,16,16}
+#define CURSOR_HOVER        UiElement{64,112,16,16}
+
+#define UI_DARK_BROWN       Color{151,113,74,255}
+#define UI_LIGHT_BROWN      Color{211,191,143,255}
 
 /// WIP
 /// @returns scaled texture of the given element in ui.png

@@ -14,6 +14,7 @@ class Menu : public State
 private:
     std::vector<IconButton*> iButtons; // Icon buttons
     std::vector<Button*> mButtons; // Menu buttons
+    Texture2D background;
     GridLayout gl;
 public:
     Menu(Config *config);

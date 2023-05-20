@@ -2,14 +2,14 @@
 #include "UiElements.hpp"
 #include <iostream>
 
-Button::Button(Rectangle hitbox, const char* text, Color tint) :
+Button::Button(Rectangle hitbox, const char* text, int fontSize, Color tint) :
 	hitbox{hitbox}, tint{tint}
 {
-	Image temp = LoadImageFromTexture(getTexture(BTN_BLUE_ACTIVE,hitbox.height/16.0F));
+	Image temp = LoadImageFromTexture(getTexture(BTN_BROWN_ACTIVE,hitbox.height/16.0F));
 	ImageResizeNN(&temp, hitbox.width, hitbox.height);
-	Image textImg = ImageText(text, temp.height*0.5, WHITE);
+	Image textImg = ImageText(text, fontSize, UI_LIGHT_BROWN);
 	ImageDraw(&temp, textImg, Rectangle{ 0,0,(float)textImg.width,(float)textImg.height },
-		Rectangle{temp.width*0.10F,temp.height*0.15F,temp.width*0.8F,temp.height*0.7F }, WHITE);
+		Rectangle{ temp.width/2.0F - textImg.width/2.0F, temp.height / 2.0F - textImg.height / 2.0F, (float)textImg.width, (float)textImg.height }, WHITE);
 	texture = LoadTextureFromImage(temp);
 	UnloadImage(temp);
 	UnloadImage(textImg);

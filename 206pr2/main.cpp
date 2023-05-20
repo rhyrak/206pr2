@@ -52,8 +52,8 @@ int main(void){
         ToggleFullscreen();
 
     HideCursor();
-    Texture2D cursorActive = getTexture(CURSOR_ACTIVE, 2);
-    Texture2D cursorHover = getTexture(CURSOR_HOVER, 2);
+    Texture2D cursorActive = getTexture(CURSOR_ACTIVE, 3);
+    Texture2D cursorHover = getTexture(CURSOR_HOVER, 3);
 
     State *currentState = new Menu(config); /*Menu by default*/
 

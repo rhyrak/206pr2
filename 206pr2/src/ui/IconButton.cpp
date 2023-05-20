@@ -84,7 +84,7 @@ inline void setTexture(int icon, Texture2D *texture, float scale) {
 	default:
 		if ((icon >= 'a' && icon <= 'z') || (icon >= 'A' && icon <= 'Z') || (icon >= '0' && icon <= '9')) {
 			Image temp = LoadImageFromTexture(getTexture(IBTN_EMTPY, scale));
-			Image text = ImageText(TextFormat("%c", icon), temp.width * 0.65, Color{ 25,137,184,255 });
+			Image text = ImageText(TextFormat("%c", icon), temp.width * 0.65, UI_DARK_BROWN);
 			ImageDraw(&temp, text, Rectangle{ 0,0,(float)text.width, (float)text.height }, Rectangle{ temp.width * 0.25F,temp.height * 0.25F,temp.width * 0.5F,temp.height * 0.5F },WHITE);
 			*texture = LoadTextureFromImage(temp);
 			UnloadImage(temp);

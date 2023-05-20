@@ -1,5 +1,7 @@
 #include "GridLayout.hpp"
 
+#define ROUND(x) ((int)(x + 0.5F))
+
 GridLayout::GridLayout(Config* config, float gridSize)
 {
 	this->config = config;
@@ -31,7 +33,7 @@ GridLayout::~GridLayout()
 void GridLayout::recalculate()
 {
 	if (useCount) {
-		gridSize = config->windowWidth / gridCountX;
+		gridSize = config->windowWidth / (float)gridCountX;
 	}
 	else
 	{
@@ -58,11 +60,11 @@ void GridLayout::drawGrid()
 }
 
 float GridLayout::getXCoord(float x) {
-	return x * gridSize + 0.5F;
+	return x * gridSize;
 }
 
 float GridLayout::getYCoord(float y) {
-	return y * gridSize + 0.5F;
+	return y * gridSize;
 }
 
 

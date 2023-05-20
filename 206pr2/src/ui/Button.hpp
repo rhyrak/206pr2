@@ -10,12 +10,11 @@ private:
 	Texture2D texture;
 	Color tint;
 public:
-	Button(Rectangle hitbox, const char* text, Color tint = GRAY);
+	Button(Rectangle hitbox, const char* text, int fontSize, Color tint = GRAY);
 	Button();
 	~Button();
 	int render();
 	Rectangle getHitbox();
 };
-
 
 #endif
