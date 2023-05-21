@@ -12,7 +12,8 @@ Player::Player()
 {
 }
 
-Player::Player(Config *map, std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey, Map* world)
+Player::Player(Config *map, std::string idDebug, Vector2 coords, KeyboardKey *upkey, KeyboardKey *downkey,
+    KeyboardKey *leftKey, KeyboardKey *rightKey, Map* world)
 {
     this->map = map;
     this->world = world;
@@ -40,7 +41,7 @@ void Player::render()
 void Player::update()
 {
     float dt = GetFrameTime();
-    if (IsKeyDown(leftKey))
+    if (IsKeyDown(*leftKey))
     {
         if(centerPoint.x > texture.width / 2)
         {
@@ -53,7 +54,7 @@ void Player::update()
             centerPoint.x = texture.width / 2;
     }      
 
-    if (IsKeyDown(rightKey))
+    if (IsKeyDown(*rightKey))
     {
         if(centerPoint.x < map->windowWidth - texture.width / 2)
         {
@@ -66,7 +67,7 @@ void Player::update()
             centerPoint.x = map->windowWidth - texture.width / 2;
     }   
 
-    if (IsKeyDown(upKey))
+    if (IsKeyDown(*upKey))
     {
         if(centerPoint.y > texture.height / 2)
         {
@@ -79,7 +80,7 @@ void Player::update()
             centerPoint.y = texture.height / 2;
     }      
 
-    if (IsKeyDown(downKey))
+    if (IsKeyDown(*downKey))
     {
         if(centerPoint.y < map->windowHeight - texture.height / 2)
         {
@@ -98,22 +99,22 @@ void Player::update()
 
 int Player::getUpKey()
 {
-    return this->upKey;
+    return *this->upKey;
 }
 
 int Player::getDownKey()
 {
-    return this->downKey;
+    return *this->downKey;
 }
 
 int Player::getLeftKey()
 {
-    return this->leftKey;
+    return *this->leftKey;
 }
 
 int Player::getRightKey()
 {
-    return this->rightKey;
+    return *this->rightKey;
 }
 
 Rectangle Player::getHitbox() 

@@ -24,7 +24,7 @@ float blinkDur = 0.5F;
 void Settings::update()
 {
 	config->cursorType = 1;
-	if (IsKeyPressed(KEY_SPACE)) signalF = S_NAV_MENU;
+	if (IsKeyPressed(KEY_SPACE)) signalF = S_NAV_POP;
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) selectedId = -1;
 	int input = GetKeyPressed();
 	bool shouldUpdateButtons = false;

@@ -60,6 +60,7 @@ int main(void){
     font = LoadFontEx("res/ui/Kenney Mini Square Mono.ttf", 96, NULL, 0);
 
     State *currentState = new Menu(config); /*Menu by default*/
+    State *prevState = nullptr;
 
     /*Game loop*/
     bool exitFlag = false;
@@ -102,6 +103,21 @@ int main(void){
             case S_NAV_SETTINGS:
                 delete currentState;
                 currentState = new Settings(config);
+                break;
+            case S_NAV_PUSH_SETTINGS:
+                prevState = currentState;
+                currentState = new Settings(config);
+                break;
+            case S_NAV_POP:
+                delete currentState;
+                if (prevState != nullptr) {
+                    currentState = prevState;
+                }
+                else
+                {
+                    currentState = new Menu(config);
+                    prevState = nullptr;
+                }
                 break;
             case S_WIN_TOGGLE_FS:
                 cToggleFullscreen(config);

@@ -4,12 +4,14 @@
 #include <raylib.h>
 
 typedef enum {
-    S_NO_CHANGE     = -1,
-    S_NAV_INGAME    = 1,
-    S_NAV_MENU      = 2,
-    S_NAV_SETTINGS  = 3,
-    S_WIN_TOGGLE_FS = 4,
-    S_WIN_CLOSE     = 5,
+    S_NO_CHANGE         = -1,
+    S_NAV_INGAME        = 1,
+    S_NAV_MENU          = 2,
+    S_NAV_SETTINGS      = 3,
+    S_NAV_PUSH_SETTINGS = 4,
+    S_NAV_POP           = 5,
+    S_WIN_TOGGLE_FS     = 6,
+    S_WIN_CLOSE         = 7,
 } Signal;
 
 typedef struct {

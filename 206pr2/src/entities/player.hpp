@@ -14,14 +14,14 @@ private:
     Texture2D texture;
     Image missingTexture;
     float speed = 1.0;
-    int upKey = KeyboardKey::KEY_NULL;
-    int downKey = KeyboardKey::KEY_NULL;
-    int leftKey = KeyboardKey::KEY_NULL;
-    int rightKey = KeyboardKey::KEY_NULL;
+    KeyboardKey *upKey;
+    KeyboardKey *downKey;
+    KeyboardKey *leftKey;
+    KeyboardKey *rightKey;
     Map* world;
 public:
     Player();   /*Default Constructor, don't use it lol*/
-    Player(Config* map, std::string idDebug, Vector2 coords, int upkey, int downkey, int leftKey, int rightKey, Map* world);   /*Constructor*/
+    Player(Config* map, std::string idDebug, Vector2 coords, KeyboardKey *upkey, KeyboardKey *downkey, KeyboardKey *leftKey, KeyboardKey *rightKey, Map* world);   /*Constructor*/
     ~Player();  /*Destructor*/
     void update();
     void render();

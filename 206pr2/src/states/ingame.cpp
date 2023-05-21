@@ -20,10 +20,10 @@ InGame::InGame(Config *config) : State(config)
         map,
         "Player 1",
         { 200.0, 200.0 },
-        config->keymap.p1Up,
-        config->keymap.p1Down,
-        config->keymap.p1Left,
-        config->keymap.p1Right,
+        &config->keymap.p1Up,
+        &config->keymap.p1Down,
+        &config->keymap.p1Left,
+        &config->keymap.p1Right,
         world
     );
 
@@ -31,10 +31,10 @@ InGame::InGame(Config *config) : State(config)
         map,
         "Player 2",
         { (float)(map->windowWidth - 200.0), (float)(map->windowHeight - 200.0) },
-        config->keymap.p2Up,
-        config->keymap.p2Down,
-        config->keymap.p2Left,
-        config->keymap.p2Right,
+        &config->keymap.p2Up,
+        &config->keymap.p2Down,
+        &config->keymap.p2Left,
+        &config->keymap.p2Right,
         world
     );
 
@@ -83,11 +83,14 @@ InGame::~InGame()
 
 inline void InGame::update()
 {
+    signalF = S_NO_CHANGE;
     if (config->isUpdated) {
         map->windowWidth = config->windowWidth * 2;
         map->windowHeight = config->windowHeight * 2;
         world->scaleMapTexture(map->windowWidth, map->windowHeight);
     }
+
+    config->cursorType = isPaused ? 1 : -1;
 
     if (!isPaused)
     {
@@ -121,7 +124,7 @@ inline void InGame::update()
     if (IsKeyPressed(KEY_H)) displayHitBoxes = !displayHitBoxes; /*toggle flag*/
 
     if (IsKeyPressed(KEY_P)) isPaused = !isPaused; // toggle pause
-    
+    if (IsKeyPressed(KEY_X)) signalF = S_NAV_PUSH_SETTINGS;
 
 
     /**/
@@ -204,7 +207,7 @@ inline void InGame::render()
     if (isPaused)
     {
         DrawText("PAUSED", gl.getXCoord(15), gl.getYCoord(5), gl.getGridSize(), BROWN);
-        DrawText("(WIP)", gl.getXCoord(16), gl.getYCoord(6), gl.getGridSize(), BROWN);
+        DrawText("PRESS X(WIP)", gl.getXCoord(16), gl.getYCoord(6), gl.getGridSize(), BROWN);
     }
 }
 
