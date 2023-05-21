@@ -44,6 +44,24 @@ void Settings::update()
 		case 7: config->keymap.p2Right = (KeyboardKey)input; shouldUpdateButtons = true; break;
 		}
 
+		// if selected key was assigned before, remove it
+		if (config->keymap.p1Up == (KeyboardKey)input && selectedId != 0)
+			config->keymap.p1Up = (KeyboardKey)999;
+		if (config->keymap.p1Left == (KeyboardKey)input && selectedId != 1)
+			config->keymap.p1Left = (KeyboardKey)999;
+		if (config->keymap.p1Down == (KeyboardKey)input && selectedId != 2)
+			config->keymap.p1Down = (KeyboardKey)999;
+		if (config->keymap.p1Right == (KeyboardKey)input && selectedId != 3)
+			config->keymap.p1Right = (KeyboardKey)999;
+		if (config->keymap.p2Up == (KeyboardKey)input && selectedId != 4)
+			config->keymap.p2Up = (KeyboardKey)999;
+		if (config->keymap.p2Left == (KeyboardKey)input && selectedId != 5)
+			config->keymap.p2Left = (KeyboardKey)999;
+		if (config->keymap.p2Down == (KeyboardKey)input && selectedId != 6)
+			config->keymap.p2Down = (KeyboardKey)999;
+		if (config->keymap.p2Right == (KeyboardKey)input && selectedId != 7)
+			config->keymap.p2Right = (KeyboardKey)999;
+
 		if (shouldUpdateButtons) {
 			selectedId = -1;
 			initButtons(&buttons, config, &gl);

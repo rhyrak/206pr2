@@ -90,6 +90,10 @@ inline void setTexture(int icon, Texture2D *texture, float scale) {
 			UnloadImage(temp);
 			UnloadImage(text);
 		}
+		else
+		{
+			*texture = getTexture(IBTN_EMTPY, scale);
+		}
 		break;
 	}
 }
