@@ -1,27 +1,24 @@
 #include "GridLayout.hpp"
 
-#define ROUND(x) ((int)(x + 0.5F))
-
-GridLayout::GridLayout(Config* config, float gridSize)
+GridLayout::GridLayout(int width, int height, float gridSize) : width{width}, height{height}
 {
-	this->config = config;
 	if (gridSize > 0)
 	{
 		this->gridSize = gridSize;
 		useCount = false;
-		gridCountX = config->windowWidth / gridSize;
-		gridCountY = config->windowHeight / gridSize;
+		gridCountX = width / gridSize;
+		gridCountY = height / gridSize;
 	}
 	else
 	{
 		gridCountX = -gridSize;
 		useCount = true;
-		this->gridSize = config->windowWidth / gridCountX;
-		gridCountY = config->windowHeight / gridSize;
+		this->gridSize = width / gridCountX;
+		gridCountY = height / gridSize;
 	}
 }
 
-GridLayout::GridLayout()
+GridLayout::GridLayout() : width{0}, height{0}, gridCountX{0}, gridCountY{0}, gridSize{0}, useCount{false}
 {
 }
 
@@ -30,32 +27,34 @@ GridLayout::~GridLayout()
 }
 
 
-void GridLayout::recalculate()
+void GridLayout::recalculate(int width, int height)
 {
+	this->width = width;
+	this->height = height;
 	if (useCount) {
-		gridSize = config->windowWidth / (float)gridCountX;
+		gridSize = width / (float)gridCountX;
 	}
 	else
 	{
-		gridCountX = config->windowWidth / gridSize;
-		gridCountY = config->windowHeight / gridSize;
+		gridCountX = width / gridSize;
+		gridCountY = height / gridSize;
 	}
 }
 
 void GridLayout::drawGrid()
 {
 
-	for (int i = 0; i*gridSize < config->windowHeight; i++)
+	for (int i = 0; i*gridSize < height; i++)
 	{
-		DrawLine(0, i * gridSize, config->windowWidth, i * gridSize, Color{ 255,0,0,60 });
+		DrawLine(0, i * gridSize, width, i * gridSize, Color{ 255,0,0,60 });
 		if (i%5 == 0)
-			DrawLine(0, i * gridSize, config->windowWidth, i * gridSize, Color{ 255,0,0,155 });
+			DrawLine(0, i * gridSize, width, i * gridSize, Color{ 255,0,0,155 });
 	}
-	for (int i = 0; i * gridSize < config->windowWidth; i++)
+	for (int i = 0; i * gridSize < width; i++)
 	{
-		DrawLine(i * gridSize, 0, i * gridSize, config->windowWidth, Color{ 255,0,0,60 });
+		DrawLine(i * gridSize, 0, i * gridSize, width, Color{ 255,0,0,60 });
 		if (i % 5 == 0)
-			DrawLine(i * gridSize, 0, i * gridSize, config->windowWidth, Color{ 255,0,0,155 });
+			DrawLine(i * gridSize, 0, i * gridSize, width, Color{ 255,0,0,155 });
 	}
 }
 
@@ -67,15 +66,13 @@ float GridLayout::getYCoord(float y) {
 	return y * gridSize;
 }
 
-
-float GridLayout::getXCoordCentered(float x, float width) {
-	return x * gridSize - width/2;
+float GridLayout::getXCoordCentered(float xIndex, float width) {
+	return xIndex * gridSize - width/2;
 }
 
-float GridLayout::getYCoordCentered(float y, float height) {
-	return y * gridSize - height/2;
+float GridLayout::getYCoordCentered(float yIndex, float height) {
+	return yIndex * gridSize - height/2;
 }
-
 
 float GridLayout::getGridSize()
 {

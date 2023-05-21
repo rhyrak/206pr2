@@ -8,7 +8,7 @@ _inline void initButtons(std::vector<IconButton*>* buttons, Config* config, Grid
 
 Settings::Settings(Config* config) : State(config)
 {
-	gl = GridLayout(config, -20);
+	gl = GridLayout(config->windowWidth, config->windowHeight, -20);
 	initButtons(&buttons, config, &gl);
 }
 
@@ -76,7 +76,7 @@ void Settings::update()
 
 	if (config->isUpdated)
 	{
-		gl.recalculate();
+		gl.recalculate(config->windowWidth, config->windowHeight);
 		initButtons(&buttons, config, &gl);
 	}
 }

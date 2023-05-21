@@ -4,7 +4,7 @@ inline void initButtons(Config* config, GridLayout* gl, std::vector<IconButton*>
 
 Menu::Menu(Config *config) : State(config)
 {
-	gl = GridLayout(config, -25);
+	gl = GridLayout(config->windowWidth, config->windowHeight, -25);
 	initButtons(config, &gl, &iButtons, &mButtons, &background);
 }
 
@@ -27,7 +27,7 @@ void Menu::update()
 	if (IsKeyPressed(KEY_O)) signalF = S_NAV_SETTINGS;
 	if (config->isUpdated)
 	{
-		gl.recalculate();
+		gl.recalculate(config->windowWidth, config->windowHeight);
 		initButtons(config, &gl, &iButtons, &mButtons, &background);
 	}
 }

@@ -71,7 +71,7 @@ InGame::InGame(Config *config) : State(config)
 
     /**/
 
-    gl = GridLayout(config, -32);
+    gl = GridLayout(config->windowWidth, config->windowHeight, -32);
     scoreboard = getTexture(SCOREBOARD, 1.2F*gl.getGridSize()/16);
     remTime = 120; // seconds
 }

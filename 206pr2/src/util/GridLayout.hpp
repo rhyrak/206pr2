@@ -6,22 +6,23 @@
 class GridLayout
 {
 private:
-	Config* config;
-	float gridSize;
+	int width;
+	int height;
 	int gridCountX;
 	int gridCountY;
+	float gridSize;
 	bool useCount;
 public:
-	GridLayout(Config* config, float gridSize);
+	GridLayout(int width, int height, float gridSize);
 	GridLayout();
 	~GridLayout();
 	void drawGrid();
 	float getGridSize();
 	float getXCoord(float x);
-	float getXCoordCentered(float x, float width);
-	float getYCoordCentered(float y, float height);
+	float getXCoordCentered(float xIndex, float width);
+	float getYCoordCentered(float yIndex, float height);
 	float getYCoord(float y);
-	void recalculate();
+	void recalculate(int width, int height);
 };
 
 #endif
