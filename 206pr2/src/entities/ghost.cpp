@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include "ghost.hpp"
 #include <cstdlib>
+#include <iostream>
 #define ROUND(a) ((int)((a) + 0.5f))
 
 #include "../../main.hpp"
@@ -129,4 +130,9 @@ void Ghost::reloadTexture()
 {
     UnloadTexture(texture);
     texture = getTexture("res/dead_ghost.png", TileWidth, TileHeight);
+}
+
+void Ghost::operator+(const int& n)
+{
+    this->idDebug = this->idDebug + std::to_string(n);
 }

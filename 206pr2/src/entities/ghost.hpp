@@ -3,6 +3,7 @@
 #define GHOST_H
 
 #include <vector>
+#include <string>
 #include "entity.hpp"
 
 class Ghost : public Entity {
@@ -25,6 +26,6 @@ public:
 	Rectangle getHitbox();
 	bool isCaught;
 	void reloadTexture();
-	
+	void operator + (const int& n);
 };
 #endif
