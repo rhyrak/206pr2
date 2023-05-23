@@ -1,9 +1,10 @@
 #include <raylib.h>
 #include <raymath.h>
+#include <iostream>
+#include <string>
 #include "ingame.hpp"
 #include "../../main.hpp"
 #include "../map/map.hpp"
-#include <iostream>
 #include "../ui/UiElements.hpp"
 
 
@@ -38,7 +39,6 @@ InGame::InGame(Config *config) : State(config)
         world
     );
 
-    //ghost = Ghost("Ghost1", map);
     /*Create Camera*/
     camera = Camera2D{
         Vector2{(float) config->windowWidth / 2, (float) config->windowHeight / 2},
@@ -46,9 +46,11 @@ InGame::InGame(Config *config) : State(config)
         0.0F, 0.5F
     };
 
-    for (int i = 1; i <= 11; i++)
+    for (int i = 0; i < 11; i++)
     {
-        ghosts.push_back(Ghost("Ghost" + std::to_string(i), map));
+        ghosts.push_back(Ghost("Ghost", map));
+        /*Addition is overloaded, concatenate 'i' to idDebug of Ghost object*/
+        ghosts.at(i) + (i+1);
     }
 
     nightVision = false;  /*disable flag by default*/
@@ -64,12 +66,11 @@ InGame::InGame(Config *config) : State(config)
         spotLoc[i] = GetShaderLocation(spotShader, spotName);
     }
 
-    spotPos[0].x = player1.getCenterPoint().x/ (map->windowWidth / config->windowWidth);
-    spotPos[0].y = player1.getCenterPoint().y/ (map->windowHeight / config->windowHeight);
-    spotPos[1].x = player2.getCenterPoint().x/2;
-    spotPos[1].y = player2.getCenterPoint().y/2;
-
-    /**/
+    /*set initial spotlight position to players coordinates*/
+    spotPos[0].x = player1.getCenterPoint().x / (map->windowWidth / config->windowWidth);
+    spotPos[0].y = player1.getCenterPoint().y / (map->windowHeight / config->windowHeight);
+    spotPos[1].x = player2.getCenterPoint().x / (map->windowWidth / config->windowWidth);
+    spotPos[1].y = player2.getCenterPoint().y / (map->windowHeight / config->windowHeight);
 
     gl = GridLayout(config->windowWidth, config->windowHeight, -32);
     scoreboard = getTexture(SCOREBOARD, 1.2F*gl.getGridSize()/16);
@@ -97,7 +98,7 @@ inline void InGame::update()
         remTime -= GetFrameTime();
         player1.update();
         player2.update();
-        //ghost.update();
+        /*update ghost positions and check for collision*/
         for (int i = 0; i < ghosts.size(); i++)
         {
             ghosts.at(i).update();
@@ -125,20 +126,16 @@ inline void InGame::update()
 
     if (IsKeyPressed(KEY_P)) isPaused = !isPaused; // toggle pause
     if (IsKeyPressed(KEY_X)) signalF = S_NAV_PUSH_SETTINGS;
-
-
-    /**/
         
-        monitor = GetCurrentMonitor();
-        spotPos[0].x = player1.getCenterPoint().x / (map->windowWidth / config->windowWidth);
-        spotPos[0].y = config->windowHeight - player1.getCenterPoint().y / (map->windowHeight / config->windowHeight);
-        spotPos[1].x = player2.getCenterPoint().x / (map->windowWidth / config->windowWidth);
-        spotPos[1].y = config->windowHeight - player2.getCenterPoint().y / (map->windowHeight / config->windowHeight);
-    
+    /*track spotlights*/
+    monitor = GetCurrentMonitor();
+    spotPos[0].x = player1.getCenterPoint().x / (map->windowWidth / config->windowWidth);
+    spotPos[0].y = config->windowHeight - player1.getCenterPoint().y / (map->windowHeight / config->windowHeight);
+    spotPos[1].x = player2.getCenterPoint().x / (map->windowWidth / config->windowWidth);
+    spotPos[1].y = config->windowHeight - player2.getCenterPoint().y / (map->windowHeight / config->windowHeight);
     SetShaderValue(spotShader, spotLoc[0], &spotPos[0].x, ShaderUniformDataType::SHADER_UNIFORM_VEC2);
     SetShaderValue(spotShader, spotLoc[1], &spotPos[1].x, ShaderUniformDataType::SHADER_UNIFORM_VEC2);
     
-    /**/
 }
 
 inline void InGame::render()
@@ -148,7 +145,7 @@ inline void InGame::render()
     world->render();
     player1.render();    /*Draw player model*/
     player2.render();
-
+    /*Draw ghosts*/
     for (int i = 0; i < ghosts.size(); i++)
     {
         ghosts.at(i).render();
@@ -156,8 +153,6 @@ inline void InGame::render()
 
     if (displayHitBoxes)
     {
-        //DrawCircleLines(player1.getCenterPoint().x, player1.getCenterPoint().y, visionRadius*2, RED);
-        //DrawCircleLines(player2.getCenterPoint().x, player2.getCenterPoint().y, visionRadius*2, RED);
         DrawRectangleLinesEx(player1.getHitbox(), 2, RED);
         DrawRectangleLinesEx(player2.getHitbox(), 2, RED);
         for (int i = 0; i < ghosts.size(); i++)
@@ -165,8 +160,6 @@ inline void InGame::render()
             DrawRectangleLinesEx(ghosts.at(i).getHitbox(), 2, RED);
         }
     }
-
-
 
     EndMode2D();
 
@@ -180,7 +173,6 @@ inline void InGame::render()
         // to actually pay attention to the colour!)
         DrawRectangle(0, 0, config->windowWidth, config->windowHeight, WHITE);
         EndShaderMode();
-        /**/
     }
 
     if(displayCoordinates)
@@ -195,6 +187,7 @@ inline void InGame::render()
         DrawText(TextFormat("%d", player2score), 400, 440, 20, RAYWHITE);
     } 
 
+    /*display scoreboard*/
     if (IsKeyDown(KEY_TAB) || isPaused)
     {
         DrawTexture(scoreboard, gl.getXCoordCentered(16,scoreboard.width), gl.getYCoordCentered(1.25F,scoreboard.height), WHITE);
