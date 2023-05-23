@@ -6,15 +6,15 @@ GridLayout::GridLayout(int width, int height, float gridSize) : width{width}, he
 	{
 		this->gridSize = gridSize;
 		useCount = false;
-		gridCountX = width / gridSize;
-		gridCountY = height / gridSize;
+		gridCountX = (int)(width / gridSize);
+		gridCountY = (int)(height / gridSize);
 	}
 	else
 	{
-		gridCountX = -gridSize;
+		gridCountX = (int)(-gridSize);
 		useCount = true;
-		this->gridSize = width / gridCountX;
-		gridCountY = height / gridSize;
+		this->gridSize = width / (float)gridCountX;
+		gridCountY = (int)(height / gridSize);
 	}
 }
 
@@ -36,8 +36,8 @@ void GridLayout::recalculate(int width, int height)
 	}
 	else
 	{
-		gridCountX = width / gridSize;
-		gridCountY = height / gridSize;
+		gridCountX = (int)(width / gridSize);
+		gridCountY = (int)(height / gridSize);
 	}
 }
 

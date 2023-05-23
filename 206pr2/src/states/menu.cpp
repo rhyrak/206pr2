@@ -1,5 +1,7 @@
 #include "menu.hpp"
 
+#define ROUND(a) ((int)((a) + 0.5f))
+
 inline void initButtons(Config* config, GridLayout* gl, std::vector<IconButton*> *iBtns, std::vector<Button*> *mBtns, Texture2D *bg);
 
 Menu::Menu(Config *config) : State(config)
@@ -76,11 +78,11 @@ inline void initButtons(Config* config, GridLayout* gl, std::vector<IconButton*>
 	*bg = LoadTextureFromImage(temp);
 
 	*iBtns = std::vector<IconButton*>(2);
-	iBtns->at(0) = new IconButton(Rectangle{ gl->getXCoord(0.5),gl->getYCoord(0.5),gl->getGridSize(),gl->getGridSize() }, I_GO_FULLSCREEN);
-	iBtns->at(1) = new IconButton(Rectangle{ gl->getXCoord(0.5),gl->getYCoord(0.5),gl->getGridSize(),gl->getGridSize() }, I_GO_WINDOWED);
+	iBtns->at(0) = new IconButton(Rectangle{ gl->getXCoord(0.5F),gl->getYCoord(0.5F),gl->getGridSize(),gl->getGridSize() }, I_GO_FULLSCREEN);
+	iBtns->at(1) = new IconButton(Rectangle{ gl->getXCoord(0.5F),gl->getYCoord(0.5F),gl->getGridSize(),gl->getGridSize() }, I_GO_WINDOWED);
 
 	*mBtns = std::vector<Button*>(3);
-	mBtns->at(0) = new Button(Rectangle(Rectangle{ gl->getXCoord(10),gl->getYCoord(4),5*gl->getGridSize(),1.5F*gl->getGridSize() }), "PLAY", gl->getGridSize()*0.75F);
-	mBtns->at(1) = new Button(Rectangle(Rectangle{ gl->getXCoord(10),gl->getYCoord(6),5*gl->getGridSize(),1.5F*gl->getGridSize() }), "SETTINGS", gl->getGridSize()*0.55F);
-	mBtns->at(2) = new Button(Rectangle(Rectangle{ gl->getXCoord(10),gl->getYCoord(8),5*gl->getGridSize(),1.5F*gl->getGridSize() }), "EXIT", gl->getGridSize()*0.75F);
+	mBtns->at(0) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(4),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "PLAY", ROUND(gl->getGridSize() * 0.75F));
+	mBtns->at(1) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(6),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "SETTINGS", ROUND(gl->getGridSize() * 0.55F));
+	mBtns->at(2) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(8),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "EXIT", ROUND(gl->getGridSize() * 0.75F));
 }

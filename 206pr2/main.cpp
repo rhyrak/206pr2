@@ -88,7 +88,7 @@ int main(void){
         }
 
         EndDrawing();
-
+        config->isUpdated = false;
         /*Change game state accordingly*/
         Signal signal = currentState->signal();
         switch (signal) {
@@ -128,8 +128,6 @@ int main(void){
             default:
                 break;
             }
-
-        config->isUpdated = false;
     }
 
     /*free up explicit-heap dynamic variable*/
