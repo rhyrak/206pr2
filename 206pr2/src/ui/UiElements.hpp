@@ -1,5 +1,7 @@
-#include <raylib.h>
+#ifndef UIELEMENTS_HPP
+#define UIELEMENTS_HPP
 
+#include <raylib.h>
 
 /// A rectangle defining the position of the element in the resource file.
 /// Pass into getTexture function to get scaled texture of the element.
@@ -28,9 +30,17 @@ typedef Rectangle UiElement;
 
 #define SCOREBOARD          UiElement{0,128,64,32}
 
+#define SLIDER_BAR          UiElement{48,86,48,5}
+#define SLIDER_BUTTON       UiElement{51,98,10,12}
+
 #define UI_DARK_BROWN       Color{151,113,74,255}
 #define UI_LIGHT_BROWN      Color{211,191,143,255}
+
 
 /// WIP
 /// @returns scaled texture of the given element in ui.png
 Texture2D getTexture(UiElement uiElem,float scale);
+
+Texture2D getTexture(UiElement uiElem,float width, float height);
+
+#endif

@@ -33,7 +33,7 @@ int main(void){
         std::cout << "CREATING DEFAULT CONFIG\n";
         config = new Config{
             { KEY_W,KEY_S,KEY_A,KEY_D,KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT },
-            1600,900,1,false,false };    /*Define new Config Object*/
+            0.95F,0.95F,1600,900,1,false,false };    /*Define new Config Object*/
     }
     else
     {

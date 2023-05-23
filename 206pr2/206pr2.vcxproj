@@ -145,6 +145,7 @@
     <ClCompile Include="src\states\state.cpp" />
     <ClCompile Include="src\ui\Button.cpp" />
     <ClCompile Include="src\ui\IconButton.cpp" />
+    <ClCompile Include="src\ui\Slider.cpp" />
     <ClCompile Include="src\ui\UiElements.cpp" />
     <ClCompile Include="src\util\GridLayout.cpp" />
   </ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="src\states\state.hpp" />
     <ClInclude Include="src\ui\Button.hpp" />
     <ClInclude Include="src\ui\IconButton.hpp" />
+    <ClInclude Include="src\ui\Slider.hpp" />
     <ClInclude Include="src\ui\UiElements.hpp" />
     <ClInclude Include="src\util\GridLayout.hpp" />
   </ItemGroup>

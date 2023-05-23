@@ -21,6 +21,8 @@ typedef struct {
 
 typedef struct {
     Keymap keymap;
+    float musicLevel;
+    float sfxLevel;
     int windowWidth;
     int windowHeight;
     int cursorType;

@@ -5,12 +5,14 @@
 #include "state.hpp"
 #include "../../main.hpp"
 #include "../ui/IconButton.hpp"
+#include "../ui/Slider.hpp"
 #include "../util/GridLayout.hpp"
 
 class Settings : public State
 {
 private:
     std::vector<IconButton*> buttons;
+    std::vector<Slider*> sliders;
     GridLayout gl;
 public:
     Settings(Config* config);

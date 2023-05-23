@@ -4,12 +4,12 @@
 
 #define ROUND(x) ((int)(x + 0.5F))
 
-_inline void initButtons(std::vector<IconButton*>* buttons, Config* config, GridLayout* gl);
+_inline void initButtons(std::vector<IconButton*>* buttons, std::vector<Slider*>* sliders, Config* config, GridLayout* gl);
 
 Settings::Settings(Config* config) : State(config)
 {
 	gl = GridLayout(config->windowWidth, config->windowHeight, -20);
-	initButtons(&buttons, config, &gl);
+	initButtons(&buttons, &sliders, config, &gl);
 }
 
 Settings::~Settings()
@@ -64,7 +64,7 @@ void Settings::update()
 
 		if (shouldUpdateButtons) {
 			selectedId = -1;
-			initButtons(&buttons, config, &gl);
+			initButtons(&buttons, &sliders, config, &gl);
 		}
 	}
 
@@ -77,15 +77,25 @@ void Settings::update()
 	if (config->isUpdated)
 	{
 		gl.recalculate(config->windowWidth, config->windowHeight);
-		initButtons(&buttons, config, &gl);
+		initButtons(&buttons, &sliders, config, &gl);
 	}
 }
 
 void Settings::render()
 {
-	ClearBackground(RAYWHITE);
-	gl.drawGrid();
-	DrawText("WIP. Press space to go back", ROUND(gl.getXCoord(3)), ROUND(gl.getYCoord(3)), ROUND(gl.getGridSize()), GRAY);
+	ClearBackground(UI_DARK_BROWN);
+	DrawRectangle(0, 0, config->windowWidth, config->windowHeight, Color{255,255,255,96});
+	//gl.drawGrid();
+	DrawText("WIP. Press space to go back", ROUND(gl.getXCoord(0.5)), ROUND(gl.getYCoord(0.5)), ROUND(gl.getGridSize()/2), RED);
+	
+
+	for (int i = 0; i < sliders.size(); i++)
+	{
+		int feedback = sliders.at(i)->render();
+		if (feedback == 1)
+			config->cursorType = 0;
+	}
+
 	for (int i = 0; i < buttons.size(); i++)
 	{
 		int feedback = buttons.at(i)->render();
@@ -102,6 +112,8 @@ void Settings::render()
 		}
 	}
 
+	DrawText("Music:", ROUND(gl.getXCoord(6.75F)), ROUND(gl.getYCoord(2.4F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
+	DrawText("  SFX:", ROUND(gl.getXCoord(6.75F)), ROUND(gl.getYCoord(3.65F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
 	DrawText("Player 1", ROUND(gl.getXCoord(7)), ROUND(gl.getYCoord(7.2F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
 	DrawText("Player 2", ROUND(gl.getXCoord(11)), ROUND(gl.getYCoord(7.2F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
 }
@@ -111,13 +123,21 @@ Signal Settings::signal()
 	return signalF;
 }
 
-_inline void initButtons(std::vector<IconButton*>* buttons, Config* config, GridLayout *gl)
+_inline void initButtons(std::vector<IconButton*>* buttons, std::vector<Slider*>* sliders, Config* config, GridLayout *gl)
 {
+	for (int i = 0; i < sliders->size(); i++)
+	{
+		delete sliders->at(i);
+	}
+	sliders->clear();
 	for (int i = 0; i < buttons->size(); i++)
 	{
 		delete buttons->at(i);
 	}
 	buttons->clear();
+
+	sliders->push_back(new Slider(Rectangle{ gl->getXCoord(8.5), gl->getYCoord(2.5), gl->getGridSize() * 3,0 }, &config->musicLevel));
+	sliders->push_back(new Slider(Rectangle{ gl->getXCoord(8.5), gl->getYCoord(3.75), gl->getGridSize() * 3,0 }, &config->sfxLevel));
 
 	buttons->push_back(new IconButton(Rectangle{
 		gl->getXCoord(7.5),gl->getYCoord(5),gl->getGridSize(),gl->getGridSize() }, config->keymap.p1Up));
