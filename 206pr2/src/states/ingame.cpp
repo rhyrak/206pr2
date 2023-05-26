@@ -10,6 +10,11 @@
 
 InGame::InGame(Config *config) : State(config)
 {
+    ghostDeath = LoadSound("res/ghostDeath.mp3");
+    player1Sound = LoadSound("res/player1footstep.mp3");
+    player2Sound = LoadSound("res/player2footstep.mp3");
+    SetSoundVolume(player1Sound, config->sfxLevel);
+    SetSoundVolume(player2Sound, (config->sfxLevel)/4);
     isPaused = false;
     map = new Config;
     map->windowWidth = config->windowWidth * 2;
@@ -80,10 +85,17 @@ InGame::InGame(Config *config) : State(config)
 InGame::~InGame()
 {
     UnloadTexture(scoreboard);
+    UnloadSound(ghostDeath);
+    UnloadSound(player1Sound);
+    UnloadSound(player2Sound);
 }
 
 inline void InGame::update()
 {
+    SetSoundVolume(player1Sound, config->sfxLevel);
+    SetSoundVolume(player2Sound, (config->sfxLevel) / 4);
+    SetSoundVolume(ghostDeath, config->sfxLevel);
+
     signalF = S_NO_CHANGE;
     if (config->isUpdated) {
         map->windowWidth = config->windowWidth * 2;
@@ -96,14 +108,34 @@ inline void InGame::update()
     if (!isPaused)
     {
         remTime -= GetFrameTime();
+        /*update players positions and play sfx*/
         player1.update();
+        if (IsKeyPressed(player1.getUpKey()))
+            PlaySound(player1Sound);
+        if (IsKeyPressed(player1.getLeftKey()))
+            PlaySound(player1Sound);
+        if (IsKeyPressed(player1.getDownKey()))
+            PlaySound(player1Sound);
+        if (IsKeyPressed(player1.getRightKey()))
+            PlaySound(player1Sound);
+
         player2.update();
+        if (IsKeyPressed(player2.getUpKey()))
+            PlaySound(player2Sound);
+        if (IsKeyPressed(player2.getLeftKey()))
+            PlaySound(player2Sound);
+        if (IsKeyPressed(player2.getDownKey()))
+            PlaySound(player2Sound);
+        if (IsKeyPressed(player2.getRightKey()))
+            PlaySound(player2Sound);
+
         /*update ghost positions and check for collision*/
         for (int i = 0; i < ghosts.size(); i++)
         {
             ghosts.at(i).update();
 
-            if (!ghosts.at(i).isCaught) {
+            if (!ghosts.at(i).isCaught) 
+            {
                 if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player1.getHitbox()))
                 {
                     ghosts.at(i).isCaught = true;
@@ -116,6 +148,13 @@ inline void InGame::update()
                     ghosts.at(i).reloadTexture();
                     player2score++;
                 }
+
+            }
+            else if (!ghosts.at(i).soundPlayed)
+            {
+                PlaySound(ghostDeath);  /*play death sound*/
+                ghosts.at(i).soundPlayed = true;    /*enable flag*/
+
             }
         }
     }
@@ -185,6 +224,7 @@ inline void InGame::render()
         player2.displayDebugInfo(60);  /*Display coordinates*/
         DrawText(TextFormat("%d", player1score), 400, 400, 20, RAYWHITE);
         DrawText(TextFormat("%d", player2score), 400, 440, 20, RAYWHITE);
+
     } 
 
     /*display scoreboard*/

@@ -36,7 +36,9 @@ public:
     inline void render() override; /*Overridden method*/
     Signal signal() override; /*Overridden method*/
     Player getPlayer(); /*Accessor*/
-
+    Sound ghostDeath;
+    Sound player1Sound;
+    Sound player2Sound;
     int monitor;
     unsigned int spotLoc[MAXSPOT];
     Vector2 spotPos[MAXSPOT];

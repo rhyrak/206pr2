@@ -24,10 +24,13 @@ inline bool instanceof(const T* ptr) {
 
 /*main function*/
 int main(void){
- 
+    InitAudioDevice();
+
+    Music music = LoadMusicStream("res/background.wav");
     Config* config;
     FILE* configFile;
     errno_t res = fopen_s(&configFile, "config.bin", "rb");
+    PlayMusicStream(music);
     if (res == EINVAL || configFile == 0)
     {
         std::cout << "CREATING DEFAULT CONFIG\n";
@@ -42,7 +45,7 @@ int main(void){
         fread(config, sizeof(Config), 1, configFile);
         fclose(configFile);
     }
-
+    SetMusicVolume(music, config->musicLevel);
 
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
@@ -67,6 +70,8 @@ int main(void){
     config->isUpdated = true; // force an update when the game is started
     while (!exitFlag && !WindowShouldClose())
     {
+        UpdateMusicStream(music);
+        SetMusicVolume(music, config->musicLevel);
         /*Fullscreen shortcut*/
         if (!instanceof<InGame>(currentState)) {
             if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
@@ -132,6 +137,8 @@ int main(void){
 
     /*free up explicit-heap dynamic variable*/
     delete currentState;
+    UnloadMusicStream(music);
+    CloseAudioDevice();
 
     UnloadTexture(cursorActive);
     UnloadTexture(cursorHover);

@@ -9,7 +9,6 @@
 class Ghost : public Entity {
 private:
 	Texture2D texture;
-	float speed = 1.0;
 	int randomDir;
 	float randomRange = 0.0;
 	bool moveRight = false;
@@ -26,6 +25,7 @@ public:
 	Rectangle getHitbox();
 	bool isCaught;
 	void reloadTexture();
+	bool soundPlayed = false;
 	void operator + (const int& n);
 };
 #endif

@@ -13,7 +13,6 @@ class Player : public Entity
 private:
     Texture2D texture;
     Image missingTexture;
-    float speed = 1.0;
     KeyboardKey *upKey;
     KeyboardKey *downKey;
     KeyboardKey *leftKey;

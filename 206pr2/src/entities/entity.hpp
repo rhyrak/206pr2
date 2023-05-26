@@ -13,6 +13,7 @@ protected:
     Rectangle hitbox;
     Vector2 centerPoint = { 0 , 0 };
     Config* map;
+    float speed = 1.0;
 public:
     Vector2 getCenterPoint();
     virtual Texture2D getTexture(const char* path, int tileWidth, int tileHeight);
