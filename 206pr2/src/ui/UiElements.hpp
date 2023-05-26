@@ -33,6 +33,8 @@ typedef Rectangle UiElement;
 #define SLIDER_BAR          UiElement{48,86,48,5}
 #define SLIDER_BUTTON       UiElement{51,98,10,12}
 
+#define ARROW_BACK          UiElement{64,98,16,12}
+
 #define UI_DARK_BROWN       Color{151,113,74,255}
 #define UI_LIGHT_BROWN      Color{211,191,143,255}
 

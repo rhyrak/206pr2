@@ -80,6 +80,9 @@ inline void setTexture(int icon, Texture2D *texture, float scale) {
 		UnloadImage(temp);
 		UnloadImage(arrow);
 		break;
+	case I_ARROW_BACK:
+		*texture = getTexture(ARROW_BACK,scale);
+		break;
 
 	default:
 		if ((icon >= 'a' && icon <= 'z') || (icon >= 'A' && icon <= 'Z') || (icon >= '0' && icon <= '9')) {

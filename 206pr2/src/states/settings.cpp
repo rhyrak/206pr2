@@ -24,7 +24,6 @@ float blinkDur = 0.5F;
 void Settings::update()
 {
 	config->cursorType = 1;
-	if (IsKeyPressed(KEY_SPACE)) signalF = S_NAV_POP;
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) selectedId = -1;
 	int input = GetKeyPressed();
 	bool shouldUpdateButtons = false;
@@ -85,9 +84,6 @@ void Settings::render()
 {
 	ClearBackground(UI_DARK_BROWN);
 	DrawRectangle(0, 0, config->windowWidth, config->windowHeight, Color{255,255,255,96});
-	//gl.drawGrid();
-	DrawText("WIP. Press space to go back", ROUND(gl.getXCoord(0.5)), ROUND(gl.getYCoord(0.5)), ROUND(gl.getGridSize()/2), RED);
-	
 
 	for (int i = 0; i < sliders.size(); i++)
 	{
@@ -100,7 +96,12 @@ void Settings::render()
 	{
 		int feedback = buttons.at(i)->render();
 		if (feedback == 2)
-			selectedId = i;
+		{
+			if (i == buttons.size()-1)
+				signalF = S_NAV_POP;
+			else
+				selectedId = i;
+		}
 		else if (feedback == 1)
 			config->cursorType = 0;
 	}
@@ -112,8 +113,8 @@ void Settings::render()
 		}
 	}
 
-	DrawText("Music:", ROUND(gl.getXCoord(6.75F)), ROUND(gl.getYCoord(2.4F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
-	DrawText("  SFX:", ROUND(gl.getXCoord(6.75F)), ROUND(gl.getYCoord(3.65F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
+	DrawText("Music", ROUND(gl.getXCoord(6.75F)), ROUND(gl.getYCoord(2.4F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
+	DrawText(" SFX", ROUND(gl.getXCoord(6.75F)), ROUND(gl.getYCoord(3.65F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
 	DrawText("Player 1", ROUND(gl.getXCoord(7)), ROUND(gl.getYCoord(7.2F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
 	DrawText("Player 2", ROUND(gl.getXCoord(11)), ROUND(gl.getYCoord(7.2F)), ROUND(gl.getGridSize() * 0.5F), UI_DARK_BROWN);
 }
@@ -156,4 +157,6 @@ _inline void initButtons(std::vector<IconButton*>* buttons, std::vector<Slider*>
 		gl->getXCoord(11.5),gl->getYCoord(6),gl->getGridSize(),gl->getGridSize() }, config->keymap.p2Down));
 	buttons->push_back(new IconButton(Rectangle{
 		gl->getXCoord(12.5),gl->getYCoord(6),gl->getGridSize(),gl->getGridSize() }, config->keymap.p2Right));
+	buttons->push_back(new IconButton(Rectangle{
+		gl->getXCoord(0.5F),gl->getYCoord(0.5F),gl->getGridSize(),gl->getGridSize() }, I_ARROW_BACK));
 }

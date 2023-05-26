@@ -62,8 +62,8 @@ int Slider::render()
 	else
 		DrawTexture(btnTexture, btnHitbox.x, btnHitbox.y, WHITE);
 	
-
-	DrawText(TextFormat("%f", *value), barHitbox.x + barHitbox.width * 1.1, barHitbox.y, barHitbox.height, RED);
+	// uncomment for debugging
+	//DrawText(TextFormat("%f", *value), barHitbox.x + barHitbox.width * 1.1, barHitbox.y, barHitbox.height, RED);
 
 	return hover ? 1 : 0;
 }

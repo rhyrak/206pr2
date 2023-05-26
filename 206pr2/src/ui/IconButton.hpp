@@ -7,6 +7,7 @@
 #define I_GO_FULLSCREEN 0
 #define I_GO_WINDOWED 1
 #define I_EXIT 2
+#define I_ARROW_BACK 3
 
 class IconButton
 {
