@@ -33,7 +33,8 @@ Slider::Slider(Rectangle barHitbox, float* value, Color tint)
 
 Slider::Slider()
 {
-
+	UnloadTexture(barTexture);
+	UnloadTexture(btnTexture);
 }
 
 Slider::~Slider()

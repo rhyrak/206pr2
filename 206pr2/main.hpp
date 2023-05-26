@@ -4,7 +4,7 @@
 #include <raylib.h>
 
 typedef enum {
-    S_NO_CHANGE         = -1,
+    S_NO_CHANGE         = 0,
     S_NAV_INGAME        = 1,
     S_NAV_MENU          = 2,
     S_NAV_SETTINGS      = 3,

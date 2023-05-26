@@ -1,4 +1,5 @@
 #include "menu.hpp"
+#include <iostream>
 
 #define ROUND(a) ((int)((a) + 0.5f))
 
@@ -12,6 +13,9 @@ Menu::Menu(Config *config) : State(config)
 
 Menu::~Menu()
 {
+	std::cout << "****************************************************************************************************"
+		"\n\t\t\tDESTRUCTING MENU\n" <<
+		"****************************************************************************************************\n";
 	for (int i = 0; i < iButtons.size(); i++)
 		delete iButtons.at(i);
 
@@ -25,8 +29,6 @@ void Menu::update()
 {
 	signalF = S_NO_CHANGE;
 	config->cursorType = 1;
-	if (IsKeyPressed(KEY_P)) signalF = S_NAV_INGAME;
-	if (IsKeyPressed(KEY_O)) signalF = S_NAV_SETTINGS;
 	if (config->isUpdated)
 	{
 		gl.recalculate(config->windowWidth, config->windowHeight);

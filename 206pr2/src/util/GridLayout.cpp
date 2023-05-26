@@ -33,6 +33,7 @@ void GridLayout::recalculate(int width, int height)
 	this->height = height;
 	if (useCount) {
 		gridSize = width / (float)gridCountX;
+		gridCountY = (int)(height / gridSize);
 	}
 	else
 	{
@@ -59,11 +60,25 @@ void GridLayout::drawGrid()
 }
 
 float GridLayout::getXCoord(float x) {
-	return x * gridSize;
+	if (x >= 0)
+	{
+		return x * gridSize;
+	}
+	else
+	{
+		return width + x * gridSize;
+	}
 }
 
 float GridLayout::getYCoord(float y) {
-	return y * gridSize;
+	if (y>=0)
+	{
+		return y * gridSize;
+	}
+	else
+	{
+		return height + y * gridSize;
+	}
 }
 
 float GridLayout::getXCoordCentered(float xIndex, float width) {

@@ -80,14 +80,29 @@ InGame::InGame(Config *config) : State(config)
     gl = GridLayout(config->windowWidth, config->windowHeight, -32);
     scoreboard = getTexture(SCOREBOARD, 1.2F*gl.getGridSize()/16);
     remTime = 120; // seconds
+    
+    showScoreboard = false;
+
+    pauseBtns.push_back(new IconButton(Rectangle{
+        gl.getXCoord(1.0F), gl.getYCoord(1.0F), gl.getGridSize(), gl.getGridSize()}, I_ARROW_BACK));
+    pauseBtns.push_back(new IconButton(Rectangle{
+        gl.getXCoord(1.0F), gl.getYCoord(-2.0F), gl.getGridSize(), gl.getGridSize()}, I_GEAR));
 }
 
 InGame::~InGame()
 {
+    std::cout << "****************************************************************************************************"
+        "\n\t\t\tDESTRUCTING INGAME\n" <<
+        "****************************************************************************************************\n";
     UnloadTexture(scoreboard);
     UnloadSound(ghostDeath);
     UnloadSound(player1Sound);
     UnloadSound(player2Sound);
+    for (int i = 0; i < pauseBtns.size(); i++)
+        delete pauseBtns.at(i);
+    pauseBtns.clear();
+    player1score = 0;
+    player2score = 0;
 }
 
 inline void InGame::update()
@@ -164,6 +179,7 @@ inline void InGame::update()
     if (IsKeyPressed(KEY_H)) displayHitBoxes = !displayHitBoxes; /*toggle flag*/
 
     if (IsKeyPressed(KEY_P)) isPaused = !isPaused; // toggle pause
+    if (IsKeyPressed(KEY_TAB)) showScoreboard = !showScoreboard;
     if (IsKeyPressed(KEY_X)) signalF = S_NAV_PUSH_SETTINGS;
         
     /*track spotlights*/
@@ -228,19 +244,31 @@ inline void InGame::render()
     } 
 
     /*display scoreboard*/
-    if (IsKeyDown(KEY_TAB) || isPaused)
+    if (showScoreboard || isPaused)
     {
+        if(isPaused)
+            DrawRectangle(0, 0, config->windowWidth, config->windowHeight, Color{0,0,0,128});
         DrawTexture(scoreboard, gl.getXCoordCentered(16,scoreboard.width), gl.getYCoordCentered(1.25F,scoreboard.height), WHITE);
         const char* sbText = TextFormat("%02d %d %02d", player1score, (int)remTime, player2score);
         Vector2 textDim = MeasureTextEx(font, sbText, gl.getGridSize() * 0.75F, 0);
         DrawTextEx(font, sbText, Vector2{ gl.getXCoordCentered(16, textDim.x), gl.getYCoordCentered(1.15F, textDim.y) },
             gl.getGridSize() * 0.75F, 0, UI_LIGHT_BROWN);
-        gl.drawGrid();
+        //gl.drawGrid();
     }
     if (isPaused)
     {
-        DrawText("PAUSED", gl.getXCoord(15), gl.getYCoord(5), gl.getGridSize(), BROWN);
-        DrawText("PRESS X(WIP)", gl.getXCoord(16), gl.getYCoord(6), gl.getGridSize(), BROWN);
+        for (int i = 0; i < pauseBtns.size(); i++)
+        {
+            int feedback = pauseBtns.at(i)->render();
+            if (feedback == 1) config->cursorType = 0;
+            else if (feedback == 2) {
+                switch (i)
+                {
+                case 0: signalF = S_NAV_MENU; break;
+                case 1: signalF = S_NAV_PUSH_SETTINGS; break;
+                }
+            }
+        }
     }
 }
 

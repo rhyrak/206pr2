@@ -8,6 +8,7 @@
 #define I_GO_WINDOWED 1
 #define I_EXIT 2
 #define I_ARROW_BACK 3
+#define I_GEAR 4
 
 class IconButton
 {

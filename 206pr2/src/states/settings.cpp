@@ -1,6 +1,7 @@
 #include "settings.hpp"
 #include "../util/GridLayout.hpp"
 #include "../ui/UiElements.hpp"
+#include <iostream>
 
 #define ROUND(x) ((int)(x + 0.5F))
 
@@ -14,6 +15,9 @@ Settings::Settings(Config* config) : State(config)
 
 Settings::~Settings()
 {
+	std::cout << "****************************************************************************************************"
+		"\n\t\t\tDESTRUCTING SETTINGS\n" <<
+		"****************************************************************************************************\n";
 	for (int i = 0; i < buttons.size(); i++)
 		delete buttons.at(i);
 }

@@ -62,8 +62,8 @@ int main(void){
     Texture2D cursorHover = getTexture(CURSOR_HOVER, 3);
     font = LoadFontEx("res/ui/Kenney Mini Square Mono.ttf", 96, NULL, 0);
 
-    State *currentState = new Menu(config); /*Menu by default*/
-    State *prevState = nullptr;
+    std::vector<State*> stateStack;
+    stateStack.push_back(new Menu(config));
 
     /*Game loop*/
     bool exitFlag = false;
@@ -73,17 +73,17 @@ int main(void){
         UpdateMusicStream(music);
         SetMusicVolume(music, config->musicLevel);
         /*Fullscreen shortcut*/
-        if (!instanceof<InGame>(currentState)) {
+        if (!instanceof<InGame>(stateStack.back())) {
             if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
         }
 
         if (IsKeyPressed(KEY_Q) && IsKeyDown(KEY_LEFT_ALT)) MinimizeWindow();
         
-        currentState->update();
+        stateStack.back()->update();
         //std::cout << player1score;
         BeginDrawing();
 
-        currentState->render();
+        stateStack.back()->render();
 
         DrawFPS(config->windowWidth-90, 10);
 
@@ -95,34 +95,34 @@ int main(void){
         EndDrawing();
         config->isUpdated = false;
         /*Change game state accordingly*/
-        Signal signal = currentState->signal();
+        Signal signal = stateStack.back()->signal();
         switch (signal) {
             case S_NAV_MENU:
-                delete currentState;
-                currentState = new Menu(config);
+                for (auto state : stateStack)
+                    delete state;
+                stateStack.clear();
+                stateStack.push_back(new Menu(config));
                 break;
             case S_NAV_INGAME:
-                delete currentState;
-                currentState = new InGame(config);
+                for (auto state : stateStack)
+                    delete state;
+                stateStack.clear();
+                stateStack.push_back(new InGame(config));
                 break;
             case S_NAV_SETTINGS:
-                delete currentState;
-                currentState = new Settings(config);
+                for (auto state : stateStack)
+                    delete state;
+                stateStack.clear();
+                stateStack.push_back(new Settings(config));
                 break;
             case S_NAV_PUSH_SETTINGS:
-                prevState = currentState;
-                currentState = new Settings(config);
+                stateStack.push_back(new Settings(config));
                 break;
             case S_NAV_POP:
-                delete currentState;
-                if (prevState != nullptr) {
-                    currentState = prevState;
-                }
-                else
-                {
-                    currentState = new Menu(config);
-                    prevState = nullptr;
-                }
+                delete stateStack.at(stateStack.size()-1);
+                stateStack.pop_back();
+                if (stateStack.size()==0)
+                    stateStack.push_back(new Menu(config));
                 break;
             case S_WIN_TOGGLE_FS:
                 cToggleFullscreen(config);
@@ -135,8 +135,10 @@ int main(void){
             }
     }
 
-    /*free up explicit-heap dynamic variable*/
-    delete currentState;
+    /*free up explicit-heap dynamic variables*/
+    for (auto state : stateStack)
+        delete state;
+    stateStack.clear();
     UnloadMusicStream(music);
     CloseAudioDevice();
 

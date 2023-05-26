@@ -10,6 +10,7 @@
 #include "raylib.h"
 #include "../map/map.hpp"
 #include "../util/GridLayout.hpp"
+#include "../ui/IconButton.hpp"
 
 /*InGame extends State*/
 class InGame : public State
@@ -27,7 +28,9 @@ private:
     Map* world;
     GridLayout gl;
     Texture2D scoreboard;
+    bool showScoreboard;
     bool isPaused;
+    std::vector<IconButton*> pauseBtns;
     std::vector< Ghost> ghosts;
 public:
     InGame(Config *config); /*Constructor*/
