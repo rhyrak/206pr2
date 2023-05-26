@@ -16,7 +16,8 @@ Map::Map(int w, int h)
 
 Map::~Map()
 {
-
+    std::cout << "\nMAP DESTRUCTOR\n";
+    UnloadTexture(mapTexture);
 }
 
 Map::Map()

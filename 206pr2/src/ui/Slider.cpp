@@ -1,6 +1,8 @@
 #include "Slider.hpp"
 #include "UiElements.hpp"
 
+#define ROUND(x) ((int)(x+0.5F))
+
 Slider::Slider(Rectangle barHitbox, float initialValue, Color tint)
 {
 	barHitbox.height = barHitbox.width * 5.0F / 48.0F;
@@ -33,13 +35,12 @@ Slider::Slider(Rectangle barHitbox, float* value, Color tint)
 
 Slider::Slider()
 {
-	UnloadTexture(barTexture);
-	UnloadTexture(btnTexture);
 }
 
 Slider::~Slider()
 {
-
+	UnloadTexture(barTexture);
+	UnloadTexture(btnTexture);
 }
 
 int Slider::render()
@@ -55,13 +56,13 @@ int Slider::render()
 	}
 	btnHitbox.x = barHitbox.x + barHitbox.width * (*value) - btnHitbox.width/2.5F;
 
-	DrawTexture(barTexture, barHitbox.x, barHitbox.y, WHITE);
+	DrawTexture(barTexture, ROUND(barHitbox.x), ROUND(barHitbox.y), WHITE);
 
 	bool hover = CheckCollisionPointRec(GetMousePosition(), btnHitbox);
 	if (hover)
-		DrawTexture(btnTexture, btnHitbox.x, btnHitbox.y, tint);
+		DrawTexture(btnTexture, ROUND(btnHitbox.x), ROUND(btnHitbox.y), tint);
 	else
-		DrawTexture(btnTexture, btnHitbox.x, btnHitbox.y, WHITE);
+		DrawTexture(btnTexture, ROUND(btnHitbox.x), ROUND(btnHitbox.y), WHITE);
 	
 	// uncomment for debugging
 	//DrawText(TextFormat("%f", *value), barHitbox.x + barHitbox.width * 1.1, barHitbox.y, barHitbox.height, RED);

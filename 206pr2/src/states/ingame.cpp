@@ -101,6 +101,7 @@ InGame::~InGame()
     for (int i = 0; i < pauseBtns.size(); i++)
         delete pauseBtns.at(i);
     pauseBtns.clear();
+    delete world;
     player1score = 0;
     player2score = 0;
 }

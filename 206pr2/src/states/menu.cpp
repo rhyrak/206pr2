@@ -22,6 +22,9 @@ Menu::~Menu()
 	for (int i = 0; i < mButtons.size(); i++)
 		delete mButtons.at(i);
 
+	iButtons.clear();
+	mButtons.clear();
+
 	UnloadTexture(background);
 }
 
