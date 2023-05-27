@@ -135,7 +135,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\map\map.cpp" />
-    <ClCompile Include="src\map\map.hpp" />
     <ClCompile Include="src\entities\entity.cpp" />
     <ClCompile Include="src\entities\ghost.cpp" />
     <ClCompile Include="src\entities\player.cpp" />
@@ -151,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.hpp" />
+    <ClInclude Include="src\map\map.hpp" />
     <ClInclude Include="src\entities\entity.hpp" />
     <ClInclude Include="src\entities\ghost.hpp" />
     <ClInclude Include="src\entities\player.hpp" />

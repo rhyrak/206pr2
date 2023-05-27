@@ -42,9 +42,6 @@
     <ClCompile Include="src\ui\UiElements.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\map\map.hpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\map\map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\states\ingame.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map\map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\states\menu.hpp">
