@@ -53,9 +53,16 @@ InGame::InGame(Config *config) : State(config)
 
     for (int i = 0; i < 11; i++)
     {
-        ghosts.push_back(Ghost("Ghost", map));
+        ghosts.push_back(Ghost("Ghost", map, world));
         /*Addition is overloaded, concatenate 'i' to idDebug of Ghost object*/
         ghosts.at(i) + (i+1);
+    }
+
+    for (int i = 0; i < 11; i++)
+    {
+        mushrooms.push_back(Mushroom("Mushroom", map, world));
+        /*Addition is overloaded, concatenate 'i' to idDebug of Ghost object*/
+        mushrooms.at(i) + (i + 1);
     }
 
     nightVision = false;  /*disable flag by default*/
@@ -156,13 +163,13 @@ inline void InGame::update()
                 {
                     ghosts.at(i).isCaught = true;
                     ghosts.at(i).reloadTexture();
-                    player1score++;
+                    player1score -= 3;
                 }
                 if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player2.getHitbox()))
                 {
                     ghosts.at(i).isCaught = true;
                     ghosts.at(i).reloadTexture();
-                    player2score++;
+                    player2score -= 3;
                 }
 
             }
@@ -170,6 +177,33 @@ inline void InGame::update()
             {
                 PlaySound(ghostDeath);  /*play death sound*/
                 ghosts.at(i).soundPlayed = true;    /*enable flag*/
+
+            }
+        }
+        for (int i = 0; i < mushrooms.size(); i++)
+        {
+            mushrooms.at(i).update();
+
+            if (!mushrooms.at(i).isCaught)
+            {
+                if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player1.getHitbox()))
+                {
+                    mushrooms.at(i).isCaught = true;
+                    mushrooms.at(i).reloadTexture();
+                    player1score += 5;
+                }
+                if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player2.getHitbox()))
+                {
+                    mushrooms.at(i).isCaught = true;
+                    mushrooms.at(i).reloadTexture();
+                    player2score += 5;
+                }
+
+            }
+            else if (!mushrooms.at(i).soundPlayed)
+            {
+                PlaySound(ghostDeath);  /*play death sound*/
+                mushrooms.at(i).soundPlayed = true;    /*enable flag*/
 
             }
         }
@@ -199,13 +233,19 @@ inline void InGame::render()
     BeginMode2D(camera);
     ClearBackground(MAGENTA);
     world->render();
-    player1.render();    /*Draw player model*/
-    player2.render();
-    /*Draw ghosts*/
+
     for (int i = 0; i < ghosts.size(); i++)
     {
         ghosts.at(i).render();
     }
+
+    for (int i = 0; i < mushrooms.size(); i++)
+    {
+        mushrooms.at(i).render();
+    }
+
+    player1.render();    /*Draw player model*/
+    player2.render();
 
     if (displayHitBoxes)
     {
@@ -214,6 +254,10 @@ inline void InGame::render()
         for (int i = 0; i < ghosts.size(); i++)
         {
             DrawRectangleLinesEx(ghosts.at(i).getHitbox(), 2, RED);
+        }
+        for (int i = 0; i < mushrooms.size(); i++)
+        {
+            DrawRectangleLinesEx(mushrooms.at(i).getHitbox(), 2, RED);
         }
     }
 
@@ -236,6 +280,10 @@ inline void InGame::render()
         for (int i = 0; i < ghosts.size(); i++)
         {
             ghosts.at(i).displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
+        }
+        for (int i = 0; i < mushrooms.size(); i++)
+        {
+            mushrooms.at(i).displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
         }
         player1.displayDebugInfo(0);  /*Display coordinates*/
         player2.displayDebugInfo(60);  /*Display coordinates*/

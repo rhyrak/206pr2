@@ -11,12 +11,19 @@
 class Player : public Entity
 {
 private:
-    Texture2D texture;
+    enum direction {LEFT, RIGHT, UP, DOWN};
+    direction dir = DOWN;
+    int textureWidth = 128, textureHeight = 128;
+    Texture2D texture[8];
     Image missingTexture;
     KeyboardKey *upKey;
     KeyboardKey *downKey;
     KeyboardKey *leftKey;
     KeyboardKey *rightKey;
+    bool idle = true;
+    float animTick = 0.0F;
+    int animIndex = 0;
+    void loadSprite();
     Map* world;
 public:
     Player();   /*Default Constructor, don't use it lol*/

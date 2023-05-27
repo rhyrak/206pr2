@@ -1,33 +1,33 @@
 #include <raylib.h>
-#include "ghost.hpp"
+#include "mushroom.hpp"
 #include <cstdlib>
 #include <iostream>
 #define ROUND(a) ((int)((a) + 0.5f))
 
 #include "../../main.hpp"
 #include "../map/map.hpp"
-Ghost::Ghost()
+Mushroom::Mushroom()
 {
 }
 
-Ghost::Ghost(std::string idDebug, Config *config, Map *world) {
+Mushroom::Mushroom(std::string idDebug, Config* config, Map* world) {
     this->idDebug = idDebug;
     this->map = config;
     this->world = world;
     this->isCaught = false;
     this->speed = 100.0;
-    this->centerPoint = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight-500))) / 1.0F };
-    this->texture = LoadTexture("res/Basic_Undead_strawberry_Sprites.png");
+    this->centerPoint = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
+    this->texture = LoadTexture("res/cute mushroom walk.png");
 }
 
-Ghost::~Ghost()
+Mushroom::~Mushroom()
 {
 }
 
-void Ghost::update() {
-    if(!isCaught)
+void Mushroom::update() {
+    if (!isCaught)
     {
-        if(!world->canMove(centerPoint.x, centerPoint.y))
+        if (!world->canMove(centerPoint.x + 1, centerPoint.y + 1))
             centerPoint = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
         if ((moveUp == false && moveDown == false && moveRight == false && moveLeft == false) || randomRange <= 0.0
             || (centerPoint.x <= textureWidth / 2 || centerPoint.x >= map->windowWidth - textureWidth / 2 || centerPoint.y <= textureHeight / 2 || centerPoint.y >= map->windowHeight - textureHeight / 2))
@@ -40,14 +40,14 @@ void Ghost::update() {
             animIndex++;
             animTick = 0.0F;
         }
-        if (animIndex == 8)
+        if (animIndex == 4)
             animIndex = 0;
 
         randomRange -= dt;
         if (moveLeft)
         {
             dir = LEFT;
-            if (centerPoint.x > textureHeight / 2)
+            if (centerPoint.x > textureWidth / 2)
             {
                 if (world->canMove(((int)centerPoint.x - textureWidth / 2) - (this->speed * dt), (int)centerPoint.y)
                     && world->canMove(((int)centerPoint.x - textureWidth / 2) - (this->speed * dt), (int)centerPoint.y + textureHeight / 2 - 0.2)
@@ -58,13 +58,13 @@ void Ghost::update() {
                 }
             }
             else
-                centerPoint.x = textureHeight / 2;
+                centerPoint.x = textureWidth / 2;
         }
 
         if (moveRight)
         {
             dir = RIGHT;
-            if (centerPoint.x < map->windowWidth - textureHeight / 2)
+            if (centerPoint.x < map->windowWidth - textureWidth / 2)
             {
                 if (world->canMove(((int)centerPoint.x + textureWidth / 2) + (this->speed * dt), (int)centerPoint.y)
                     && world->canMove(((int)centerPoint.x + textureWidth / 2) + (this->speed * dt), (int)centerPoint.y + textureHeight / 2 - 0.2)
@@ -75,7 +75,7 @@ void Ghost::update() {
                 }
             }
             else
-                centerPoint.x = map->windowWidth - textureHeight / 2;
+                centerPoint.x = map->windowWidth - textureWidth / 2;
         }
 
         if (moveUp)
@@ -106,36 +106,36 @@ void Ghost::update() {
                     centerPoint.y += (this->speed * dt);
                 else {
                     moveRandom();
-                }    
+                }
             }
             else
                 centerPoint.y = map->windowHeight - textureHeight / 2;
         }
     }
-    hitbox = { centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2,(float) textureWidth,(float)textureHeight };
-    DebugXY = {centerPoint.x, centerPoint.y - texture.height / 2 - 10};
+    hitbox = { centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2, (float)textureWidth, (float)textureHeight };
+    DebugXY = { centerPoint.x, centerPoint.y - textureHeight / 2 - 10 };
 }
 
-void Ghost::render() {
+void Mushroom::render() {
     if (isCaught)
         DrawTexture(texture, centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2, WHITE);
     else
         switch (dir)
         {
         case LEFT:
-            DrawTextureRec(texture, Rectangle{ (float)522 - textureWidth * (animIndex + 1), 76, (float)textureWidth,(float)textureHeight },
+            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, (float)textureHeight * 3,(float)textureWidth, (float)textureHeight },
                 Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             break;
         case RIGHT:
-            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, 0, (float)textureWidth, (float)textureHeight},
+            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, (float)textureHeight * 1, (float)textureWidth, (float)textureHeight },
                 Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             break;
         case UP:
-            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, 152,(float)textureWidth,(float)textureHeight },
+            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, (float)textureHeight*2, (float)textureWidth, (float)textureHeight },
                 Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             break;
         case DOWN:
-            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, 228, (float)textureWidth,(float)textureHeight},
+            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, 0, (float)textureWidth, (float)textureHeight },
                 Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             break;
         default:
@@ -143,8 +143,8 @@ void Ghost::render() {
         }
 }
 
-void Ghost::moveRandom() {
-    
+void Mushroom::moveRandom() {
+
     moveRight = false;
     moveLeft = false;
     moveUp = false;
@@ -153,17 +153,17 @@ void Ghost::moveRandom() {
     randomDir = 1 + (rand() % 8);
     randomRange = ((rand() % 3001) / 1000.0F) + 1.0;
 
-    if (randomDir == 1) { 
+    if (randomDir == 1) {
         moveRight = true;
     }
-    if (randomDir == 2) { 
+    if (randomDir == 2) {
         moveLeft = true;
     }
-    if (randomDir == 3) { 
+    if (randomDir == 3) {
         moveUp = true;
         moveRight = true;
     }
-    if (randomDir == 4) { 
+    if (randomDir == 4) {
         moveUp = true;
         moveLeft = true;
     }
@@ -173,7 +173,7 @@ void Ghost::moveRandom() {
     if (randomDir == 6) {
         moveDown = true;
     }
-    if (randomDir == 7) { 
+    if (randomDir == 7) {
         moveDown = true;
         moveRight = true;
     }
@@ -183,18 +183,18 @@ void Ghost::moveRandom() {
     }
 }
 
-Rectangle Ghost::getHitbox()
+Rectangle Mushroom::getHitbox()
 {
     return hitbox;
 }
 
-void Ghost::reloadTexture()
+void Mushroom::reloadTexture()
 {
     UnloadTexture(texture);
-    texture = getTexture("res/strawberry_dead.png", 96, 96);
+    texture = getTexture("res/mushroom_dead.png", textureWidth, textureHeight);
 }
 
-void Ghost::operator+(const int& n)
+void Mushroom::operator+(const int& n)
 {
     this->idDebug = this->idDebug + std::to_string(n);
 }

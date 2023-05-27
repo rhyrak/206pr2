@@ -4,6 +4,7 @@
 
 #include "../entities/player.hpp"
 #include "../entities/ghost.hpp"
+#include "../entities/mushroom.hpp"
 #include "cmath"
 #include "state.hpp"
 #include "../../main.hpp"
@@ -32,6 +33,7 @@ private:
     bool isPaused;
     std::vector<IconButton*> pauseBtns;
     std::vector< Ghost> ghosts;
+    std::vector< Mushroom> mushrooms;
 public:
     InGame(Config *config); /*Constructor*/
     ~InGame();  /*Destructor*/

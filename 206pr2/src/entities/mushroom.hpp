@@ -1,16 +1,15 @@
-
-#ifndef GHOST_H
-#define GHOST_H
+#ifndef MUSHROOM_H
+#define MUSHROOM_H
 
 #include <vector>
 #include <string>
 #include "entity.hpp"
 #include "../map/map.hpp"
-class Ghost : public Entity {
+class Mushroom : public Entity {
 private:
 	Texture2D texture;
-	int textureWidth = 58, textureHeight = 76;
-	enum direction { LEFT, RIGHT, UP, DOWN };
+	enum direction {LEFT, RIGHT, UP, DOWN};
+	int textureWidth = 72, textureHeight = 72;
 	direction dir;
 	int animIndex = 0;
 	float animTick = 0.0;
@@ -23,9 +22,9 @@ private:
 	Map* world;
 	void moveRandom();
 public:
-	Ghost();
-	Ghost(std::string idDebug, Config *config, Map *world);
-	~Ghost();
+	Mushroom();
+	Mushroom(std::string idDebug, Config* config, Map* world);
+	~Mushroom();
 	void update();
 	void render();
 	Rectangle getHitbox();
