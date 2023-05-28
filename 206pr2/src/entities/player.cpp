@@ -177,7 +177,7 @@ void Player::update()
                 speed = 200.0F;
         }
     }
-    std::cout << speed;
+    
     animTick += 1.0;
     if (animTick >= 10.0F) {
         animIndex++;
