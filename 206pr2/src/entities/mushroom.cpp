@@ -17,7 +17,12 @@ Mushroom::Mushroom(std::string idDebug, Config* config, Map* world) {
     this->isCaught = false;
     this->speed = 100.0;
     this->centerPoint = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
-    this->texture = LoadTexture("res/cute mushroom walk.png");
+    Image png = LoadImage("res/cute mushroom walk.png");
+    textureWidth = TileWidth * 0.8;
+    textureHeight = TileHeight * 0.8;
+    ImageResizeNN(&png, textureWidth * 4, textureHeight * 4);
+    this->texture = LoadTextureFromImage(png);
+    UnloadImage(png);
 }
 
 Mushroom::~Mushroom()
@@ -191,7 +196,10 @@ Rectangle Mushroom::getHitbox()
 void Mushroom::reloadTexture()
 {
     UnloadTexture(texture);
-    texture = getTexture("res/mushroom_dead.png", textureWidth, textureHeight);
+    Image png = LoadImage("res/mushroom_dead.png");
+    ImageResizeNN(&png, textureWidth, textureHeight);
+    texture = LoadTextureFromImage(png);
+    UnloadImage(png);
 }
 
 void Mushroom::operator+(const int& n)

@@ -17,7 +17,12 @@ Ghost::Ghost(std::string idDebug, Config *config, Map *world) {
     this->isCaught = false;
     this->speed = 100.0;
     this->centerPoint = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight-500))) / 1.0F };
-    this->texture = LoadTexture("res/Basic_Undead_strawberry_Sprites.png");
+    Image png = LoadImage("res/Basic_Undead_strawberry_Sprites.png");
+    textureHeight = TileHeight * 0.9;
+    textureWidth = textureHeight * 29 / 38.0f;
+    ImageResizeNN(&png, textureWidth * 9.0F, textureHeight * 4.0F);
+    texture = LoadTextureFromImage(png);
+    UnloadImage(png);
 }
 
 Ghost::~Ghost()
@@ -58,7 +63,7 @@ void Ghost::update() {
                 }
             }
             else
-                centerPoint.x = textureHeight / 2;
+                centerPoint.x = textureHeight / 2.0F;
         }
 
         if (moveRight)
@@ -191,7 +196,10 @@ Rectangle Ghost::getHitbox()
 void Ghost::reloadTexture()
 {
     UnloadTexture(texture);
-    texture = getTexture("res/strawberry_dead.png", 96, 96);
+    Image png = LoadImage("res/strawberry_dead.png");
+    ImageResizeNN(&png, textureWidth, textureHeight);
+    texture = LoadTextureFromImage(png);
+    UnloadImage(png);
 }
 
 void Ghost::operator+(const int& n)

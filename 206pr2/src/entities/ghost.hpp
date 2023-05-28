@@ -9,7 +9,7 @@
 class Ghost : public Entity {
 private:
 	Texture2D texture;
-	int textureWidth = 58, textureHeight = 76;
+	int textureWidth, textureHeight;
 	enum direction { LEFT, RIGHT, UP, DOWN };
 	direction dir;
 	int animIndex = 0;

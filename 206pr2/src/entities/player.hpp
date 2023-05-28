@@ -13,7 +13,7 @@ class Player : public Entity
 private:
     enum direction {LEFT, RIGHT, UP, DOWN};
     direction dir = DOWN;
-    int textureWidth = 128, textureHeight = 128;
+    int textureWidth, textureHeight;
     Texture2D texture[8];
     Image missingTexture;
     KeyboardKey *upKey;
