@@ -124,25 +124,25 @@ void Mushroom::update() {
 
 void Mushroom::render() {
     if (isCaught)
-        DrawTexture(texture, centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2, WHITE);
+        DrawTexture(texture, centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2, LIGHTGRAY);
     else
         switch (dir)
         {
         case LEFT:
             DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, (float)textureHeight * 3,(float)textureWidth, (float)textureHeight },
-                Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+                Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, LIGHTGRAY);
             break;
         case RIGHT:
             DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, (float)textureHeight * 1, (float)textureWidth, (float)textureHeight },
-                Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+                Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, LIGHTGRAY);
             break;
         case UP:
             DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, (float)textureHeight*2, (float)textureWidth, (float)textureHeight },
-                Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+                Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, LIGHTGRAY);
             break;
         case DOWN:
             DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, 0, (float)textureWidth, (float)textureHeight },
-                Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+                Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, LIGHTGRAY);
             break;
         default:
             break;

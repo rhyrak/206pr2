@@ -57,7 +57,7 @@ void Map::scaleMapTexture(int w, int h) {
             for (int x = 0; x < 32; x++)
             {
                 if(mapData[layer][y][x] != 0 )
-                ImageDraw(&mapImg, tiles[mapData[layer][y][x]], Rectangle{ 0,0,(float)tileWidth,(float)tileHeight }, Rectangle{ x * (float)tileWidth, y * (float)tileHeight, (float)tileWidth, (float)tileHeight }, WHITE);
+                ImageDraw(&mapImg, tiles[mapData[layer][y][x]], Rectangle{ 0,0,(float)tileWidth,(float)tileHeight }, Rectangle{ x * (float)tileWidth, y * (float)tileHeight, (float)tileWidth, (float)tileHeight }, LIGHTGRAY);
                 //ImageDrawText(&mapImg, TextFormat("%d", mapData[layer][y][x]), x * (float)tileWidth, y * (float)tileHeight,19,WHITE);
             }
         }
