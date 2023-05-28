@@ -63,6 +63,6 @@ Open your terminal, change to the game folder and type.
 This will build your game.
 
 Now navigate to ./_bin/Debug and run the executable.
-#Note
+## Note
 The resources folder (res) inside ./game might need to be copied over to the location of the executable and be put in its own game folder to utilize resources properly,
  it will look like the following: ./_bin/Debug will have the game executable and a folder called game which houses the res folder as follows ./_bin/Debug/game/res .
