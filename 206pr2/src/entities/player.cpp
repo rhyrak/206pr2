@@ -6,6 +6,7 @@
 #include <string>
 #include "../map/map.hpp"
 #include "../../main.hpp"
+#include <iostream>
 
 
 Player::Player()
@@ -126,6 +127,29 @@ void Player::render()
 void Player::update()
 {
     float dt = GetFrameTime();
+    if (speed < 200.0F)
+    {
+        tick += dt;
+        if (tick >= 1.5F)
+        {
+            changeSpeed(15.0F);
+            tick = 0.0F;
+            if (speed > 200.0F)
+                speed = 200.0F;
+        }
+    }
+    if (speed > 200.0F)
+    {
+        tick += dt;
+        if (tick >= 1.5F)
+        {
+            changeSpeed(-10.0F);
+            tick = 0.0F;
+            if (speed < 200.0F)
+                speed = 200.0F;
+        }
+    }
+    std::cout << speed;
     animTick += 1.0;
     if (animTick >= 10.0F) {
         animIndex++;
@@ -218,6 +242,10 @@ int Player::getRightKey()
 Rectangle Player::getHitbox() 
 {
     return hitbox;
+}
+
+void Player::changeSpeed(float num) {
+    speed += num;
 }
 
 

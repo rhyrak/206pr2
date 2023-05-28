@@ -25,6 +25,7 @@ private:
     int animIndex = 0;
     void loadSprite();
     Map* world;
+    float tick = 0.0F;
 public:
     Player();   /*Default Constructor, don't use it lol*/
     Player(Config* map, std::string idDebug, Vector2 coords, KeyboardKey *upkey, KeyboardKey *downkey, KeyboardKey *leftKey, KeyboardKey *rightKey, Map* world);   /*Constructor*/
@@ -36,6 +37,7 @@ public:
     int getLeftKey();   /*Accesor*/
     int getRightKey();  /*Accesor*/
     Rectangle getHitbox();
+    void changeSpeed(float num);
 };
 
 #endif

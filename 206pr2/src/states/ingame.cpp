@@ -164,12 +164,14 @@ inline void InGame::update()
                     ghosts.at(i).isCaught = true;
                     ghosts.at(i).reloadTexture();
                     player1score -= 3;
+                    player1.changeSpeed(-50.0F);
                 }
                 if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player2.getHitbox()))
                 {
                     ghosts.at(i).isCaught = true;
                     ghosts.at(i).reloadTexture();
                     player2score -= 3;
+                    player2.changeSpeed(-50.0F);
                 }
 
             }
@@ -191,12 +193,14 @@ inline void InGame::update()
                     mushrooms.at(i).isCaught = true;
                     mushrooms.at(i).reloadTexture();
                     player1score += 5;
+                    player1.changeSpeed(30.0F);
                 }
                 if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player2.getHitbox()))
                 {
                     mushrooms.at(i).isCaught = true;
                     mushrooms.at(i).reloadTexture();
                     player2score += 5;
+                    player2.changeSpeed(30.0F);
                 }
 
             }
@@ -204,7 +208,6 @@ inline void InGame::update()
             {
                 PlaySound(ghostDeath);  /*play death sound*/
                 mushrooms.at(i).soundPlayed = true;    /*enable flag*/
-
             }
         }
     }
