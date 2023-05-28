@@ -7,6 +7,7 @@
 #include "../map/map.hpp"
 #include "../ui/UiElements.hpp"
 
+#define MAX(a,b) (a > b ? a : b)
 
 InGame::InGame(Config *config) : State(config)
 {
@@ -86,7 +87,7 @@ InGame::InGame(Config *config) : State(config)
 
     gl = GridLayout(config->windowWidth, config->windowHeight, -32);
     scoreboard = getTexture(SCOREBOARD, 1.2F*gl.getGridSize()/16);
-    remTime = 120; // seconds
+    remTime = 15; // seconds
     
     showScoreboard = false;
 
@@ -120,6 +121,10 @@ inline void InGame::update()
     SetSoundVolume(ghostDeath, config->sfxLevel);
 
     signalF = S_NO_CHANGE;
+    if (remTime <= -5)
+    {
+        signalF = S_NAV_INGAME;
+    }
     if (config->isUpdated) {
         map->windowWidth = config->windowWidth * 2;
         map->windowHeight = config->windowHeight * 2;
@@ -127,10 +132,9 @@ inline void InGame::update()
     }
 
     config->cursorType = isPaused ? 1 : -1;
-
-    if (!isPaused)
+    if (!isPaused) remTime -= GetFrameTime();
+    if (!isPaused && remTime > 0)
     {
-        remTime -= GetFrameTime();
         /*update players positions and play sfx*/
         player1.update();
         if (IsKeyPressed(player1.getUpKey()))
@@ -218,7 +222,7 @@ inline void InGame::update()
 
     if (IsKeyPressed(KEY_P)) isPaused = !isPaused; // toggle pause
     if (IsKeyPressed(KEY_TAB)) showScoreboard = !showScoreboard;
-    if (IsKeyPressed(KEY_X)) signalF = S_NAV_PUSH_SETTINGS;
+    //if (IsKeyPressed(KEY_X)) signalF = S_NAV_PUSH_SETTINGS;
         
     /*track spotlights*/
     monitor = GetCurrentMonitor();
@@ -301,7 +305,7 @@ inline void InGame::render()
         if(isPaused)
             DrawRectangle(0, 0, config->windowWidth, config->windowHeight, Color{0,0,0,128});
         DrawTexture(scoreboard, gl.getXCoordCentered(16,scoreboard.width), gl.getYCoordCentered(1.25F,scoreboard.height), WHITE);
-        const char* sbText = TextFormat("%02d %d %02d", player1score, (int)remTime, player2score);
+        const char* sbText = TextFormat("%02d %d %02d", player1score, MAX((int)remTime,0), player2score);
         Vector2 textDim = MeasureTextEx(font, sbText, gl.getGridSize() * 0.75F, 0);
         DrawTextEx(font, sbText, Vector2{ gl.getXCoordCentered(16, textDim.x), gl.getYCoordCentered(1.15F, textDim.y) },
             gl.getGridSize() * 0.75F, 0, UI_LIGHT_BROWN);
@@ -321,6 +325,21 @@ inline void InGame::render()
                 }
             }
         }
+    }
+    if (remTime <= 0)
+    {
+        showScoreboard = true;
+        if (player1score>player2score)
+            DrawText("PLAYER 1 WON",gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
+        else if (player2score>player1score)
+            DrawText("PLAYER 2 WON",gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
+        else
+            DrawText("IT IS A DRAW",gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
+
+        DrawText("NEW GAME STARTS IN",
+            gl.getXCoord(10.25F), gl.getYCoord(4), gl.getGridSize(), UI_DARK_BROWN);
+        DrawText(TextFormat("%d", (int)(6 + remTime)),
+            gl.getXCoord(15.75F), gl.getYCoord(5), gl.getGridSize(), UI_DARK_BROWN);
     }
 }
 
