@@ -16,7 +16,8 @@ Ghost::Ghost(std::string idDebug, Config *config, Map *world) {
     this->world = world;
     this->isCaught = false;
     this->speed = 100.0;
-    this->centerPoint = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight-500))) / 1.0F };
+    this->speedC = 100.0;
+    this->centerPoint = generateRandomCoordinates();
     Image png = LoadImage("res/Basic_Undead_strawberry_Sprites.png");
     textureHeight = TileHeight * 0.9;
     textureWidth = textureHeight * 29 / 38.0f;
@@ -200,6 +201,29 @@ void Ghost::reloadTexture()
     ImageResizeNN(&png, textureWidth, textureHeight);
     texture = LoadTextureFromImage(png);
     UnloadImage(png);
+}
+
+void Ghost::reset()
+{
+    this->speed = this->speedC;
+    this->centerPoint = generateRandomCoordinates();
+    reloadTextureC();
+    this->isCaught = false;
+    moveRandom();
+}
+
+void Ghost::reloadTextureC()
+{
+    UnloadTexture(texture);
+    Image png = LoadImage("res/Basic_Undead_strawberry_Sprites.png");
+    ImageResizeNN(&png, textureWidth * 9.0F, textureHeight * 4.0F);
+    texture = LoadTextureFromImage(png);
+    UnloadImage(png);
+}
+
+Vector2 Ghost::generateRandomCoordinates()
+{
+    return { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
 }
 
 void Ghost::operator+(const int& n)

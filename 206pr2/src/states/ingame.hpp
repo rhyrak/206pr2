@@ -31,12 +31,14 @@ private:
     Texture2D scoreboard;
     bool showScoreboard;
     bool isPaused;
+    bool incrementOnce;
     std::vector<IconButton*> pauseBtns;
     std::vector< Ghost> ghosts;
     std::vector< Mushroom> mushrooms;
 public:
     InGame(Config *config); /*Constructor*/
     ~InGame();  /*Destructor*/
+    void reset() override;
     inline void update() override; /*Overridden method*/
     inline void render() override; /*Overridden method*/
     Signal signal() override; /*Overridden method*/

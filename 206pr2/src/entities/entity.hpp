@@ -12,11 +12,14 @@ protected:
     Entity();
     Rectangle hitbox;
     Vector2 centerPoint = { 0 , 0 };
+    Vector2 centerPointC = { 0, 0 };
     Config* map;
     float speed = 1.0;
+    float speedC = 1.0;
 public:
     Vector2 getCenterPoint();
     virtual Texture2D getTexture(const char* path, int tileWidth, int tileHeight);
+    virtual void reset();
     Texture2D texture;
     Image *image;
     /*Temp for debug purposes*/

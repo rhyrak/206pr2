@@ -20,6 +20,7 @@ public:
     void update() override;
     void render() override;
     Signal signal() override;
+    void reset() override;
 };
 
 #endif

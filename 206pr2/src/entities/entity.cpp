@@ -39,3 +39,8 @@ void Entity::displayDebugInfo(int offset, int factor, int fontSize)
     DrawText(TextFormat("%.2f", centerPoint.y), (int)(DebugXY.x+25)/factor, (int)(DebugXY.y+offset+40)/factor, fontSize, RAYWHITE);
     DrawText("Y: ", (int)(DebugXY.x+5)/factor, (int)(DebugXY.y+offset+40)/factor, fontSize, RAYWHITE);
 }
+
+void Entity::reset()
+{
+
+}

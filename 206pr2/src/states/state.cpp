@@ -10,3 +10,8 @@ State::State(Config *config)
 State::~State()
 {
 }
+
+void State::reset()
+{
+
+}

@@ -31,6 +31,9 @@ public:
 	Rectangle getHitbox();
 	bool isCaught;
 	void reloadTexture();
+	void reloadTextureC();
+	void reset() override;
+	Vector2 generateRandomCoordinates();
 	bool soundPlayed = false;
 	void operator + (const int& n);
 };

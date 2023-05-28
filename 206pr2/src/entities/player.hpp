@@ -32,6 +32,7 @@ public:
     ~Player();  /*Destructor*/
     void update();
     void render();
+    void reset() override;
     int getUpKey();     /*Accesor*/
     int getDownKey();   /*Accesor*/
     int getLeftKey();   /*Accesor*/

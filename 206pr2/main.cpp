@@ -104,10 +104,15 @@ int main(void){
                 stateStack.push_back(new Menu(config));
                 break;
             case S_NAV_INGAME:
-                for (auto state : stateStack)
-                    delete state;
-                stateStack.clear();
-                stateStack.push_back(new InGame(config));
+                if (!instanceof<InGame>(stateStack.back()))
+                {
+                    for (auto state : stateStack)
+                        delete state;
+                    stateStack.clear();
+                    stateStack.push_back(new InGame(config));
+                }
+                else
+                    stateStack.back()->reset();
                 break;
             case S_NAV_SETTINGS:
                 for (auto state : stateStack)

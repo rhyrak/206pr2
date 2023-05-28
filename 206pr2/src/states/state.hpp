@@ -14,6 +14,7 @@ public:
     virtual void update() = 0;  /*Overridable method*/
     virtual void render() = 0;  /*Overridable method*/
     virtual Signal signal() = 0;  /*Overridable method*/
+    virtual void reset();
 };
 
 #endif

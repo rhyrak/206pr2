@@ -16,6 +16,7 @@ Mushroom::Mushroom(std::string idDebug, Config* config, Map* world) {
     this->world = world;
     this->isCaught = false;
     this->speed = 100.0;
+    this->speedC = 100.0;
     this->centerPoint = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
     Image png = LoadImage("res/cute mushroom walk.png");
     textureWidth = TileWidth * 0.8;
@@ -200,6 +201,29 @@ void Mushroom::reloadTexture()
     ImageResizeNN(&png, textureWidth, textureHeight);
     texture = LoadTextureFromImage(png);
     UnloadImage(png);
+}
+
+void Mushroom::reset()
+{
+    this->speed = this->speedC;
+    this->centerPoint = generateRandomCoordinates();
+    reloadTextureC();
+    this->isCaught = false;
+    moveRandom();
+}
+
+void Mushroom::reloadTextureC()
+{
+    UnloadTexture(texture);
+    Image png = LoadImage("res/cute mushroom walk.png");
+    ImageResizeNN(&png, textureWidth * 4, textureHeight * 4);
+    texture = LoadTextureFromImage(png);
+    UnloadImage(png);
+}
+
+Vector2 Mushroom::generateRandomCoordinates()
+{
+    return { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
 }
 
 void Mushroom::operator+(const int& n)

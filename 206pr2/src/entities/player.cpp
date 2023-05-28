@@ -19,7 +19,9 @@ Player::Player(Config *map, std::string idDebug, Vector2 coords, KeyboardKey *up
     this->map = map;
     this->world = world;
     this->centerPoint = coords;
+    this->centerPointC = coords;
     this->speed = 200.0;
+    this->speedC = 200.0;
     //this->texture = this->getTexture("res/amogus.png", TileWidth, TileHeight);
     loadSprite();
     this->idDebug = idDebug + "'s coordinates:";
@@ -245,6 +247,13 @@ void Player::update()
     }
 
     hitbox = { centerPoint.x - textureWidth/8, centerPoint.y - textureHeight / 4, (float)textureWidth / 4, (float)textureHeight / 2 };
+}
+
+void Player::reset()
+{
+    this->speed = this->speedC;
+    this->centerPoint = this->centerPointC;
+    this->dir = DOWN;
 }
 
 int Player::getUpKey()

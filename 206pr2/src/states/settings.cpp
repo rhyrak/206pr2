@@ -164,3 +164,8 @@ _inline void initButtons(std::vector<IconButton*>* buttons, std::vector<Slider*>
 	buttons->push_back(new IconButton(Rectangle{
 		gl->getXCoord(0.5F),gl->getYCoord(0.5F),gl->getGridSize(),gl->getGridSize() }, I_ARROW_BACK));
 }
+
+void Settings::reset()
+{
+
+}

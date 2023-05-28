@@ -91,3 +91,8 @@ inline void initButtons(Config* config, GridLayout* gl, std::vector<IconButton*>
 	mBtns->at(1) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(6),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "SETTINGS", ROUND(gl->getGridSize() * 0.55F));
 	mBtns->at(2) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(8),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "EXIT", ROUND(gl->getGridSize() * 0.75F));
 }
+
+void Menu::reset()
+{
+
+}

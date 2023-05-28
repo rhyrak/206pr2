@@ -8,6 +8,8 @@
 #include "../ui/UiElements.hpp"
 
 #define MAX(a,b) (a > b ? a : b)
+int player1roundWins = 0;
+int player2roundWins = 0;
 
 InGame::InGame(Config *config) : State(config)
 {
@@ -17,6 +19,7 @@ InGame::InGame(Config *config) : State(config)
     SetSoundVolume(player1Sound, config->sfxLevel);
     SetSoundVolume(player2Sound, (config->sfxLevel)/4);
     isPaused = false;
+    incrementOnce = true;
     map = new Config;
     map->windowWidth = config->windowWidth * 2;
     map->windowHeight = config->windowHeight * 2;
@@ -112,6 +115,20 @@ InGame::~InGame()
     delete world;
     player1score = 0;
     player2score = 0;
+}
+
+void InGame::reset()
+{
+    player1.reset();
+    player2.reset();
+    for (int i = 0; i < ghosts.size(); i++)
+        ghosts.at(i).reset();
+    for (int i = 0; i < mushrooms.size(); i++)
+        mushrooms.at(i).reset();
+    player1score = 0;
+    player2score = 0;
+    remTime = 15;
+    incrementOnce = true;
 }
 
 inline void InGame::update()
@@ -294,8 +311,8 @@ inline void InGame::render()
         }
         player1.displayDebugInfo(0);  /*Display coordinates*/
         player2.displayDebugInfo(60);  /*Display coordinates*/
-        DrawText(TextFormat("%d", player1score), 400, 400, 20, RAYWHITE);
-        DrawText(TextFormat("%d", player2score), 400, 440, 20, RAYWHITE);
+        DrawText(TextFormat("%d", player1roundWins), 400, 400, 20, RAYWHITE);
+        DrawText(TextFormat("%d", player2roundWins), 400, 440, 20, RAYWHITE);
 
     } 
 
@@ -329,10 +346,25 @@ inline void InGame::render()
     if (remTime <= 0)
     {
         showScoreboard = true;
-        if (player1score>player2score)
+        if (player1score > player2score)
+        {
             DrawText("PLAYER 1 WON",gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
-        else if (player2score>player1score)
-            DrawText("PLAYER 2 WON",gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
+            if (incrementOnce)
+            {
+                player1roundWins++;
+                incrementOnce = false;
+            }
+        }
+        else if (player2score > player1score)
+        {
+            DrawText("PLAYER 2 WON", gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
+            if (incrementOnce)
+            {
+                player2roundWins++;
+                incrementOnce = false;
+            }
+            
+        }        
         else
             DrawText("IT IS A DRAW",gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
 
