@@ -128,19 +128,19 @@ void Ghost::render() {
         switch (dir)
         {
         case LEFT:
-            DrawTextureRec(texture, Rectangle{ (float)522 - textureWidth * (animIndex + 1), 76, (float)textureWidth,(float)textureHeight },
+            DrawTextureRec(texture, Rectangle{ (float)textureWidth * 9 - textureWidth * (animIndex + 1), textureHeight*1.0f, (float)textureWidth,(float)textureHeight },
                 Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             break;
         case RIGHT:
-            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, 0, (float)textureWidth, (float)textureHeight},
+            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, textureHeight*0.0f, (float)textureWidth, (float)textureHeight},
                 Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             break;
         case UP:
-            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, 152,(float)textureWidth,(float)textureHeight },
+            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, textureHeight*2.0f,(float)textureWidth,(float)textureHeight },
                 Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             break;
         case DOWN:
-            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, 228, (float)textureWidth,(float)textureHeight},
+            DrawTextureRec(texture, Rectangle{ (float)textureWidth * animIndex, textureHeight*3.0f, (float)textureWidth,(float)textureHeight},
                 Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             break;
         default:
