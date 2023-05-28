@@ -285,4 +285,9 @@ void Player::changeSpeed(float num) {
     speed += num;
 }
 
+bool Player::getStatus()
+{
+    return idle;
+}
+
 

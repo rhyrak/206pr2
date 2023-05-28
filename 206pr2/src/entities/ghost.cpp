@@ -223,7 +223,10 @@ void Ghost::reloadTextureC()
 
 Vector2 Ghost::generateRandomCoordinates()
 {
-    return { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
+    Vector2 xy = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
+    if (world->canMove(xy.x, xy.y))
+        return xy;
+    return generateRandomCoordinates();
 }
 
 void Ghost::operator+(const int& n)

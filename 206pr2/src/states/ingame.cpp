@@ -90,7 +90,7 @@ InGame::InGame(Config *config) : State(config)
 
     gl = GridLayout(config->windowWidth, config->windowHeight, -32);
     scoreboard = getTexture(SCOREBOARD, 1.2F*gl.getGridSize()/16);
-    remTime = 15; // seconds
+    remTime = 30; // seconds
     
     showScoreboard = false;
 
@@ -127,7 +127,7 @@ void InGame::reset()
         mushrooms.at(i).reset();
     player1score = 0;
     player2score = 0;
-    remTime = 15;
+    remTime = 30;
     incrementOnce = true;
 }
 
@@ -180,21 +180,27 @@ inline void InGame::update()
 
             if (!ghosts.at(i).isCaught) 
             {
-                if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player1.getHitbox()))
+                if (!player1.getStatus())
                 {
-                    ghosts.at(i).isCaught = true;
-                    ghosts.at(i).reloadTexture();
-                    player1score -= 3;
-                    player1.changeSpeed(-50.0F);
-                }
-                if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player2.getHitbox()))
-                {
-                    ghosts.at(i).isCaught = true;
-                    ghosts.at(i).reloadTexture();
-                    player2score -= 3;
-                    player2.changeSpeed(-50.0F);
+                    if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player1.getHitbox()))
+                    {
+                        ghosts.at(i).isCaught = true;
+                        ghosts.at(i).reloadTexture();
+                        player1score -= 3;
+                        player1.changeSpeed(-50.0F);
+                    }
                 }
 
+                if (!player2.getStatus())
+                {
+                    if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player2.getHitbox()))
+                    {
+                        ghosts.at(i).isCaught = true;
+                        ghosts.at(i).reloadTexture();
+                        player2score -= 3;
+                        player2.changeSpeed(-50.0F);
+                    }
+                }  
             }
             else if (!ghosts.at(i).soundPlayed)
             {
@@ -209,21 +215,27 @@ inline void InGame::update()
 
             if (!mushrooms.at(i).isCaught)
             {
-                if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player1.getHitbox()))
+                if (!player1.getStatus())
                 {
-                    mushrooms.at(i).isCaught = true;
-                    mushrooms.at(i).reloadTexture();
-                    player1score += 5;
-                    player1.changeSpeed(30.0F);
+                    if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player1.getHitbox()))
+                    {
+                        mushrooms.at(i).isCaught = true;
+                        mushrooms.at(i).reloadTexture();
+                        player1score += 5;
+                        player1.changeSpeed(30.0F);
+                    }
                 }
-                if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player2.getHitbox()))
+                
+                if (!player2.getStatus())
                 {
-                    mushrooms.at(i).isCaught = true;
-                    mushrooms.at(i).reloadTexture();
-                    player2score += 5;
-                    player2.changeSpeed(30.0F);
+                    if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player2.getHitbox()))
+                    {
+                        mushrooms.at(i).isCaught = true;
+                        mushrooms.at(i).reloadTexture();
+                        player2score += 5;
+                        player2.changeSpeed(30.0F);
+                    }
                 }
-
             }
             else if (!mushrooms.at(i).soundPlayed)
             {

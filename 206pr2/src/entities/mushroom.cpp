@@ -53,69 +53,69 @@ void Mushroom::update() {
         if (moveLeft)
         {
             dir = LEFT;
-            if (centerPoint.x > textureWidth / 2)
+            if (centerPoint.x > textureWidth / 2 + 0.2)
             {
-                if (world->canMove(((int)centerPoint.x - textureWidth / 2) - (this->speed * dt), (int)centerPoint.y)
-                    && world->canMove(((int)centerPoint.x - textureWidth / 2) - (this->speed * dt), (int)centerPoint.y + textureHeight / 2 - 0.2)
-                    && world->canMove(((int)centerPoint.x - textureWidth / 2) - (this->speed * dt), (int)centerPoint.y - textureHeight / 2 + 0.2))
+                if (world->canMove(((int)centerPoint.x - textureWidth / 2 + 0.2) - (this->speed * dt), (int)centerPoint.y)
+                    && world->canMove(((int)centerPoint.x - textureWidth / 2 + 0.2) - (this->speed * dt), (int)centerPoint.y + textureHeight / 2 - 0.2)
+                    && world->canMove(((int)centerPoint.x - textureWidth / 2 + 0.2) - (this->speed * dt), (int)centerPoint.y - textureHeight / 2 + 0.2))
                     centerPoint.x -= (this->speed * dt);
                 else {
                     moveRandom();
                 }
             }
             else
-                centerPoint.x = textureWidth / 2;
+                centerPoint.x = textureWidth / 2 + 0.2;
         }
 
         if (moveRight)
         {
             dir = RIGHT;
-            if (centerPoint.x < map->windowWidth - textureWidth / 2)
+            if (centerPoint.x < map->windowWidth - textureWidth / 2 - 0.2)
             {
-                if (world->canMove(((int)centerPoint.x + textureWidth / 2) + (this->speed * dt), (int)centerPoint.y)
-                    && world->canMove(((int)centerPoint.x + textureWidth / 2) + (this->speed * dt), (int)centerPoint.y + textureHeight / 2 - 0.2)
-                    && world->canMove(((int)centerPoint.x + textureWidth / 2) + (this->speed * dt), (int)centerPoint.y - textureHeight / 2 + 0.2))
+                if (world->canMove(((int)centerPoint.x + textureWidth / 2 - 0.2) + (this->speed * dt), (int)centerPoint.y)
+                    && world->canMove(((int)centerPoint.x + textureWidth / 2 - 0.2) + (this->speed * dt), (int)centerPoint.y + textureHeight / 2 - 0.2)
+                    && world->canMove(((int)centerPoint.x + textureWidth / 2 - 0.2) + (this->speed * dt), (int)centerPoint.y - textureHeight / 2 + 0.2))
                     centerPoint.x += (this->speed * dt);
                 else {
                     moveRandom();
                 }
             }
             else
-                centerPoint.x = map->windowWidth - textureWidth / 2;
+                centerPoint.x = map->windowWidth - textureWidth / 2 - 0.2;
         }
 
         if (moveUp)
         {
             dir = UP;
-            if (centerPoint.y > textureHeight / 2)
+            if (centerPoint.y > textureHeight / 2 + 0.2)
             {
-                if (world->canMove((int)centerPoint.x, (centerPoint.y - textureHeight / 2) - (this->speed * dt))
-                    && world->canMove((int)centerPoint.x + textureWidth / 2 - 0.2, (centerPoint.y - textureHeight / 2) - (this->speed * dt))
-                    && world->canMove((int)centerPoint.x - textureWidth / 2 + 0.2, (centerPoint.y - textureHeight / 2) - (this->speed * dt)))
+                if (world->canMove((int)centerPoint.x, (centerPoint.y - textureHeight / 2 + 0.2) - (this->speed * dt))
+                    && world->canMove((int)centerPoint.x + textureWidth / 2 - 0.2, (centerPoint.y - textureHeight / 2 + 0.2) - (this->speed * dt))
+                    && world->canMove((int)centerPoint.x - textureWidth / 2 + 0.2, (centerPoint.y - textureHeight / 2 + 0.2) - (this->speed * dt)))
                     centerPoint.y -= (this->speed * dt);
                 else {
                     moveRandom();
                 }
             }
             else
-                centerPoint.y = textureHeight / 2;
+                centerPoint.y = textureHeight / 2 + 0.2; 
         }
 
         if (moveDown)
         {
             dir = DOWN;
-            if (centerPoint.y < map->windowHeight - textureHeight / 2)
+            if (centerPoint.y < map->windowHeight - textureHeight / 2 - 0.2)
             {
-                if (world->canMove((int)centerPoint.x, (centerPoint.y + textureHeight / 2) + (this->speed * dt))
-                    && world->canMove((int)centerPoint.x + textureWidth / 2 - 0.2, (centerPoint.y + textureHeight / 2) + (this->speed * dt))
-                    && world->canMove((int)centerPoint.x - textureWidth / 2 + 0.2, (centerPoint.y + textureHeight / 2) + (this->speed * dt)))
+                if (world->canMove((int)centerPoint.x, (centerPoint.y + textureHeight / 2 - 0.2) + (this->speed * dt))
+                    && world->canMove((int)centerPoint.x + textureWidth / 2 - 0.2, (centerPoint.y + textureHeight / 2 - 0.2) + (this->speed * dt))
+                    && world->canMove((int)centerPoint.x - textureWidth / 2 + 0.2, (centerPoint.y + textureHeight / 2 - 0.2) + (this->speed * dt)))
                     centerPoint.y += (this->speed * dt);
                 else {
                     moveRandom();
                 }
             }
             else
-                centerPoint.y = map->windowHeight - textureHeight / 2;
+                centerPoint.y = map->windowHeight - textureHeight / 2 - 0.2;
         }
     }
     hitbox = { centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2, (float)textureWidth, (float)textureHeight };
@@ -223,7 +223,10 @@ void Mushroom::reloadTextureC()
 
 Vector2 Mushroom::generateRandomCoordinates()
 {
-    return { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
+    Vector2 xy = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
+    if (world->canMove(xy.x, xy.y))
+        return xy;
+    return generateRandomCoordinates();
 }
 
 void Mushroom::operator+(const int& n)

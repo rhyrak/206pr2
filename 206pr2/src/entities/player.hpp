@@ -39,6 +39,7 @@ public:
     int getRightKey();  /*Accesor*/
     Rectangle getHitbox();
     void changeSpeed(float num);
+    bool getStatus();
 };
 
 #endif
