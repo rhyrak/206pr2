@@ -19,7 +19,7 @@ typedef struct {
     KeyboardKey p2Up, p2Down, p2Left, p2Right;
 } Keymap;
 
-typedef struct {
+typedef struct Config{
     Keymap keymap;
     float musicLevel;
     float sfxLevel;
@@ -28,6 +28,8 @@ typedef struct {
     int cursorType;
     bool isFullscreen;
     bool isUpdated;
+    void operator<<(const char* fileName);
+    void operator>>(const char* fileName);
 } Config;
 
 

@@ -25,26 +25,13 @@ inline bool instanceof(const T* ptr) {
 /*main function*/
 int main(void){
     InitAudioDevice();
-
     Music music = LoadMusicStream("game/res/background.wav");
-    Config* config;
-    FILE* configFile;
-    errno_t res = fopen_s(&configFile, "config.bin", "rb");
     PlayMusicStream(music);
-    if (res == EINVAL || configFile == 0)
-    {
-        std::cout << "CREATING DEFAULT CONFIG\n";
-        config = new Config{
-            { KEY_W,KEY_S,KEY_A,KEY_D,KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT },
-            0.95F,0.95F,1280,721,1,false,false };    /*Define new Config Object*/
-    }
-    else
-    {
-        std::cout << "READING SAVED CONFIG\n";
-        config = new Config;
-        fread(config, sizeof(Config), 1, configFile);
-        fclose(configFile);
-    }
+    
+    // create config object and load data from file
+    Config* config = new Config;
+    *config << "config.bin";
+
     SetMusicVolume(music, config->musicLevel);
 
     /*Create window*/
@@ -166,11 +153,8 @@ int main(void){
     UnloadFont(font);
     CloseWindow();
 
-    res = fopen_s(&configFile, "config.bin", "wb");
-    if (res != EINVAL && configFile != 0)
-    {
-        fwrite(config, sizeof(Config), 1, configFile);
-    }
+    // save config data to file
+    *config >> "config.bin";
 
     return 0;
 }
@@ -197,5 +181,32 @@ inline void cToggleFullscreen(Config *config)
         config->windowWidth = GetMonitorWidth(monitor);
         SetWindowSize(config->windowWidth, config->windowHeight);
         ToggleFullscreen();
+    }
+}
+
+void Config::operator<<(const char* fileName) {
+    FILE* configFile;
+    errno_t res = fopen_s(&configFile, fileName, "rb");
+    if (res == EINVAL || configFile == 0)
+    {
+        std::cout << "CREATING DEFAULT CONFIG\n";
+        *this = Config{
+            { KEY_W,KEY_S,KEY_A,KEY_D,KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT },
+            0.95F,0.95F,1280,721,1,false,false };    /*Define new Config Object*/
+    }
+    else
+    {
+        std::cout << "READING SAVED CONFIG\n";
+        fread(this, sizeof(Config), 1, configFile);
+        fclose(configFile);
+    }
+}
+
+void Config::operator>>(const char* fileName) {
+    FILE* configFile;
+    errno_t res = fopen_s(&configFile, fileName, "wb");
+    if (res != EINVAL && configFile != 0)
+    {
+        fwrite(this, sizeof(Config), 1, configFile);
     }
 }
