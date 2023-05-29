@@ -13,7 +13,7 @@ int player2roundWins = 0;
 
 InGame::InGame(Config *config) : State(config)
 {
-    ghostDeath = LoadSound("game/res/ghostDeath.mp3");
+    entityDeath = LoadSound("game/res/ghostDeath.mp3");
     player1Sound = LoadSound("game/res/player1footstep.mp3");
     player2Sound = LoadSound("game/res/player2footstep.mp3");
     SetSoundVolume(player1Sound, config->sfxLevel);
@@ -57,16 +57,16 @@ InGame::InGame(Config *config) : State(config)
 
     for (int i = 0; i < 11; i++)
     {
-        ghosts.push_back(new Ghost("Ghost", map, world));
+        strawberries.push_back(new Strawberry("Strawberry", map, world));
         /*Addition is overloaded, concatenate 'i' to idDebug of Ghost object*/
-        ghosts.at(i) + (i+1);
+        *strawberries.at(i) + (i+1);
     }
 
     for (int i = 0; i < 11; i++)
     {
         mushrooms.push_back(new Mushroom("Mushroom", map, world));
         /*Addition is overloaded, concatenate 'i' to idDebug of Ghost object*/
-        mushrooms.at(i) + (i + 1);
+        *mushrooms.at(i) + (i + 1);
     }
 
     nightVision = false;  /*disable flag by default*/
@@ -109,7 +109,7 @@ InGame::~InGame()
         "****************************************************************************************************\n";
     UnloadTexture(scoreboard);
     UnloadTexture(gameoverBg);
-    UnloadSound(ghostDeath);
+    UnloadSound(entityDeath);
     UnloadSound(player1Sound);
     UnloadSound(player2Sound);
     for (int i = 0; i < pauseBtns.size(); i++)
@@ -128,8 +128,8 @@ void InGame::reset()
 {
     player1->reset();
     player2->reset();
-    for (int i = 0; i < ghosts.size(); i++)
-        ghosts.at(i)->reset();
+    for (int i = 0; i < strawberries.size(); i++)
+        strawberries.at(i)->reset();
     for (int i = 0; i < mushrooms.size(); i++)
         mushrooms.at(i)->reset();
     player1score = 0;
@@ -142,7 +142,7 @@ inline void InGame::update()
 {
     SetSoundVolume(player1Sound, config->sfxLevel);
     SetSoundVolume(player2Sound, (config->sfxLevel) / 4);
-    SetSoundVolume(ghostDeath, config->sfxLevel);
+    SetSoundVolume(entityDeath, config->sfxLevel);
 
     signalF = S_NO_CHANGE;
     if (remTime <= -5)
@@ -181,18 +181,18 @@ inline void InGame::update()
             PlaySound(player2Sound);
 
         /*update ghost positions and check for collision*/
-        for (int i = 0; i < ghosts.size(); i++)
+        for (int i = 0; i < strawberries.size(); i++)
         {
-            ghosts.at(i)->update();
+            strawberries.at(i)->update();
 
-            if (!ghosts.at(i)->isCaught)
+            if (!strawberries.at(i)->isCaught)
             {
                 if (!player1->getStatus() && !player1->getPicking())
                 {
-                    if (CheckCollisionRecs(ghosts.at(i)->getHitbox(), player1->getHitbox()))
+                    if (CheckCollisionRecs(strawberries.at(i)->getHitbox(), player1->getHitbox()))
                     {
-                        ghosts.at(i)->isCaught = true;
-                        ghosts.at(i)->reloadTexture();
+                        strawberries.at(i)->isCaught = true;
+                        strawberries.at(i)->reloadTexture();
                         player1score -= 3;
                         player1->changeSpeed(-50.0F);
                         player1->changePicking();
@@ -202,10 +202,10 @@ inline void InGame::update()
 
                 if (!player2->getStatus() && !player2->getPicking())
                 {
-                    if (CheckCollisionRecs(ghosts.at(i)->getHitbox(), player2->getHitbox()))
+                    if (CheckCollisionRecs(strawberries.at(i)->getHitbox(), player2->getHitbox()))
                     {
-                        ghosts.at(i)->isCaught = true;
-                        ghosts.at(i)->reloadTexture();
+                        strawberries.at(i)->isCaught = true;
+                        strawberries.at(i)->reloadTexture();
                         player2score -= 3;
                         player2->changeSpeed(-50.0F);
                         player2->changePicking();
@@ -213,10 +213,10 @@ inline void InGame::update()
                     }
                 }  
             }
-            else if (!ghosts.at(i)->soundPlayed)
+            else if (!strawberries.at(i)->soundPlayed)
             {
-                PlaySound(ghostDeath);  /*play death sound*/
-                ghosts.at(i)->soundPlayed = true;    /*enable flag*/
+                PlaySound(entityDeath);  /*play death sound*/
+                strawberries.at(i)->soundPlayed = true;    /*enable flag*/
 
             }
         }
@@ -254,7 +254,7 @@ inline void InGame::update()
             }
             else if (!mushrooms.at(i)->soundPlayed)
             {
-                PlaySound(ghostDeath);  /*play death sound*/
+                PlaySound(entityDeath);  /*play death sound*/
                 mushrooms.at(i)->soundPlayed = true;    /*enable flag*/
             }
         }
@@ -285,9 +285,9 @@ inline void InGame::render()
     ClearBackground(MAGENTA);
     world->render();
 
-    for (int i = 0; i < ghosts.size(); i++)
+    for (int i = 0; i < strawberries.size(); i++)
     {
-        ghosts.at(i)->render();
+        strawberries.at(i)->render();
     }
 
     for (int i = 0; i < mushrooms.size(); i++)
@@ -302,9 +302,9 @@ inline void InGame::render()
     {
         DrawRectangleLinesEx(player1->getHitbox(), 2, RED);
         DrawRectangleLinesEx(player2->getHitbox(), 2, RED);
-        for (int i = 0; i < ghosts.size(); i++)
+        for (int i = 0; i < strawberries.size(); i++)
         {
-            DrawRectangleLinesEx(ghosts.at(i)->getHitbox(), 2, RED);
+            DrawRectangleLinesEx(strawberries.at(i)->getHitbox(), 2, RED);
         }
         for (int i = 0; i < mushrooms.size(); i++)
         {
@@ -328,9 +328,9 @@ inline void InGame::render()
 
     if(displayCoordinates)
     {
-        for (int i = 0; i < ghosts.size(); i++)
+        for (int i = 0; i < strawberries.size(); i++)
         {
-            ghosts.at(i)->displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
+            strawberries.at(i)->displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
         }
         for (int i = 0; i < mushrooms.size(); i++)
         {

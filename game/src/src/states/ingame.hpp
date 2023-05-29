@@ -3,7 +3,7 @@
 #define MAXSPOT 2
 
 #include "../entities/player.hpp"
-#include "../entities/ghost.hpp"
+#include "../entities/strawberry.hpp"
 #include "../entities/mushroom.hpp"
 #include "cmath"
 #include "state.hpp"
@@ -33,7 +33,7 @@ private:
     bool isPaused;
     bool incrementOnce;
     std::vector<IconButton*> pauseBtns;
-    std::vector<Ghost*> ghosts;
+    std::vector<Strawberry*> strawberries;
     std::vector<Mushroom*> mushrooms;
 public:
     InGame(Config *config); /*Constructor*/
@@ -43,7 +43,7 @@ public:
     inline void render() override; /*Overridden method*/
     Signal signal() override; /*Overridden method*/
     Player getPlayer(); /*Accessor*/
-    Sound ghostDeath;
+    Sound entityDeath;
     Sound player1Sound;
     Sound player2Sound;
     int monitor;

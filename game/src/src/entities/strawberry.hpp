@@ -1,15 +1,14 @@
-
-#ifndef GHOST_H
-#define GHOST_H
+#ifndef STRAWBERRY_H
+#define STRAWBERRY_H
 
 #include <vector>
 #include <string>
 #include "entity.hpp"
 #include "../map/map.hpp"
-class Ghost : public Entity {
+class Strawberry : public Entity {
 private:
 	Texture2D texture;
-	int textureWidth, textureHeight;
+	int textureWidth = 72, textureHeight = 72;
 	enum direction { LEFT, RIGHT, UP, DOWN };
 	direction dir;
 	int animIndex = 0;
@@ -23,9 +22,9 @@ private:
 	Map* world;
 	void moveRandom();
 public:
-	Ghost();
-	Ghost(std::string idDebug, Config *config, Map *world);
-	~Ghost();
+	Strawberry();
+	Strawberry(std::string idDebug, Config *config, Map *world);
+	~Strawberry();
 	void update();
 	void render();
 	Rectangle getHitbox();
