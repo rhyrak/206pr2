@@ -343,7 +343,7 @@ void Player::resetAnimIndex() {
 }
 
 void Player::changePicking() {
-    if (!picking())
+    if (!picking)
         picking = true;  
     else
         picking = false;
