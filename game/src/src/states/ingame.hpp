@@ -29,6 +29,7 @@ private:
     Map* world;
     GridLayout gl;
     Texture2D scoreboard;
+    Texture2D gameoverBg;
     bool showScoreboard;
     bool isPaused;
     bool incrementOnce;

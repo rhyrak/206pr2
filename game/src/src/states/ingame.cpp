@@ -90,7 +90,7 @@ InGame::InGame(Config *config) : State(config)
 
     gl = GridLayout(config->windowWidth, config->windowHeight, -32);
     scoreboard = getTexture(SCOREBOARD, 1.2F*gl.getGridSize()/16);
-    remTime = 30; // seconds
+    remTime = 3; // seconds
     
     showScoreboard = false;
 
@@ -98,6 +98,8 @@ InGame::InGame(Config *config) : State(config)
         gl.getXCoord(1.0F), gl.getYCoord(1.0F), gl.getGridSize(), gl.getGridSize()}, I_ARROW_BACK));
     pauseBtns.push_back(new IconButton(Rectangle{
         gl.getXCoord(1.0F), gl.getYCoord(-2.0F), gl.getGridSize(), gl.getGridSize()}, I_GEAR));
+
+    gameoverBg = getTexture(GAME_OVER_BG, gl.getGridSize() * 12, gl.getGridSize() * 6);
 }
 
 InGame::~InGame()
@@ -106,6 +108,7 @@ InGame::~InGame()
         "\n\t\t\tDESTRUCTING INGAME\n" <<
         "****************************************************************************************************\n";
     UnloadTexture(scoreboard);
+    UnloadTexture(gameoverBg);
     UnloadSound(ghostDeath);
     UnloadSound(player1Sound);
     UnloadSound(player2Sound);
@@ -115,6 +118,8 @@ InGame::~InGame()
     delete world;
     player1score = 0;
     player2score = 0;
+    player1roundWins = 0;
+    player2roundWins = 0;
 }
 
 void InGame::reset()
@@ -127,7 +132,7 @@ void InGame::reset()
         mushrooms.at(i).reset();
     player1score = 0;
     player2score = 0;
-    remTime = 30;
+    remTime = 3;
     incrementOnce = true;
 }
 
@@ -366,9 +371,10 @@ inline void InGame::render()
     if (remTime <= 0)
     {
         showScoreboard = true;
+        DrawTexture(gameoverBg, gl.getXCoord(10), gl.getYCoord(2.5F), WHITE);
         if (player1score > player2score)
         {
-            DrawText("PLAYER 1 WON",gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
+            DrawText("PLAYER 1 WON",gl.getXCoord(12.35F), gl.getYCoord(3.5), gl.getGridSize(), UI_LIGHT_BROWN);
             if (incrementOnce)
             {
                 player1roundWins++;
@@ -377,7 +383,7 @@ inline void InGame::render()
         }
         else if (player2score > player1score)
         {
-            DrawText("PLAYER 2 WON", gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
+            DrawText("PLAYER 2 WON", gl.getXCoord(12.35F), gl.getYCoord(3.5), gl.getGridSize(), UI_LIGHT_BROWN);
             if (incrementOnce)
             {
                 player2roundWins++;
@@ -386,12 +392,14 @@ inline void InGame::render()
             
         }        
         else
-            DrawText("IT IS A DRAW",gl.getXCoord(12.35F), gl.getYCoord(3), gl.getGridSize(), UI_DARK_BROWN);
+            DrawText("IT IS A DRAW",gl.getXCoord(12.35F), gl.getYCoord(3.5), gl.getGridSize(), UI_LIGHT_BROWN);
 
-        DrawText("NEW GAME STARTS IN",
-            gl.getXCoord(10.25F), gl.getYCoord(4), gl.getGridSize(), UI_DARK_BROWN);
-        DrawText(TextFormat("%d", (int)(6 + remTime)),
-            gl.getXCoord(15.75F), gl.getYCoord(5), gl.getGridSize(), UI_DARK_BROWN);
+        DrawText(TextFormat("NEW GAME IN %d", (int)(6 + remTime)),
+            gl.getXCoord(12), gl.getYCoord(4.5), gl.getGridSize(), UI_LIGHT_BROWN);
+        DrawText(TextFormat("P1: %d", player1roundWins),
+            gl.getXCoord(13), gl.getYCoord(6), gl.getGridSize(), UI_LIGHT_BROWN);
+        DrawText(TextFormat("P2: %d", player2roundWins),
+            gl.getXCoord(17), gl.getYCoord(6), gl.getGridSize(), UI_LIGHT_BROWN);
     }
 }
 
