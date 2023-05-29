@@ -26,7 +26,7 @@ InGame::InGame(Config *config) : State(config)
     monitor = GetCurrentMonitor();
     world = new Map(map->windowWidth, map->windowHeight);
     /*Create new Player*/
-    player1 = Player(
+    player1 = new Player(
         map,
         "Player 1",
         { 200.0, 200.0 },
@@ -37,7 +37,7 @@ InGame::InGame(Config *config) : State(config)
         world
     );
 
-    player2 = Player(
+    player2 = new Player(
         map,
         "Player 2",
         { (float)(map->windowWidth - 200.0), (float)(map->windowHeight - 200.0) },
@@ -57,14 +57,14 @@ InGame::InGame(Config *config) : State(config)
 
     for (int i = 0; i < 11; i++)
     {
-        ghosts.push_back(Ghost("Ghost", map, world));
+        ghosts.push_back(new Ghost("Ghost", map, world));
         /*Addition is overloaded, concatenate 'i' to idDebug of Ghost object*/
         ghosts.at(i) + (i+1);
     }
 
     for (int i = 0; i < 11; i++)
     {
-        mushrooms.push_back(Mushroom("Mushroom", map, world));
+        mushrooms.push_back(new Mushroom("Mushroom", map, world));
         /*Addition is overloaded, concatenate 'i' to idDebug of Ghost object*/
         mushrooms.at(i) + (i + 1);
     }
@@ -83,10 +83,10 @@ InGame::InGame(Config *config) : State(config)
     }
 
     /*set initial spotlight position to players coordinates*/
-    spotPos[0].x = player1.getCenterPoint().x / (map->windowWidth / config->windowWidth);
-    spotPos[0].y = player1.getCenterPoint().y / (map->windowHeight / config->windowHeight);
-    spotPos[1].x = player2.getCenterPoint().x / (map->windowWidth / config->windowWidth);
-    spotPos[1].y = player2.getCenterPoint().y / (map->windowHeight / config->windowHeight);
+    spotPos[0].x = player1->getCenterPoint().x / (map->windowWidth / config->windowWidth);
+    spotPos[0].y = player1->getCenterPoint().y / (map->windowHeight / config->windowHeight);
+    spotPos[1].x = player2->getCenterPoint().x / (map->windowWidth / config->windowWidth);
+    spotPos[1].y = player2->getCenterPoint().y / (map->windowHeight / config->windowHeight);
 
     gl = GridLayout(config->windowWidth, config->windowHeight, -32);
     scoreboard = getTexture(SCOREBOARD, 1.2F*gl.getGridSize()/16);
@@ -116,6 +116,8 @@ InGame::~InGame()
         delete pauseBtns.at(i);
     pauseBtns.clear();
     delete world;
+    delete player1;
+    delete player2;
     player1score = 0;
     player2score = 0;
     player1roundWins = 0;
@@ -124,12 +126,12 @@ InGame::~InGame()
 
 void InGame::reset()
 {
-    player1.reset();
-    player2.reset();
+    player1->reset();
+    player2->reset();
     for (int i = 0; i < ghosts.size(); i++)
-        ghosts.at(i).reset();
+        ghosts.at(i)->reset();
     for (int i = 0; i < mushrooms.size(); i++)
-        mushrooms.at(i).reset();
+        mushrooms.at(i)->reset();
     player1score = 0;
     player2score = 0;
     remTime = 60;
@@ -158,102 +160,102 @@ inline void InGame::update()
     if (!isPaused && remTime > 0)
     {
         /*update players positions and play sfx*/
-        player1.update();
-        if (IsKeyPressed(player1.getUpKey()))
+        player1->update();
+        if (IsKeyPressed(player1->getUpKey()))
             PlaySound(player1Sound);
-        if (IsKeyPressed(player1.getLeftKey()))
+        if (IsKeyPressed(player1->getLeftKey()))
             PlaySound(player1Sound);
-        if (IsKeyPressed(player1.getDownKey()))
+        if (IsKeyPressed(player1->getDownKey()))
             PlaySound(player1Sound);
-        if (IsKeyPressed(player1.getRightKey()))
+        if (IsKeyPressed(player1->getRightKey()))
             PlaySound(player1Sound);
 
-        player2.update();
-        if (IsKeyPressed(player2.getUpKey()))
+        player2->update();
+        if (IsKeyPressed(player2->getUpKey()))
             PlaySound(player2Sound);
-        if (IsKeyPressed(player2.getLeftKey()))
+        if (IsKeyPressed(player2->getLeftKey()))
             PlaySound(player2Sound);
-        if (IsKeyPressed(player2.getDownKey()))
+        if (IsKeyPressed(player2->getDownKey()))
             PlaySound(player2Sound);
-        if (IsKeyPressed(player2.getRightKey()))
+        if (IsKeyPressed(player2->getRightKey()))
             PlaySound(player2Sound);
 
         /*update ghost positions and check for collision*/
         for (int i = 0; i < ghosts.size(); i++)
         {
-            ghosts.at(i).update();
+            ghosts.at(i)->update();
 
-            if (!ghosts.at(i).isCaught) 
+            if (!ghosts.at(i)->isCaught)
             {
-                if (!player1.getStatus() && !player1.getPicking())
+                if (!player1->getStatus() && !player1->getPicking())
                 {
-                    if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player1.getHitbox()))
+                    if (CheckCollisionRecs(ghosts.at(i)->getHitbox(), player1->getHitbox()))
                     {
-                        ghosts.at(i).isCaught = true;
-                        ghosts.at(i).reloadTexture();
+                        ghosts.at(i)->isCaught = true;
+                        ghosts.at(i)->reloadTexture();
                         player1score -= 3;
-                        player1.changeSpeed(-50.0F);
-                        player1.changePicking();
-                        player1.resetAnimIndex();
+                        player1->changeSpeed(-50.0F);
+                        player1->changePicking();
+                        player1->resetAnimIndex();
                     }
                 }
 
-                if (!player2.getStatus() && !player2.getPicking())
+                if (!player2->getStatus() && !player2->getPicking())
                 {
-                    if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player2.getHitbox()))
+                    if (CheckCollisionRecs(ghosts.at(i)->getHitbox(), player2->getHitbox()))
                     {
-                        ghosts.at(i).isCaught = true;
-                        ghosts.at(i).reloadTexture();
+                        ghosts.at(i)->isCaught = true;
+                        ghosts.at(i)->reloadTexture();
                         player2score -= 3;
-                        player2.changeSpeed(-50.0F);
-                        player2.changePicking();
-                        player2.resetAnimIndex();
+                        player2->changeSpeed(-50.0F);
+                        player2->changePicking();
+                        player2->resetAnimIndex();
                     }
                 }  
             }
-            else if (!ghosts.at(i).soundPlayed)
+            else if (!ghosts.at(i)->soundPlayed)
             {
                 PlaySound(ghostDeath);  /*play death sound*/
-                ghosts.at(i).soundPlayed = true;    /*enable flag*/
+                ghosts.at(i)->soundPlayed = true;    /*enable flag*/
 
             }
         }
         for (int i = 0; i < mushrooms.size(); i++)
         {
-            mushrooms.at(i).update();
+            mushrooms.at(i)->update();
 
-            if (!mushrooms.at(i).isCaught)
+            if (!mushrooms.at(i)->isCaught)
             {
-                if (!player1.getStatus() && !player1.getPicking())
+                if (!player1->getStatus() && !player1->getPicking())
                 {
-                    if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player1.getHitbox()))
+                    if (CheckCollisionRecs(mushrooms.at(i)->getHitbox(), player1->getHitbox()))
                     {
-                        mushrooms.at(i).isCaught = true;
-                        mushrooms.at(i).reloadTexture();
+                        mushrooms.at(i)->isCaught = true;
+                        mushrooms.at(i)->reloadTexture();
                         player1score += 5;
-                        player1.changeSpeed(30.0F);
-                        player1.changePicking();
-                        player1.resetAnimIndex();
+                        player1->changeSpeed(30.0F);
+                        player1->changePicking();
+                        player1->resetAnimIndex();
                     }
                 }
                 
-                if (!player2.getStatus() && !player2.getPicking())
+                if (!player2->getStatus() && !player2->getPicking())
                 {
-                    if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player2.getHitbox()))
+                    if (CheckCollisionRecs(mushrooms.at(i)->getHitbox(), player2->getHitbox()))
                     {
-                        mushrooms.at(i).isCaught = true;
-                        mushrooms.at(i).reloadTexture();
+                        mushrooms.at(i)->isCaught = true;
+                        mushrooms.at(i)->reloadTexture();
                         player2score += 5;
-                        player2.changeSpeed(30.0F);
-                        player2.changePicking();
-                        player2.resetAnimIndex();
+                        player2->changeSpeed(30.0F);
+                        player2->changePicking();
+                        player2->resetAnimIndex();
                     }
                 }
             }
-            else if (!mushrooms.at(i).soundPlayed)
+            else if (!mushrooms.at(i)->soundPlayed)
             {
                 PlaySound(ghostDeath);  /*play death sound*/
-                mushrooms.at(i).soundPlayed = true;    /*enable flag*/
+                mushrooms.at(i)->soundPlayed = true;    /*enable flag*/
             }
         }
     }
@@ -268,10 +270,10 @@ inline void InGame::update()
         
     /*track spotlights*/
     monitor = GetCurrentMonitor();
-    spotPos[0].x = player1.getCenterPoint().x / (map->windowWidth / config->windowWidth);
-    spotPos[0].y = config->windowHeight - player1.getCenterPoint().y / (map->windowHeight / config->windowHeight);
-    spotPos[1].x = player2.getCenterPoint().x / (map->windowWidth / config->windowWidth);
-    spotPos[1].y = config->windowHeight - player2.getCenterPoint().y / (map->windowHeight / config->windowHeight);
+    spotPos[0].x = player1->getCenterPoint().x / (map->windowWidth / config->windowWidth);
+    spotPos[0].y = config->windowHeight - player1->getCenterPoint().y / (map->windowHeight / config->windowHeight);
+    spotPos[1].x = player2->getCenterPoint().x / (map->windowWidth / config->windowWidth);
+    spotPos[1].y = config->windowHeight - player2->getCenterPoint().y / (map->windowHeight / config->windowHeight);
     SetShaderValue(spotShader, spotLoc[0], &spotPos[0].x, ShaderUniformDataType::SHADER_UNIFORM_VEC2);
     SetShaderValue(spotShader, spotLoc[1], &spotPos[1].x, ShaderUniformDataType::SHADER_UNIFORM_VEC2);
     
@@ -285,28 +287,28 @@ inline void InGame::render()
 
     for (int i = 0; i < ghosts.size(); i++)
     {
-        ghosts.at(i).render();
+        ghosts.at(i)->render();
     }
 
     for (int i = 0; i < mushrooms.size(); i++)
     {
-        mushrooms.at(i).render();
+        mushrooms.at(i)->render();
     }
 
-    player1.render();    /*Draw player model*/
-    player2.render();
+    player1->render();    /*Draw player model*/
+    player2->render();
 
     if (displayHitBoxes)
     {
-        DrawRectangleLinesEx(player1.getHitbox(), 2, RED);
-        DrawRectangleLinesEx(player2.getHitbox(), 2, RED);
+        DrawRectangleLinesEx(player1->getHitbox(), 2, RED);
+        DrawRectangleLinesEx(player2->getHitbox(), 2, RED);
         for (int i = 0; i < ghosts.size(); i++)
         {
-            DrawRectangleLinesEx(ghosts.at(i).getHitbox(), 2, RED);
+            DrawRectangleLinesEx(ghosts.at(i)->getHitbox(), 2, RED);
         }
         for (int i = 0; i < mushrooms.size(); i++)
         {
-            DrawRectangleLinesEx(mushrooms.at(i).getHitbox(), 2, RED);
+            DrawRectangleLinesEx(mushrooms.at(i)->getHitbox(), 2, RED);
         }
     }
 
@@ -328,14 +330,14 @@ inline void InGame::render()
     {
         for (int i = 0; i < ghosts.size(); i++)
         {
-            ghosts.at(i).displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
+            ghosts.at(i)->displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
         }
         for (int i = 0; i < mushrooms.size(); i++)
         {
-            mushrooms.at(i).displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
+            mushrooms.at(i)->displayDebugInfo(0, map->windowHeight / config->windowHeight, 10);
         }
-        player1.displayDebugInfo(0);  /*Display coordinates*/
-        player2.displayDebugInfo(60);  /*Display coordinates*/
+        player1->displayDebugInfo(0);  /*Display coordinates*/
+        player2->displayDebugInfo(60);  /*Display coordinates*/
         DrawText(TextFormat("%d", player1roundWins), 400, 400, 20, RAYWHITE);
         DrawText(TextFormat("%d", player2roundWins), 400, 440, 20, RAYWHITE);
 
@@ -412,5 +414,5 @@ Signal InGame::signal()
 /*Accessor*/
 Player InGame::getPlayer()
 {
-    return player1;
+    return *player1;
 }

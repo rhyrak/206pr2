@@ -28,6 +28,7 @@ Mushroom::Mushroom(std::string idDebug, Config* config, Map* world) {
 
 Mushroom::~Mushroom()
 {
+    UnloadTexture(texture);
 }
 
 void Mushroom::update() {

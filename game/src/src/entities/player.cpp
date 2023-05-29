@@ -40,46 +40,57 @@ void Player::loadSprite() {
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[0] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_leftside walk.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[1] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_up walk.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[2] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_down walk.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[3] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_rightside idle.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[4] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_leftside idle.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[5] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_up idle.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[6] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_down idle.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[7] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_pick up right.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[8] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_pick up left.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[9] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_pick up up.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[10] = LoadTextureFromImage(png);
 
+    UnloadImage(png);
     png = LoadImage("game/res/_pick up down.png");
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[11] = LoadTextureFromImage(png);
@@ -89,6 +100,8 @@ void Player::loadSprite() {
 
 Player::~Player()
 {
+    for (int i = 0; i < 12; i++)
+        UnloadTexture(texture[i]);
 }
 
 void Player::render()

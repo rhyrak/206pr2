@@ -28,6 +28,7 @@ Ghost::Ghost(std::string idDebug, Config *config, Map *world) {
 
 Ghost::~Ghost()
 {
+    UnloadTexture(texture);
 }
 
 void Ghost::update() {

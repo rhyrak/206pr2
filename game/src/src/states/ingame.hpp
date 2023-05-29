@@ -17,9 +17,8 @@
 class InGame : public State
 {
 private:
-    Player player1;  /*Player Object*/
-    Player player2; 
-    Ghost ghost;
+    Player *player1;  /*Player Object*/
+    Player *player2; 
     Camera2D camera;    /*Camera Object*/
     float visionRadius;
     bool nightVision;    /*cheat*/
@@ -34,8 +33,8 @@ private:
     bool isPaused;
     bool incrementOnce;
     std::vector<IconButton*> pauseBtns;
-    std::vector< Ghost> ghosts;
-    std::vector< Mushroom> mushrooms;
+    std::vector<Ghost*> ghosts;
+    std::vector<Mushroom*> mushrooms;
 public:
     InGame(Config *config); /*Constructor*/
     ~InGame();  /*Destructor*/
