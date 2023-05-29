@@ -185,7 +185,7 @@ inline void InGame::update()
 
             if (!ghosts.at(i).isCaught) 
             {
-                if (!player1.getStatus())
+                if (!player1.getStatus() && !player1.getPicking())
                 {
                     if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player1.getHitbox()))
                     {
@@ -198,7 +198,7 @@ inline void InGame::update()
                     }
                 }
 
-                if (!player2.getStatus())
+                if (!player2.getStatus() && !player2.getPicking())
                 {
                     if (CheckCollisionRecs(ghosts.at(i).getHitbox(), player2.getHitbox()))
                     {
@@ -224,7 +224,7 @@ inline void InGame::update()
 
             if (!mushrooms.at(i).isCaught)
             {
-                if (!player1.getStatus())
+                if (!player1.getStatus() && !player1.getPicking())
                 {
                     if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player1.getHitbox()))
                     {
@@ -237,7 +237,7 @@ inline void InGame::update()
                     }
                 }
                 
-                if (!player2.getStatus())
+                if (!player2.getStatus() && !player2.getPicking())
                 {
                     if (CheckCollisionRecs(mushrooms.at(i).getHitbox(), player2.getHitbox()))
                     {
