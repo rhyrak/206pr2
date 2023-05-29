@@ -68,6 +68,22 @@ void Player::loadSprite() {
     ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
     texture[7] = LoadTextureFromImage(png);
 
+    png = LoadImage("game/res/_pick up right.png");
+    ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
+    texture[8] = LoadTextureFromImage(png);
+
+    png = LoadImage("game/res/_pick up left.png");
+    ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
+    texture[9] = LoadTextureFromImage(png);
+
+    png = LoadImage("game/res/_pick up up.png");
+    ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
+    texture[10] = LoadTextureFromImage(png);
+
+    png = LoadImage("game/res/_pick up down.png");
+    ImageResizeNN(&png, textureWidth * 4.0f, textureHeight * 2.0f);
+    texture[11] = LoadTextureFromImage(png);
+
     UnloadImage(png);
 }
 
@@ -78,74 +94,103 @@ Player::~Player()
 void Player::render()
 {
     if (idle && animIndex >= 5)
-        animIndex = 0;
+        resetAnimIndex();
     if (!idle && animIndex >= 6)
-        animIndex = 0;
+        resetAnimIndex();
 
     switch (dir)
     {
     case LEFT:
-        if(!idle)
+        if(!idle && !picking)
             if (animIndex < 4)
                 DrawTextureRec(texture[1], Rectangle{(float)textureWidth *animIndex, textureHeight * 0.0F,(float)textureWidth,(float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             else
                 DrawTextureRec(texture[1], Rectangle{ (float)textureWidth * (animIndex-4), textureHeight * 1.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
-        else
+        else if(idle && !picking)
             if(animIndex < 4)
                 DrawTextureRec(texture[5], Rectangle{ (float)textureWidth * animIndex, textureHeight * 0.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth/2, centerPoint.y - textureHeight / 2 }, WHITE);
             else
                 DrawTextureRec(texture[5], Rectangle{ (float)textureWidth * (animIndex - 4), textureHeight * 1.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+        else if (picking)
+            if (animIndex < 4)
+                DrawTextureRec(texture[9], Rectangle{ (float)textureWidth * animIndex, textureHeight * 0.0F, (float)textureWidth, (float)textureHeight },
+                    Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+            else
+                DrawTextureRec(texture[9], Rectangle{ (float)textureWidth * (animIndex - 4), textureHeight * 1.0F, (float)textureWidth, (float)textureHeight },
+                    Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
         break;
     case RIGHT:
-        if (!idle)
+        if (!idle && !picking)
             if (animIndex < 4)
                 DrawTextureRec(texture[0], Rectangle{ (float)textureWidth * 4 - textureWidth * (animIndex + 1), textureHeight * 0.0F,(float)textureWidth,(float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             else
                 DrawTextureRec(texture[0], Rectangle{ (float)textureWidth * 4 - textureWidth * (animIndex - 3), textureHeight * 1.0F, (float)textureWidth,(float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
-        else
+        else if (idle && !picking)
             if (animIndex < 4)
                 DrawTextureRec(texture[4], Rectangle{ (float)textureWidth * 4 - textureWidth * (animIndex + 1), textureHeight * 0.0F,(float)textureWidth,(float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             else
                 DrawTextureRec(texture[4], Rectangle{ (float)textureWidth * 4 - textureWidth * (animIndex - 3), textureHeight * 1.0F, (float)textureWidth,(float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+        else if (picking)
+            if (animIndex < 4)
+                DrawTextureRec(texture[8], Rectangle{ (float)textureWidth * animIndex, textureHeight * 0.0F,(float)textureWidth,(float)textureHeight },
+                    Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+            else
+                DrawTextureRec(texture[8], Rectangle{ (float)textureWidth * 0, textureHeight * 1.0F, (float)textureWidth,(float)textureHeight },
+                    Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
         break;
     case UP:
-        if (!idle)
+        if (!idle && !picking)
             if (animIndex < 4)
                 DrawTextureRec(texture[2], Rectangle{ (float)textureWidth * animIndex, textureHeight * 0.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             else
                 DrawTextureRec(texture[2], Rectangle{ (float)textureWidth * (animIndex - 4), textureHeight * 1.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
-        else
+        else if(idle && !picking)
             if (animIndex < 4)
                 DrawTextureRec(texture[6], Rectangle{ (float)textureWidth * animIndex, textureHeight * 0.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             else
                 DrawTextureRec(texture[6], Rectangle{ (float)textureWidth * (animIndex - 4), textureHeight * 1.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+        else if (picking) {
+            if (animIndex < 4)
+                DrawTextureRec(texture[10], Rectangle{ (float)textureWidth * animIndex, textureHeight * 0.0F, (float)textureWidth, (float)textureHeight },
+                    Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+            else
+                DrawTextureRec(texture[10], Rectangle{ (float)textureWidth * (animIndex - 4), textureHeight * 1.0F, (float)textureWidth, (float)textureHeight },
+                    Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+        }
         break;
     case DOWN:
-        if (!idle)
+        if (!idle && !picking)
             if (animIndex < 4)
                 DrawTextureRec(texture[3], Rectangle{ (float)textureWidth * animIndex, textureHeight * 0.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             else
                 DrawTextureRec(texture[3], Rectangle{ (float)textureWidth * (animIndex - 4), textureHeight * 1.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
-        else
+        else if(idle && !picking)
             if (animIndex < 4)
                 DrawTextureRec(texture[7], Rectangle{ (float)textureWidth * animIndex, textureHeight * 0.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
             else
                 DrawTextureRec(texture[7], Rectangle{ (float)textureWidth * (animIndex - 4), textureHeight * 1.0F, (float)textureWidth, (float)textureHeight },
+                    Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+        else if (picking)
+            if (animIndex < 4)
+                DrawTextureRec(texture[11], Rectangle{ (float)textureWidth * animIndex, textureHeight * 0.0F, (float)textureWidth, (float)textureHeight },
+                    Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
+            else
+                DrawTextureRec(texture[11], Rectangle{ (float)textureWidth * (animIndex - 4), textureHeight * 1.0F, (float)textureWidth, (float)textureHeight },
                     Vector2{ centerPoint.x - textureWidth / 2, centerPoint.y - textureHeight / 2 }, WHITE);
         break;
     default:
@@ -185,12 +230,15 @@ void Player::update()
         animIndex++;
         animTick = 0.0F;
     }
-    if (!IsKeyDown(*leftKey) && !IsKeyDown(*rightKey) && !IsKeyDown(*upKey) && !IsKeyDown(*downKey))
+    if (!IsKeyDown(*leftKey) && !IsKeyDown(*rightKey) && !IsKeyDown(*upKey) && !IsKeyDown(*downKey) && !picking)
         idle = true;
     else
         idle = false;
-
-    if (IsKeyDown(*leftKey))
+    if (picking && animIndex >= 5) {
+        resetAnimIndex();
+        changePicking();
+    }
+    if (IsKeyDown(*leftKey) && !picking)
     {
         dir = LEFT;
         if(centerPoint.x > textureWidth / 4)
@@ -204,7 +252,7 @@ void Player::update()
             centerPoint.x = textureWidth / 4;
     }      
 
-    if (IsKeyDown(*rightKey))
+    if (IsKeyDown(*rightKey) && !picking)
     {
         dir = RIGHT;
         if(centerPoint.x < map->windowWidth - textureWidth / 4)
@@ -218,7 +266,7 @@ void Player::update()
             centerPoint.x = map->windowWidth - textureWidth / 4;
     }   
 
-    if (IsKeyDown(*upKey))
+    if (IsKeyDown(*upKey) && !picking)
     {
         dir = UP;
         if(centerPoint.y > textureHeight / 4)
@@ -232,7 +280,7 @@ void Player::update()
             centerPoint.y = textureHeight / 4;
     }      
 
-    if (IsKeyDown(*downKey))
+    if (IsKeyDown(*downKey) && !picking)
     {
         dir = DOWN;
         if(centerPoint.y < map->windowHeight - textureHeight / 4)
@@ -290,4 +338,13 @@ bool Player::getStatus()
     return idle;
 }
 
+void Player::resetAnimIndex() {
+    animIndex = 0;
+}
 
+void Player::changePicking() {
+    if (!picking)
+        picking = true;  
+    else
+        picking = false;
+}
