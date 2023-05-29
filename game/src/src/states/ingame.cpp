@@ -188,6 +188,8 @@ inline void InGame::update()
                         ghosts.at(i).reloadTexture();
                         player1score -= 3;
                         player1.changeSpeed(-50.0F);
+                        player1.changePicking();
+                        player1.resetAnimIndex();
                     }
                 }
 
@@ -199,6 +201,8 @@ inline void InGame::update()
                         ghosts.at(i).reloadTexture();
                         player2score -= 3;
                         player2.changeSpeed(-50.0F);
+                        player2.changePicking();
+                        player2.resetAnimIndex();
                     }
                 }  
             }
@@ -223,6 +227,8 @@ inline void InGame::update()
                         mushrooms.at(i).reloadTexture();
                         player1score += 5;
                         player1.changeSpeed(30.0F);
+                        player1.changePicking();
+                        player1.resetAnimIndex();
                     }
                 }
                 
@@ -234,6 +240,8 @@ inline void InGame::update()
                         mushrooms.at(i).reloadTexture();
                         player2score += 5;
                         player2.changeSpeed(30.0F);
+                        player2.changePicking();
+                        player2.resetAnimIndex();
                     }
                 }
             }
