@@ -36,7 +36,7 @@ int main(void){
         std::cout << "CREATING DEFAULT CONFIG\n";
         config = new Config{
             { KEY_W,KEY_S,KEY_A,KEY_D,KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT },
-            0.95F,0.95F,1600,900,1,false,false };    /*Define new Config Object*/
+            0.95F,0.95F,1280,721,1,false,false };    /*Define new Config Object*/
     }
     else
     {
@@ -49,6 +49,13 @@ int main(void){
 
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
+    if (config->windowHeight == 721)
+    {
+        int monitor = GetCurrentMonitor();
+        config->windowWidth = GetMonitorWidth(monitor) * 0.75F;
+        config->windowHeight = config->windowWidth * (9.0F / 16);
+        SetWindowSize(config->windowWidth, config->windowHeight);
+    }
 
     SetWindowState(FLAG_VSYNC_HINT);    /*Limit FPS to monitor's Refresh rate*/
     /* SetTargetFPS(60); */
@@ -56,6 +63,13 @@ int main(void){
 
     if (config->isFullscreen && !IsWindowFullscreen())
         ToggleFullscreen();
+
+    if (!IsWindowFullscreen())
+    {
+        int monitor = GetCurrentMonitor();
+        SetWindowPosition((GetMonitorWidth(monitor) - config->windowWidth) / 2,
+            (GetMonitorHeight(monitor) - config->windowHeight) / 2);
+    }
 
     HideCursor();
     Texture2D cursorActive = getTexture(CURSOR_ACTIVE, 3);
@@ -170,8 +184,8 @@ inline void cToggleFullscreen(Config *config)
     int monitor = GetCurrentMonitor();
     if (IsWindowFullscreen())
     {
-        config->windowHeight = 900;
-        config->windowWidth = 1600;
+        config->windowWidth = GetMonitorWidth(monitor) * 0.75F;
+        config->windowHeight = config->windowWidth * (9.0F / 16);
         ToggleFullscreen();
         SetWindowSize(config->windowWidth, config->windowHeight);
         SetWindowPosition((GetMonitorWidth(monitor) - config->windowWidth) / 2,
