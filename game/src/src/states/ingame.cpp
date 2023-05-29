@@ -90,7 +90,7 @@ InGame::InGame(Config *config) : State(config)
 
     gl = GridLayout(config->windowWidth, config->windowHeight, -32);
     scoreboard = getTexture(SCOREBOARD, 1.2F*gl.getGridSize()/16);
-    remTime = 3; // seconds
+    remTime = 60; // seconds
     
     showScoreboard = false;
 
@@ -132,7 +132,7 @@ void InGame::reset()
         mushrooms.at(i).reset();
     player1score = 0;
     player2score = 0;
-    remTime = 3;
+    remTime = 60;
     incrementOnce = true;
 }
 
