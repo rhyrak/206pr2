@@ -16,7 +16,7 @@ Visual Studio users should run
     premake-VisualStudio.bat
 	
 This will generate a Visual Studio project, by default this is configured to work with Visual Studio 2022 but if you have a different version then
-edit the batch file and change it to the version of Visual Studio you are using.
+edit the batch file and change it to the version of Visual Studio you are using. Please email Selcuk Gencay or Yousif Suhail if you're facing errors with using the generated .sln file or face CMake related errors.
 	
 ## MinGW-w64 Users
 Please make sure you have a recent version of MinGW-W64. The older versions from mingw.org will not work.
