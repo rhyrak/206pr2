@@ -35,7 +35,7 @@ int main(void){
     SetMusicVolume(music, config->musicLevel);
 
     /*Create window*/
-    InitWindow(config->windowWidth, config->windowHeight, "Demo game with raylib");
+    InitWindow(config->windowWidth, config->windowHeight, "Hide & Seek");
     if (config->windowHeight == 721)
     {
         int monitor = GetCurrentMonitor();
@@ -43,6 +43,8 @@ int main(void){
         config->windowHeight = config->windowWidth * (9.0F / 16);
         SetWindowSize(config->windowWidth, config->windowHeight);
     }
+
+    SetWindowIcon(LoadImage("game/res/win-icon.png"));
 
     SetWindowState(FLAG_VSYNC_HINT);    /*Limit FPS to monitor's Refresh rate*/
     /* SetTargetFPS(60); */
