@@ -18,7 +18,7 @@ Mushroom::Mushroom(std::string idDebug, Config* config, Map* world) {
     this->isCaught = false;
     this->speed = 100.0;
     this->speedC = 100.0;
-    this->centerPoint = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
+    this->centerPoint = generateRandomCoordinates();
     Image png = LoadImage("game/res/cute mushroom walk.png");
     textureWidth = TileWidth * 0.8;
     textureHeight = TileHeight * 0.8;
@@ -36,10 +36,10 @@ void Mushroom::update() {
     if (!isCaught)
     {
         if (!world->canMove(centerPoint.x + 1, centerPoint.y + 1))
-            centerPoint = { (500 + (rand() % (map->windowWidth - 500))) / 1.0F, (500 + (rand() % (map->windowHeight - 500))) / 1.0F };
+            this->centerPoint = generateRandomCoordinates();
         if ((moveUp == false && moveDown == false && moveRight == false && moveLeft == false) || randomRange <= 0.0
-            || (centerPoint.x <= (double)textureWidth / 2 || centerPoint.x >= map->windowWidth - (double)textureWidth / 2 
-                || centerPoint.y <= (double)textureHeight / 2 || centerPoint.y >= (double)map->windowHeight - (double)textureHeight / 2))
+            || (this->centerPoint.x <= (double)this->textureWidth / 2 || this->centerPoint.x >= map->windowWidth - (double)this->textureWidth / 2
+                || this->centerPoint.y <= (double)this->textureHeight / 2 || this->centerPoint.y >= map->windowHeight - (double)this->textureHeight / 2))
             moveRandom();
 
         float dt = GetFrameTime();
@@ -56,73 +56,73 @@ void Mushroom::update() {
         if (moveLeft)
         {
             dir = LEFT;
-            if (centerPoint.x > textureWidth / 2 + 0.2)
+            if (this->centerPoint.x > (double)this->textureWidth / 2 + 0.2)
             {
-                if (world->canMove(((int)centerPoint.x - textureWidth / 2 + 0.2) - (this->speed * (double)dt), (int)centerPoint.y)
-                    && world->canMove(((int)centerPoint.x - textureWidth / 2 + 0.2) - (this->speed * (double)dt), (int)centerPoint.y + (double)textureHeight / 2 - 0.2)
-                    && world->canMove(((int)centerPoint.x - textureWidth / 2 + 0.2) - (this->speed * (double)dt), (int)centerPoint.y - (double)textureHeight / 2 + 0.2))
-                    centerPoint.x -= (this->speed * dt);
+                if (world->canMove(((int)this->centerPoint.x - textureWidth / 2 + 0.2) - (this->speed * (double)dt), (int)this->centerPoint.y)
+                    && world->canMove(((int)this->centerPoint.x - textureWidth / 2 + 0.2) - (this->speed * (double)dt), (int)this->centerPoint.y + textureHeight / 2 - 0.2)
+                    && world->canMove(((int)this->centerPoint.x - textureWidth / 2 + 0.2) - (this->speed * (double)dt), (int)this->centerPoint.y - textureHeight / 2 + 0.2))
+                    this->centerPoint.x -= (this->speed * (double)dt);
                 else {
                     moveRandom();
                 }
             }
             else
-                centerPoint.x = textureWidth / 2 + 0.2;
+                this->centerPoint.x = (double)this->textureWidth / 2 + 0.2;
         }
 
         if (moveRight)
         {
             dir = RIGHT;
-            if (centerPoint.x < map->windowWidth - (double)textureWidth / 2 - 0.2)
+            if (this->centerPoint.x < map->windowWidth - (double)this->textureWidth / 2 - 0.2)
             {
-                if (world->canMove(((int)centerPoint.x + (double)textureWidth / 2 - 0.2) + (this->speed * (double)dt), (int)centerPoint.y)
-                    && world->canMove(((int)centerPoint.x + (double)textureWidth / 2 - 0.2) + (this->speed * (double)dt), (int)centerPoint.y + (double)textureHeight / 2 - 0.2)
-                    && world->canMove(((int)centerPoint.x + (double)textureWidth / 2 - 0.2) + (this->speed * (double)dt), (int)centerPoint.y - (double)textureHeight / 2 + 0.2))
-                    centerPoint.x += (this->speed * (double)dt);
+                if (world->canMove(((int)this->centerPoint.x + (double)this->textureWidth / 2 - 0.2) + (this->speed * (double)dt), (int)this->centerPoint.y)
+                    && world->canMove(((int)this->centerPoint.x + (double)this->textureWidth / 2 - 0.2) + (this->speed * (double)dt), (int)this->centerPoint.y + (double)this->textureHeight / 2 - 0.2)
+                    && world->canMove(((int)this->centerPoint.x + (double)this->textureWidth / 2 - 0.2) + (this->speed * (double)dt), (int)this->centerPoint.y - (double)this->textureHeight / 2 + 0.2))
+                    this->centerPoint.x += (this->speed * (double)dt);
                 else {
                     moveRandom();
                 }
             }
             else
-                centerPoint.x = map->windowWidth - (double)textureWidth / 2 - 0.2;
+                this->centerPoint.x = map->windowWidth - (double)this->textureWidth / 2 - 0.2;
         }
 
         if (moveUp)
         {
             dir = UP;
-            if (centerPoint.y > (double)textureHeight / 2 + 0.2)
+            if (this->centerPoint.y > (double)this->textureHeight / 2)
             {
-                if (world->canMove((int)centerPoint.x, (centerPoint.y - (double)textureHeight / 2 + 0.2) - (this->speed * (double)dt))
-                    && world->canMove((int)centerPoint.x + (double)textureWidth / 2 - 0.2, (centerPoint.y - (double)textureHeight / 2 + 0.2) - (this->speed * (double)dt))
-                    && world->canMove((int)centerPoint.x - (double)textureWidth / 2 + 0.2, (centerPoint.y - (double)textureHeight / 2 + 0.2) - (this->speed * (double)dt)))
-                    centerPoint.y -= (this->speed * (double)dt);
+                if (world->canMove((int)this->centerPoint.x, (this->centerPoint.y - (double)this->textureHeight / 2) - (this->speed * dt))
+                    && world->canMove((int)this->centerPoint.x + (double)this->textureWidth / 2 - 0.2, (this->centerPoint.y - (double)this->textureHeight / 2) - (this->speed * (double)dt))
+                    && world->canMove((int)this->centerPoint.x - (double)this->textureWidth / 2 + 0.2, (this->centerPoint.y - (double)this->textureHeight / 2) - (this->speed * (double)dt)))
+                    this->centerPoint.y -= (this->speed * (double)dt);
                 else {
                     moveRandom();
                 }
             }
             else
-                centerPoint.y = (double)textureHeight / 2 + 0.2;
+                this->centerPoint.y = (double)this->textureHeight / 2;
         }
 
         if (moveDown)
         {
             dir = DOWN;
-            if (centerPoint.y < map->windowHeight - (double)textureHeight / 2 - 0.2)
+            if (this->centerPoint.y < map->windowHeight - (double)this->textureHeight / 2)
             {
-                if (world->canMove((int)centerPoint.x, (centerPoint.y + (double)textureHeight / 2 - 0.2) + (this->speed * (double)dt))
-                    && world->canMove((int)centerPoint.x + (double)textureWidth / 2 - 0.2, (centerPoint.y + (double)textureHeight / 2 - 0.2) + (this->speed * (double)dt))
-                    && world->canMove((int)centerPoint.x - (double)textureWidth / 2 + 0.2, (centerPoint.y + (double)textureHeight / 2 - 0.2) + (this->speed * (double)dt)))
-                    centerPoint.y += (this->speed * (double)dt);
+                if (world->canMove((int)this->centerPoint.x, (this->centerPoint.y + (double)this->textureHeight / 2) + (this->speed * (double)dt))
+                    && world->canMove((int)this->centerPoint.x + (double)this->textureWidth / 2 - 0.2, (this->centerPoint.y + (double)this->textureHeight / 2) + (this->speed * (double)dt))
+                    && world->canMove((int)this->centerPoint.x - (double)this->textureWidth / 2 + 0.2, (this->centerPoint.y + (double)this->textureHeight / 2) + (this->speed * (double)dt)))
+                    this->centerPoint.y += (this->speed * (double)dt);
                 else {
                     moveRandom();
                 }
             }
             else
-                centerPoint.y = map->windowHeight - textureHeight / 2 - 0.2;
+                this->centerPoint.y = map->windowHeight - (double)this->textureHeight / 2;
         }
     }
-    hitbox = { centerPoint.x - (float)textureWidth / 2, centerPoint.y - (float)textureHeight / 2, (float)textureWidth, (float)textureHeight };
-    DebugXY = { centerPoint.x, centerPoint.y - (float)textureHeight / 2 - 10 };
+    hitbox = { this->centerPoint.x - (float)this->textureWidth / 2, this->centerPoint.y - (float)this->textureHeight / 2,(float)this->textureWidth,(float)this->textureHeight };
+    DebugXY = { this->centerPoint.x, this->centerPoint.y - (float)this->textureHeight / 2 - 10 };
 }
 
 void Mushroom::render() {
