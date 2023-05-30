@@ -1,13 +1,12 @@
 #include <raylib.h>
 #include "player.hpp"
 #include <cmath>
-
-#define ROUND(a) ((int)((a) + 0.5f))
 #include <string>
 #include "../map/map.hpp"
 #include "../../main.hpp"
 #include <iostream>
 
+inline int ROUND(float x) { return (int)(x + 0.5F); }
 
 Player::Player()
 {
@@ -270,7 +269,7 @@ void Player::update()
         if(centerPoint.x < map->windowWidth - textureWidth / 4)
         {
             if(world->canMove(((int)centerPoint.x + textureWidth / 8) + (this->speed * dt), (int)centerPoint.y)
-                && world->canMove(((int)centerPoint.x + textureWidth / 8) + (this->speed * dt), (int)centerPoint.y + textureHeight / 32 - 0.2))
+                && world->canMove(((int)centerPoint.x + textureWidth / 8) + (this->speed * dt), (int)centerPoint.y + textureHeight / 4 - 0.2))
                 centerPoint.x += (this->speed * dt);
         }
         else

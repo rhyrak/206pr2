@@ -3,7 +3,7 @@
 #include <iostream>
 #include "../../main.hpp"
 
-#define ROUND(a) ((int)((a) + 0.5f))
+inline int ROUND(float x) { return (int)(x + 0.5F); }
 
 Button::Button(Rectangle hitbox, const char* text, int fontSize, Color tint) :
 	hitbox{hitbox}, tint{tint}

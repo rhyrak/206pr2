@@ -2,7 +2,8 @@
 #include "strawberry.hpp"
 #include <cstdlib>
 #include <iostream>
-#define ROUND(a) ((int)((a) + 0.5f))
+
+inline int ROUND(float x) { return (int)(x + 0.5F); }
 
 #include "../../main.hpp"
 #include "../map/map.hpp"

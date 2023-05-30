@@ -1,7 +1,7 @@
 #include "menu.hpp"
 #include <iostream>
 
-#define ROUND(a) ((int)((a) + 0.5f))
+inline int ROUND(float x) { return (int)(x + 0.5F); }
 
 inline void initButtons(Config* config, GridLayout* gl, std::vector<IconButton*> *iBtns, std::vector<Button*> *mBtns, Texture2D *bg);
 

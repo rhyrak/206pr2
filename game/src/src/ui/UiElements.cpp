@@ -1,6 +1,6 @@
 #include "UiElements.hpp"
 
-#define ROUND(x) ((int)(x+0.5F))
+inline int ROUND(float x) { return (int)(x + 0.5F); }
 
 Texture2D getTexture(UiElement uiElem, float scale) {
 	Image uiPng = LoadImage("game/res/ui/ui.png");

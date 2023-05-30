@@ -7,9 +7,10 @@
 #include "../map/map.hpp"
 #include "../ui/UiElements.hpp"
 
-#define MAX(a,b) (a > b ? a : b)
 int player1roundWins = 0;
 int player2roundWins = 0;
+
+inline int MAX(int a, int b) { return a > b ? a : b; }
 
 InGame::InGame(Config *config) : State(config)
 {

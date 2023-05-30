@@ -2,10 +2,11 @@
 #include "mushroom.hpp"
 #include <cstdlib>
 #include <iostream>
-#define ROUND(a) ((int)((a) + 0.5f))
-
 #include "../../main.hpp"
 #include "../map/map.hpp"
+
+inline int ROUND(float x) { return (int)(x + 0.5F); }
+
 Mushroom::Mushroom()
 {
 }

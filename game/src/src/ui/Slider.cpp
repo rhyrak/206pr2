@@ -1,7 +1,7 @@
 #include "Slider.hpp"
 #include "UiElements.hpp"
 
-#define ROUND(x) ((int)(x+0.5F))
+inline int ROUND(float x) { return (int)(x + 0.5F); }
 
 Slider::Slider(Rectangle barHitbox, float initialValue, Color tint)
 {

@@ -3,7 +3,7 @@
 #include "../ui/UiElements.hpp"
 #include <iostream>
 
-#define ROUND(x) ((int)(x + 0.5F))
+inline int ROUND(float x) { return (int)(x + 0.5F); }
 
 _inline void initButtons(std::vector<IconButton*>* buttons, std::vector<Slider*>* sliders, Config* config, GridLayout* gl);
 
