@@ -28,8 +28,6 @@ typedef struct Config{
     int cursorType;
     bool isFullscreen;
     bool isUpdated;
-    void operator<<(const char* fileName);
-    void operator>>(const char* fileName);
 } Config;
 
 

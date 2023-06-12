@@ -30,7 +30,9 @@ int main(void){
     
     // create config object and load data from file
     Config* config = new Config;
-    *config << "config.bin";
+    *config = Config{
+            { KEY_W,KEY_S,KEY_A,KEY_D,KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT },
+            0.65F,0.65F,1280,721,1,false,false };
 
     SetMusicVolume(music, config->musicLevel);
 
@@ -155,8 +157,7 @@ int main(void){
     UnloadFont(font);
     CloseWindow();
 
-    // save config data to file
-    *config >> "config.bin";
+    delete config;
 
     return 0;
 }
@@ -183,32 +184,5 @@ inline void cToggleFullscreen(Config *config)
         config->windowWidth = GetMonitorWidth(monitor);
         SetWindowSize(config->windowWidth, config->windowHeight);
         ToggleFullscreen();
-    }
-}
-
-void Config::operator<<(const char* fileName) {
-    FILE* configFile;
-    errno_t res = fopen_s(&configFile, fileName, "rb");
-    if (res == EINVAL || configFile == 0)
-    {
-        std::cout << "CREATING DEFAULT CONFIG\n";
-        *this = Config{
-            { KEY_W,KEY_S,KEY_A,KEY_D,KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT },
-            0.95F,0.95F,1280,721,1,false,false };    /*Define new Config Object*/
-    }
-    else
-    {
-        std::cout << "READING SAVED CONFIG\n";
-        fread(this, sizeof(Config), 1, configFile);
-        fclose(configFile);
-    }
-}
-
-void Config::operator>>(const char* fileName) {
-    FILE* configFile;
-    errno_t res = fopen_s(&configFile, fileName, "wb");
-    if (res != EINVAL && configFile != 0)
-    {
-        fwrite(this, sizeof(Config), 1, configFile);
     }
 }
