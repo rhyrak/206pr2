@@ -5,7 +5,7 @@
 
 inline int ROUND(float x) { return (int)(x + 0.5F); }
 
-_inline void initButtons(std::vector<IconButton*>* buttons, std::vector<Slider*>* sliders, Config* config, GridLayout* gl);
+inline void initButtons(std::vector<IconButton*>* buttons, std::vector<Slider*>* sliders, Config* config, GridLayout* gl);
 
 Settings::Settings(Config* config) : State(config)
 {
@@ -128,7 +128,7 @@ Signal Settings::signal()
 	return signalF;
 }
 
-_inline void initButtons(std::vector<IconButton*>* buttons, std::vector<Slider*>* sliders, Config* config, GridLayout *gl)
+inline void initButtons(std::vector<IconButton*>* buttons, std::vector<Slider*>* sliders, Config* config, GridLayout *gl)
 {
 	for (int i = 0; i < sliders->size(); i++)
 	{

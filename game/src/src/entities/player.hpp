@@ -16,7 +16,7 @@ private:
     int textureWidth, textureHeight;
     int animIndex = 0;
     Texture2D texture[12];
-    Image missingTexture;
+    //Image missingTexture;
     KeyboardKey *upKey;
     KeyboardKey *downKey;
     KeyboardKey *leftKey;
