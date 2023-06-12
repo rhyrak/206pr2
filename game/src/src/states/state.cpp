@@ -15,3 +15,18 @@ void State::reset()
 {
 
 }
+
+void State::update()
+{
+
+}
+
+void State::render()
+{
+
+}
+
+Signal State::signal()
+{
+	return signalF;
+}

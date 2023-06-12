@@ -77,19 +77,32 @@ inline void initButtons(Config* config, GridLayout* gl, std::vector<IconButton*>
 	for (int i = 0; i < mBtns->size(); i++)
 		delete mBtns->at(i);
 
-	UnloadTexture(*bg);
-	Image temp = LoadImage("game/res/ui/menu.png");
-	ImageResizeNN(&temp, config->windowWidth, config->windowHeight);
-	*bg = LoadTextureFromImage(temp);
+	try{
+		if(IsTextureReady(*bg))
+			UnloadTexture(*bg);
+		std::cout << "loaing menu png";
+		Image temp = LoadImage("game/res/ui/menu.png");
+		std::cout << "loaded menu png";
+		ImageResizeNN(&temp, config->windowWidth, config->windowHeight);
+		std::cout << "resized";
+		*bg = LoadTextureFromImage(temp);
+		std::cout << "loaded txture from img temp";
 
-	*iBtns = std::vector<IconButton*>(2);
-	iBtns->at(0) = new IconButton(Rectangle{ gl->getXCoord(0.5F),gl->getYCoord(0.5F),gl->getGridSize(),gl->getGridSize() }, I_GO_FULLSCREEN);
-	iBtns->at(1) = new IconButton(Rectangle{ gl->getXCoord(0.5F),gl->getYCoord(0.5F),gl->getGridSize(),gl->getGridSize() }, I_GO_WINDOWED);
+		*iBtns = std::vector<IconButton*>(2);
+		iBtns->at(0) = new IconButton(Rectangle{ gl->getXCoord(0.5F),gl->getYCoord(0.5F),gl->getGridSize(),gl->getGridSize() }, I_GO_FULLSCREEN);
+		iBtns->at(1) = new IconButton(Rectangle{ gl->getXCoord(0.5F),gl->getYCoord(0.5F),gl->getGridSize(),gl->getGridSize() }, I_GO_WINDOWED);
 
-	*mBtns = std::vector<Button*>(3);
-	mBtns->at(0) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(4),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "PLAY", ROUND(gl->getGridSize() * 0.75F));
-	mBtns->at(1) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(6),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "SETTINGS", ROUND(gl->getGridSize() * 0.55F));
-	mBtns->at(2) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(8),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "EXIT", ROUND(gl->getGridSize() * 0.75F));
+		*mBtns = std::vector<Button*>(3);
+		mBtns->at(0) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(4),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "PLAY", ROUND(gl->getGridSize() * 0.75F));
+		mBtns->at(1) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(6),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "SETTINGS", ROUND(gl->getGridSize() * 0.55F));
+		mBtns->at(2) = new Button(Rectangle{ gl->getXCoord(10),gl->getYCoord(8),5 * gl->getGridSize(),1.5F * gl->getGridSize() }, "EXIT", ROUND(gl->getGridSize() * 0.75F));
+		std::cout << "fin";
+	}
+	catch (...) {
+		std::cout << "exception happened in menu.cpp::initButtons()?";
+	}
+
+
 }
 
 void Menu::reset()

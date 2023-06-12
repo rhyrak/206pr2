@@ -9,7 +9,7 @@ GridLayout::GridLayout(int width, int height, float gridSize) : width{width}, he
 		gridCountX = (int)(width / gridSize);
 		gridCountY = (int)(height / gridSize);
 	}
-	else
+	else if(gridSize < 0)
 	{
 		gridCountX = (int)(-gridSize);
 		useCount = true;

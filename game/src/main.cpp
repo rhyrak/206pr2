@@ -38,13 +38,6 @@ int main(void){
 
     /*Create window*/
     InitWindow(config->windowWidth, config->windowHeight, "Hide & Seek");
-    if (config->windowHeight == 721)
-    {
-        int monitor = GetCurrentMonitor();
-        config->windowWidth = GetMonitorWidth(monitor) * 0.75F;
-        config->windowHeight = config->windowWidth * (9.0F / 16);
-        SetWindowSize(config->windowWidth, config->windowHeight);
-    }
 
     SetWindowIcon(LoadImage("game/res/win-icon.png"));
 
@@ -58,8 +51,8 @@ int main(void){
     if (!IsWindowFullscreen())
     {
         int monitor = GetCurrentMonitor();
-        SetWindowPosition((GetMonitorWidth(monitor) - config->windowWidth) / 2,
-            (GetMonitorHeight(monitor) - config->windowHeight) / 2);
+        SetWindowPosition((GetMonitorWidth(monitor) - config->windowWidth) / 2.0,
+            (GetMonitorHeight(monitor) - config->windowHeight) / 2.0);
     }
 
     HideCursor();
@@ -75,33 +68,36 @@ int main(void){
     config->isUpdated = true; // force an update when the game is started
     while (!exitFlag && !WindowShouldClose())
     {
-        UpdateMusicStream(music);
-        SetMusicVolume(music, config->musicLevel);
-        /*Fullscreen shortcut*/
-        if (!instanceof<InGame>(stateStack.back())) {
-            if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
-        }
+        try{
+            UpdateMusicStream(music);
+            SetMusicVolume(music, config->musicLevel);
+            /*Fullscreen shortcut*/
+            /*
+            if (!instanceof<InGame>(stateStack.back())) {
+                if (IsKeyPressed(KEY_F)) cToggleFullscreen(config);
+            }
+            */
 
-        if (IsKeyPressed(KEY_Q) && IsKeyDown(KEY_LEFT_ALT)) MinimizeWindow();
-        
-        stateStack.back()->update();
-        //std::cout << player1score;
-        BeginDrawing();
+            if (IsKeyPressed(KEY_Q) && IsKeyDown(KEY_LEFT_ALT)) MinimizeWindow();
 
-        stateStack.back()->render();
+            stateStack.back()->update();
+            //std::cout << player1score;
+            BeginDrawing();
 
-        DrawFPS(config->windowWidth-90, 10);
+            stateStack.back()->render();
 
-        switch (config->cursorType) {
-        case 1: DrawTexture(cursorActive, GetMouseX(), GetMouseY(), WHITE); break;
-        case 0: DrawTexture(cursorHover, GetMouseX(), GetMouseY(), WHITE); break;
-        }
+            DrawFPS(config->windowWidth - 90, 10);
 
-        EndDrawing();
-        config->isUpdated = false;
-        /*Change game state accordingly*/
-        Signal signal = stateStack.back()->signal();
-        switch (signal) {
+            switch (config->cursorType) {
+            case 1: DrawTexture(cursorActive, GetMouseX(), GetMouseY(), WHITE); break;
+            case 0: DrawTexture(cursorHover, GetMouseX(), GetMouseY(), WHITE); break;
+            }
+
+            EndDrawing();
+            config->isUpdated = false;
+            /*Change game state accordingly*/
+            Signal signal = stateStack.back()->signal();
+            switch (signal) {
             case S_NAV_MENU:
                 for (auto state : stateStack)
                     delete state;
@@ -129,9 +125,9 @@ int main(void){
                 stateStack.push_back(new Settings(config));
                 break;
             case S_NAV_POP:
-                delete stateStack.at(stateStack.size()-1);
+                delete stateStack.at(stateStack.size() - 1);
                 stateStack.pop_back();
-                if (stateStack.size()==0)
+                if (stateStack.size() == 0)
                     stateStack.push_back(new Menu(config));
                 break;
             case S_WIN_TOGGLE_FS:
@@ -143,6 +139,11 @@ int main(void){
             default:
                 break;
             }
+        }
+        catch (...) {
+            std::cout << "exception in main looop";
+        }
+  
     }
 
     /*free up explicit-heap dynamic variables*/

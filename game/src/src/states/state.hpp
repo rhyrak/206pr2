@@ -11,9 +11,9 @@ protected:
     Config* config;
 public:
     virtual ~State();   /*Destructor*/
-    virtual void update() = 0;  /*Overridable method*/
-    virtual void render() = 0;  /*Overridable method*/
-    virtual Signal signal() = 0;  /*Overridable method*/
+    virtual void update();  /*Overridable method*/
+    virtual void render();  /*Overridable method*/
+    virtual Signal signal();  /*Overridable method*/
     virtual void reset();
 };
 

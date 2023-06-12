@@ -8,10 +8,10 @@ class GridLayout
 private:
 	int width;
 	int height;
-	int gridCountX;
-	int gridCountY;
-	float gridSize;
-	bool useCount;
+	int gridCountX = 0;
+	int gridCountY = 0;
+	float gridSize = 0;
+	bool useCount = false;
 public:
 	GridLayout(int width, int height, float gridSize);
 	GridLayout();

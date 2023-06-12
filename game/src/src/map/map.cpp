@@ -44,7 +44,7 @@ void Map::scaleMapTexture(int w, int h) {
     for (int j = 0; j < 31; j++) {
         for (int i = 0; i < 64; i++) {
             Image tile = ImageFromImage(tileSet, Rectangle{ 16.0F * i,16.0F * j,16,16 });
-            ImageResizeNN(&tile, this->tileWidth, this->tileHeight);
+            //ImageResizeNN(&tile, this->tileWidth, this->tileHeight);
             tiles.at(iter) = tile;
             iter++;
         }

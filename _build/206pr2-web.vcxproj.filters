@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{21EB8090-0D4E-1035-B6D3-48EBA215DCB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\src">
+      <UniqueIdentifier>{B8516F6F-A44A-8EC1-CD7C-7346B9D46DCD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\src\entities">
+      <UniqueIdentifier>{8C756E3E-F837-A2C8-41E8-3055ADE97AA6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\src\map">
+      <UniqueIdentifier>{2510CD55-119F-561F-BABD-6A1AA62B67C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\src\states">
+      <UniqueIdentifier>{9BE0D7B6-0718-204E-1022-84717CD84647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\src\ui">
+      <UniqueIdentifier>{256EDF19-91CF-BC27-1A3D-03DA869DF3E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\src\util">
+      <UniqueIdentifier>{25C8730F-9134-2F0A-5A28-C767C6535172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E9C7FDCE-D52A-8D73-7EB0-C5296AF258F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src">
+      <UniqueIdentifier>{80521D27-6C4B-3C79-957D-21FE81D51B85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\entities">
+      <UniqueIdentifier>{54D71DA2-C099-512C-094A-E0B8754B2A0A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\map">
+      <UniqueIdentifier>{ED349E42-D9C3-270C-82E2-3B076E5038B2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\states">
+      <UniqueIdentifier>{633034D2-CF67-7C69-D871-E08C4428A362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ui">
+      <UniqueIdentifier>{ED193BDB-597B-18E9-E2E8-5E9B4E494FA8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\util">
+      <UniqueIdentifier>{ED856996-59F2-2491-22E6-BCEE8E1147F9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\game\src\main.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\entities\entity.hpp">
+      <Filter>Header Files\src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\entities\mushroom.hpp">
+      <Filter>Header Files\src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\entities\player.hpp">
+      <Filter>Header Files\src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\entities\strawberry.hpp">
+      <Filter>Header Files\src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\map\map.hpp">
+      <Filter>Header Files\src\map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\map\mapData.hpp">
+      <Filter>Header Files\src\map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\states\ingame.hpp">
+      <Filter>Header Files\src\states</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\states\menu.hpp">
+      <Filter>Header Files\src\states</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\states\settings.hpp">
+      <Filter>Header Files\src\states</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\states\state.hpp">
+      <Filter>Header Files\src\states</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\ui\Button.hpp">
+      <Filter>Header Files\src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\ui\IconButton.hpp">
+      <Filter>Header Files\src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\ui\Slider.hpp">
+      <Filter>Header Files\src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\ui\UiElements.hpp">
+      <Filter>Header Files\src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\src\util\GridLayout.hpp">
+      <Filter>Header Files\src\util</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\game\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\entities\entity.cpp">
+      <Filter>Source Files\src\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\entities\mushroom.cpp">
+      <Filter>Source Files\src\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\entities\player.cpp">
+      <Filter>Source Files\src\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\entities\strawberry.cpp">
+      <Filter>Source Files\src\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\map\map.cpp">
+      <Filter>Source Files\src\map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\states\ingame.cpp">
+      <Filter>Source Files\src\states</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\states\menu.cpp">
+      <Filter>Source Files\src\states</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\states\settings.cpp">
+      <Filter>Source Files\src\states</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\states\state.cpp">
+      <Filter>Source Files\src\states</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\ui\Button.cpp">
+      <Filter>Source Files\src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\ui\IconButton.cpp">
+      <Filter>Source Files\src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\ui\Slider.cpp">
+      <Filter>Source Files\src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\ui\UiElements.cpp">
+      <Filter>Source Files\src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\src\util\GridLayout.cpp">
+      <Filter>Source Files\src\util</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

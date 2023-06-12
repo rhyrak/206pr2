@@ -7,8 +7,8 @@
 class Map {
 private:
 	Texture2D mapTexture;
-    int tileWidth;
-    int tileHeight;
+    double tileWidth;
+    double tileHeight;
     int width;
     int height;
 public:
