@@ -188,8 +188,8 @@ inline void cToggleFullscreen(Config *config)
 
 void Config::operator<<(const char* fileName) {
     FILE* configFile;
-    errno_t res = fopen_s(&configFile, fileName, "rb");
-    if (res == EINVAL || configFile == 0)
+    configFile = fopen(fileName, "rb");
+    if (configFile == NULL || configFile == 0)
     {
         std::cout << "CREATING DEFAULT CONFIG\n";
         *this = Config{
@@ -206,8 +206,8 @@ void Config::operator<<(const char* fileName) {
 
 void Config::operator>>(const char* fileName) {
     FILE* configFile;
-    errno_t res = fopen_s(&configFile, fileName, "wb");
-    if (res != EINVAL && configFile != 0)
+    configFile = fopen(fileName, "wb");
+    if (configFile != NULL && configFile != 0)
     {
         fwrite(this, sizeof(Config), 1, configFile);
     }

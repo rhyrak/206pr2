@@ -54,52 +54,68 @@ inline void setTexture(int icon, Texture2D *texture, float scale) {
 	switch (icon)
 	{
 	case I_GO_FULLSCREEN:
+	{
 		*texture = getTexture(IBTN_FULLSCREEN, scale);
 		break;
+	}
 	case I_GO_WINDOWED:
+	{
 		*texture = getTexture(IBTN_WINDOWED, scale);
 		break;
+	}
 	case I_EXIT:
+	{
 		*texture = getTexture(IBTN_EXIT, scale);
 		break;
+	}
 	case KEY_UP:
 	case KEY_LEFT:
 	case KEY_RIGHT:
 	case KEY_DOWN:
-		Image temp = LoadImageFromTexture(getTexture(IBTN_EMTPY, 1));
-		Image arrow = LoadImageFromTexture(getTexture(UP_ARROW, 1));
-		ImageDraw(&temp, arrow, Rectangle{ 0,0,16,16 }, Rectangle{ 0,0,16,16 }, WHITE);
-		if (icon == KEY_DOWN)
-			ImageFlipVertical(&temp);
-		if (icon == KEY_LEFT)
-			ImageRotateCCW(&temp);
-		if (icon == KEY_RIGHT)
-			ImageRotateCW(&temp);
-		ImageResizeNN(&temp, temp.width * scale, temp.height * scale);
-		*texture = LoadTextureFromImage(temp);
-		UnloadImage(temp);
-		UnloadImage(arrow);
-		break;
-	case I_ARROW_BACK:
-		*texture = getTexture(ARROW_BACK,scale);
-		break;
-	case I_GEAR:
-		*texture = getTexture(GEAR_ICON, scale);
-		break;
-
-	default:
-		if ((icon >= 'a' && icon <= 'z') || (icon >= 'A' && icon <= 'Z') || (icon >= '0' && icon <= '9')) {
-			Image temp = LoadImageFromTexture(getTexture(IBTN_EMTPY, scale));
-			Image text = ImageText(TextFormat("%c", icon), temp.width * 0.65, UI_DARK_BROWN);
-			ImageDraw(&temp, text, Rectangle{ 0,0,(float)text.width, (float)text.height }, Rectangle{ temp.width * 0.25F,temp.height * 0.25F,temp.width * 0.5F,temp.height * 0.5F },WHITE);
+		{
+			Image temp = LoadImageFromTexture(getTexture(IBTN_EMTPY, 1));
+			Image arrow = LoadImageFromTexture(getTexture(UP_ARROW, 1));
+			ImageDraw(&temp, arrow, Rectangle{ 0,0,16,16 }, Rectangle{ 0,0,16,16 }, WHITE);
+			if (icon == KEY_DOWN)
+				ImageFlipVertical(&temp);
+			if (icon == KEY_LEFT)
+				ImageRotateCCW(&temp);
+			if (icon == KEY_RIGHT)
+				ImageRotateCW(&temp);
+			ImageResizeNN(&temp, temp.width * scale, temp.height * scale);
 			*texture = LoadTextureFromImage(temp);
 			UnloadImage(temp);
-			UnloadImage(text);
+			UnloadImage(arrow);
+			break;
 		}
-		else
+		
+	case I_ARROW_BACK:
 		{
-			*texture = getTexture(IBTN_EMTPY, scale);
+			*texture = getTexture(ARROW_BACK,scale);
+			break;
 		}
-		break;
+		
+	case I_GEAR:
+		{
+			*texture = getTexture(GEAR_ICON, scale);
+			break;
+		}
+		
+	default:
+		{
+			if ((icon >= 'a' && icon <= 'z') || (icon >= 'A' && icon <= 'Z') || (icon >= '0' && icon <= '9')) {
+				Image temp = LoadImageFromTexture(getTexture(IBTN_EMTPY, scale));
+				Image text = ImageText(TextFormat("%c", icon), temp.width * 0.65, UI_DARK_BROWN);
+				ImageDraw(&temp, text, Rectangle{ 0,0,(float)text.width, (float)text.height }, Rectangle{ temp.width * 0.25F,temp.height * 0.25F,temp.width * 0.5F,temp.height * 0.5F },WHITE);
+				*texture = LoadTextureFromImage(temp);
+				UnloadImage(temp);
+				UnloadImage(text);
+			}
+			else
+			{
+				*texture = getTexture(IBTN_EMTPY, scale);
+			}
+			break;
+		}
 	}
 }

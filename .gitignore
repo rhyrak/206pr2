@@ -14,6 +14,7 @@
 *.exe
 *.sln
 *.bin
+Makefile
 !premake5.exe
 
 # User-specific files (MonoDevelop/Xamarin Studio)
