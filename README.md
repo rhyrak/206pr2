@@ -1,12 +1,3 @@
-## 206pr2 <br />
-Group #11 <br />
-TyfnOz 20050111002, Tayfun Özdemir <br />
-rhyrak 20050111008, Selçuk Gençay <br />
-Sugarchild 20050111034, Merter Çoban <br />
-isology 21050111056, Ismail Alper Koyuncu <br />
-yAlqubati 21050141023, Yousef Sultan Ahmed Saif <br />
-He-Is-HaZaRdOuS 21050141038, Yousif Harith Suhail Suhail <br />
-
 # Generate Projects
 For windows users, there are two batch files you can use depending on what compiler you are using. For linux users you can simply use a terminal.
 Only do ONE of these options depending on your compiler and platform.
